@@ -1,0 +1,10 @@
+.DS_Store
+*.heic
+*.mov
+.playwright-mcp
+.git
+Images/optimized
+ARCHITECTURE_PLAN.md
+Roger_King_Tech_Guide_Handoff.md
+getting-started.png
+landing-full.png
