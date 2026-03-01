@@ -11,1765 +11,811 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-/* ========== RESET & BASE ========== */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
-body {
-  font-family: 'Source Sans 3', -apple-system, sans-serif;
-  font-size: 18px;
-  line-height: 1.7;
-  color: #1a2744;
-  background: #faf8f5;
-  overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:'Source Sans 3',-apple-system,sans-serif;font-size:18px;line-height:1.7;color:#1a2744;background:#faf8f5;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+:root{
+--navy:#1a2744;--navy-light:#2a3d5e;--cream:#faf8f5;--ivory:#f5f0e8;
+--gold:#c8956c;--gold-light:#dbb08a;--gold-dark:#a67c52;
+--warm-blue:#4a6fa5;--sage:#7a9e7e;--sage-light:#a8c5ab;
+--text:#1a2744;--text-light:#5a6a7e;--text-muted:#8a95a5;
+--border:#e8e0d4;--shadow:rgba(26,39,68,0.08);--shadow-md:rgba(26,39,68,0.12);
+--radius:12px;--radius-lg:20px;--radius-sm:8px;
+--transition:0.3s cubic-bezier(0.4,0,0.2,1);
+--nav-height:72px;--sidebar-width:260px;--content-max:760px;
 }
+h1,h2,h3,h4,h5{font-family:'Playfair Display',Georgia,serif;font-weight:700;line-height:1.25;color:var(--navy)}
+h1{font-size:clamp(2rem,5vw,3.2rem);letter-spacing:-0.02em}
+h2{font-size:clamp(1.6rem,4vw,2.4rem);letter-spacing:-0.01em}
+h3{font-size:clamp(1.25rem,3vw,1.6rem)}
+h4{font-size:1.15rem;font-weight:600}
+p{margin-bottom:1em;color:var(--text)}
+a{color:var(--gold-dark);text-decoration:none;transition:color var(--transition)}
+a:hover{color:var(--gold)}
+strong{font-weight:600}
+img{max-width:100%;height:auto;display:block}
+#root{min-height:100vh;display:flex;flex-direction:column}
 
-/* ========== CSS VARIABLES ========== */
-:root {
-  --navy: #1a2744;
-  --navy-light: #2a3d5e;
-  --cream: #faf8f5;
-  --ivory: #f5f0e8;
-  --gold: #c8956c;
-  --gold-light: #dbb08a;
-  --gold-dark: #a67c52;
-  --warm-blue: #4a6fa5;
-  --sage: #7a9e7e;
-  --sage-light: #a8c5ab;
-  --text: #1a2744;
-  --text-light: #5a6a7e;
-  --text-muted: #8a95a5;
-  --border: #e8e0d4;
-  --shadow: rgba(26, 39, 68, 0.08);
-  --shadow-md: rgba(26, 39, 68, 0.12);
-  --radius: 12px;
-  --radius-lg: 20px;
-  --radius-sm: 8px;
-  --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  --nav-height: 72px;
-  --sidebar-width: 260px;
-  --content-max: 760px;
-}
+/* NAV MOBILE */
+.mobile-nav{position:fixed;bottom:0;left:0;right:0;z-index:1000;background:rgba(250,248,245,0.88);backdrop-filter:blur(20px) saturate(1.8);-webkit-backdrop-filter:blur(20px) saturate(1.8);border-top:1px solid var(--border);padding:6px 4px calc(6px + env(safe-area-inset-bottom));display:flex;justify-content:space-around;align-items:center}
+.mnb{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 2px;border:none;background:none;cursor:pointer;min-width:48px;min-height:44px;border-radius:var(--radius-sm);transition:all var(--transition);-webkit-tap-highlight-color:transparent}
+.mnb svg{width:22px;height:22px;stroke:var(--text-muted);transition:all var(--transition);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.mnb span{font-size:10px;font-weight:600;color:var(--text-muted);letter-spacing:0.02em;transition:color var(--transition)}
+.mnb.active svg{stroke:var(--gold)}.mnb.active span{color:var(--gold)}
+.mnb:active{transform:scale(0.92)}
 
-/* ========== TYPOGRAPHY ========== */
-h1, h2, h3, h4, h5 {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-weight: 700;
-  line-height: 1.25;
-  color: var(--navy);
-}
-h1 { font-size: clamp(2rem, 5vw, 3.2rem); letter-spacing: -0.02em; }
-h2 { font-size: clamp(1.6rem, 4vw, 2.4rem); letter-spacing: -0.01em; }
-h3 { font-size: clamp(1.25rem, 3vw, 1.6rem); }
-h4 { font-size: 1.15rem; font-weight: 600; }
+/* NAV SIDEBAR */
+.sidebar{position:fixed;top:0;left:0;width:var(--sidebar-width);height:100vh;background:var(--cream);border-right:1px solid var(--border);padding:32px 20px;display:none;flex-direction:column;overflow-y:auto;z-index:100}
+.sidebar-logo{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--navy);margin-bottom:8px;cursor:pointer;transition:color var(--transition)}
+.sidebar-logo:hover{color:var(--gold)}
+.sidebar-sub{font-size:13px;color:var(--text-muted);margin-bottom:32px;line-height:1.5}
+.slink{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:var(--radius-sm);font-size:15px;font-weight:500;color:var(--text-light);cursor:pointer;transition:all var(--transition);margin-bottom:2px;border:none;background:none;width:100%;text-align:left}
+.slink:hover{background:var(--ivory);color:var(--navy)}
+.slink.active{background:var(--ivory);color:var(--gold-dark);font-weight:600}
+.slink svg{width:20px;height:20px;flex-shrink:0;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.sdiv{height:1px;background:var(--border);margin:16px 0}
+.sfooter{margin-top:auto;padding-top:20px;font-size:13px;color:var(--text-muted);line-height:1.5}
 
-p { margin-bottom: 1em; color: var(--text); }
-a { color: var(--gold-dark); text-decoration: none; transition: color var(--transition); }
-a:hover { color: var(--gold); }
-strong { font-weight: 600; }
-img { max-width: 100%; height: auto; display: block; }
+/* MAIN */
+.main-content{flex:1;padding-bottom:calc(var(--nav-height) + env(safe-area-inset-bottom) + 20px);min-height:100vh}
 
-/* ========== SUBTLE GRAIN TEXTURE ========== */
-.grain::after {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  opacity: 0.035;
-  pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-  background-size: 200px 200px;
-}
+/* HERO */
+.hero{position:relative;min-height:85vh;display:flex;flex-direction:column;justify-content:center;padding:60px 24px 40px;overflow:hidden}
+.hero-bg{position:absolute;top:0;left:0;right:0;bottom:0;z-index:0}
+.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center 20%}
+.hero-bg::after{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(to bottom,rgba(26,39,68,0.55) 0%,rgba(26,39,68,0.70) 50%,rgba(26,39,68,0.88) 100%)}
+.hero-content{position:relative;z-index:1;max-width:var(--content-max);margin:0 auto;text-align:center}
+.hero h1{color:#fff;font-size:clamp(2.2rem,6vw,3.6rem);margin-bottom:16px;font-weight:700;text-shadow:0 2px 12px rgba(0,0,0,0.2)}
+.hero-sub{color:rgba(255,255,255,0.85);font-size:clamp(1.05rem,2.5vw,1.3rem);font-weight:300;max-width:540px;margin:0 auto 12px;line-height:1.6}
+.hero-from{color:var(--gold-light);font-family:'Playfair Display',serif;font-style:italic;font-size:1.05rem;margin-top:8px}
+.hero-scroll{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);z-index:1;color:rgba(255,255,255,0.5);animation:bounce 2.5s ease-in-out infinite;cursor:pointer}
+.hero-scroll svg{width:28px;height:28px;stroke:currentColor;fill:none;stroke-width:2}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
 
-/* ========== LAYOUT ========== */
-#root { min-height: 100vh; display: flex; flex-direction: column; }
+/* CARDS GRID */
+.cards-section{padding:48px 24px 60px;max-width:960px;margin:0 auto}
+.cards-title{text-align:center;font-size:1rem;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-muted);margin-bottom:32px}
+.cards-grid{display:grid;grid-template-columns:1fr;gap:16px}
+.scard{position:relative;background:#fff;border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px;cursor:pointer;transition:all var(--transition);display:flex;align-items:center;gap:20px;overflow:hidden;min-height:88px}
+.scard::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;border-radius:4px 0 0 4px;transition:width var(--transition)}
+.scard:hover{transform:translateY(-3px);box-shadow:0 8px 32px var(--shadow-md);border-color:transparent}
+.scard:hover::before{width:5px}
+.scard:active{transform:translateY(-1px)}
+.cicon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;transition:transform var(--transition)}
+.scard:hover .cicon{transform:scale(1.08)}
+.ctxt{flex:1}
+.clbl{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px}
+.cttl{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--navy);margin-bottom:4px}
+.cdsc{font-size:14px;color:var(--text-light);line-height:1.5;margin:0}
+.carr{color:var(--text-muted);transition:all var(--transition);flex-shrink:0}
+.carr svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2}
+.scard:hover .carr{color:var(--gold);transform:translateX(4px)}
+.cg::before{background:var(--gold)}.cg .cicon{background:rgba(200,149,108,0.12)}.cg .clbl{color:var(--gold-dark)}
+.cb::before{background:var(--warm-blue)}.cb .cicon{background:rgba(74,111,165,0.12)}.cb .clbl{color:var(--warm-blue)}
+.cn::before{background:var(--navy)}.cn .cicon{background:rgba(26,39,68,0.10)}.cn .clbl{color:var(--navy-light)}
+.cs::before{background:var(--sage)}.cs .cicon{background:rgba(122,158,126,0.12)}.cs .clbl{color:var(--sage)}
+.ca::before{background:#c0884a}.ca .cicon{background:rgba(192,136,74,0.12)}.ca .clbl{color:#b07a40}
+.ct::before{background:#5a8fa8}.ct .cicon{background:rgba(90,143,168,0.12)}.ct .clbl{color:#4a7f98}
+.ck::before{background:linear-gradient(135deg,var(--gold),var(--warm-blue))}.ck .cicon{background:linear-gradient(135deg,rgba(200,149,108,0.15),rgba(74,111,165,0.15))}.ck .clbl{color:var(--gold-dark)}
 
-/* ========== NAVIGATION — MOBILE BOTTOM BAR ========== */
-.mobile-nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
-  background: rgba(250, 248, 245, 0.88);
-  backdrop-filter: blur(20px) saturate(1.8);
-  -webkit-backdrop-filter: blur(20px) saturate(1.8);
-  border-top: 1px solid var(--border);
-  padding: 6px 8px calc(6px + env(safe-area-inset-bottom));
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-}
-.mobile-nav-btn {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-  padding: 6px 4px;
-  border: none;
-  background: none;
-  cursor: pointer;
-  min-width: 56px;
-  min-height: 44px;
-  border-radius: var(--radius-sm);
-  transition: all var(--transition);
-  -webkit-tap-highlight-color: transparent;
-}
-.mobile-nav-btn svg { width: 22px; height: 22px; stroke: var(--text-muted); transition: all var(--transition); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-.mobile-nav-btn span { font-size: 10px; font-weight: 600; color: var(--text-muted); letter-spacing: 0.02em; transition: color var(--transition); }
-.mobile-nav-btn.active svg { stroke: var(--gold); }
-.mobile-nav-btn.active span { color: var(--gold); }
-.mobile-nav-btn:active { transform: scale(0.92); }
+/* SECTION PAGE */
+.section-page{padding:0 0 40px}
+.shero{position:relative;height:280px;overflow:hidden}
+.shero img{width:100%;height:100%;object-fit:cover}
+.shero-ov{position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(to bottom,rgba(26,39,68,0.3) 0%,rgba(26,39,68,0.75) 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:24px}
+.shero-lbl{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;color:var(--gold-light);margin-bottom:8px}
+.shero-ttl{color:#fff;font-size:clamp(1.8rem,4.5vw,2.6rem);text-shadow:0 2px 8px rgba(0,0,0,0.2)}
+.sbody{max-width:var(--content-max);margin:0 auto;padding:32px 24px}
+.sintro{font-size:1.1rem;line-height:1.8;color:var(--text);margin-bottom:36px;font-weight:300}
+.sintro strong{font-weight:600}
+.back-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 0;margin-bottom:8px;border:none;background:none;cursor:pointer;font-size:15px;font-weight:500;color:var(--text-muted);transition:color var(--transition);-webkit-tap-highlight-color:transparent}
+.back-btn:hover{color:var(--gold)}
+.back-btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2}
 
-/* ========== NAVIGATION — DESKTOP SIDEBAR ========== */
-.sidebar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: var(--sidebar-width);
-  height: 100vh;
-  background: var(--cream);
-  border-right: 1px solid var(--border);
-  padding: 32px 20px;
-  display: none;
-  flex-direction: column;
-  overflow-y: auto;
-  z-index: 100;
-}
-.sidebar-logo {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: var(--navy);
-  margin-bottom: 8px;
-  cursor: pointer;
-  transition: color var(--transition);
-}
-.sidebar-logo:hover { color: var(--gold); }
-.sidebar-subtitle {
-  font-size: 13px;
-  color: var(--text-muted);
-  margin-bottom: 32px;
-  line-height: 1.5;
-}
-.sidebar-link {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 14px;
-  border-radius: var(--radius-sm);
-  font-size: 15px;
-  font-weight: 500;
-  color: var(--text-light);
-  cursor: pointer;
-  transition: all var(--transition);
-  margin-bottom: 2px;
-  border: none;
-  background: none;
-  width: 100%;
-  text-align: left;
-}
-.sidebar-link:hover { background: var(--ivory); color: var(--navy); }
-.sidebar-link.active { background: var(--ivory); color: var(--gold-dark); font-weight: 600; }
-.sidebar-link svg { width: 20px; height: 20px; flex-shrink: 0; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-.sidebar-divider { height: 1px; background: var(--border); margin: 16px 0; }
-.sidebar-footer { margin-top: auto; padding-top: 20px; font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+/* ACCORDION */
+.acc{margin-bottom:16px;border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);background:#fff}
+.acc-h{display:flex;align-items:center;gap:14px;width:100%;padding:18px 20px;border:none;background:#fff;cursor:pointer;text-align:left;font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:600;color:var(--navy);transition:all var(--transition);-webkit-tap-highlight-color:transparent;min-height:56px}
+.acc-h:hover{background:var(--ivory)}
+.acc-chev{margin-left:auto;flex-shrink:0;transition:transform 0.35s cubic-bezier(0.4,0,0.2,1);color:var(--text-muted)}
+.acc-chev svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.5}
+.acc.open .acc-chev{transform:rotate(180deg);color:var(--gold)}
+.acc-body{max-height:0;overflow:hidden;transition:max-height 0.45s cubic-bezier(0.4,0,0.2,1)}
+.acc.open .acc-body{max-height:8000px}
+.acc-content{padding:4px 20px 24px;font-size:17px;line-height:1.75}
+.acc-content p{margin-bottom:14px}
+.acc-content ul,.acc-content ol{margin:12px 0 18px 20px}
+.acc-content li{margin-bottom:8px}
+.acc-content h4{margin:20px 0 10px;font-family:'Source Sans 3',sans-serif}
 
-/* ========== MAIN CONTENT ========== */
-.main-content {
-  flex: 1;
-  padding-bottom: calc(var(--nav-height) + env(safe-area-inset-bottom) + 20px);
-  min-height: 100vh;
-}
+/* PROMPT BLOCK */
+.pb{position:relative;background:var(--navy);border-radius:var(--radius);padding:20px;margin:20px 0 24px;overflow:hidden}
+.pb::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--warm-blue))}
+.pb pre{font-family:'JetBrains Mono',monospace;font-size:14px;line-height:1.65;color:rgba(255,255,255,0.9);white-space:pre-wrap;word-break:break-word;margin:0;padding-right:40px}
+.pb-copy{position:absolute;top:14px;right:14px;padding:8px 16px;border:1px solid rgba(255,255,255,0.2);border-radius:var(--radius-sm);background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.7);font-size:13px;font-weight:600;cursor:pointer;transition:all var(--transition);display:flex;align-items:center;gap:6px;min-height:36px;-webkit-tap-highlight-color:transparent}
+.pb-copy:hover{background:rgba(255,255,255,0.15);color:#fff;border-color:rgba(255,255,255,0.3)}
+.pb-copy.copied{background:rgba(122,158,126,0.3);border-color:var(--sage);color:var(--sage-light)}
+.pb-copy svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
 
-/* ========== PAGE TRANSITIONS ========== */
-.page-enter { opacity: 0; transform: translateY(16px); }
-.page-active { opacity: 1; transform: translateY(0); transition: opacity 0.4s ease, transform 0.4s ease; }
-.page-exit { opacity: 0; transform: translateY(-8px); transition: opacity 0.2s ease, transform 0.2s ease; }
+/* STEPS */
+.steps{margin:20px 0}
+.step{display:flex;gap:16px;margin-bottom:24px;position:relative}
+.step-num{width:36px;height:36px;border-radius:50%;background:var(--gold);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;flex-shrink:0;margin-top:2px}
+.step-line{position:absolute;top:40px;left:18px;width:2px;bottom:-8px;background:var(--border)}
+.step:last-child .step-line{display:none}
+.step-content{flex:1}
+.step-title{font-weight:600;font-size:17px;margin-bottom:6px}
 
-/* ========== LANDING PAGE ========== */
-.hero {
-  position: relative;
-  min-height: 85vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 60px 24px 40px;
-  overflow: hidden;
-}
-.hero-bg {
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  z-index: 0;
-}
-.hero-bg img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 20%;
-}
-.hero-bg::after {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(26, 39, 68, 0.55) 0%,
-    rgba(26, 39, 68, 0.70) 50%,
-    rgba(26, 39, 68, 0.88) 100%
-  );
-}
-.hero-content {
-  position: relative;
-  z-index: 1;
-  max-width: var(--content-max);
-  margin: 0 auto;
-  text-align: center;
-}
-.hero h1 {
-  color: #fff;
-  font-size: clamp(2.2rem, 6vw, 3.6rem);
-  margin-bottom: 16px;
-  font-weight: 700;
-  text-shadow: 0 2px 12px rgba(0,0,0,0.2);
-}
-.hero-subtitle {
-  color: rgba(255,255,255,0.85);
-  font-size: clamp(1.05rem, 2.5vw, 1.3rem);
-  font-weight: 300;
-  max-width: 540px;
-  margin: 0 auto 12px;
-  line-height: 1.6;
-}
-.hero-from {
-  color: var(--gold-light);
-  font-family: 'Playfair Display', serif;
-  font-style: italic;
-  font-size: 1.05rem;
-  margin-top: 8px;
-}
-.hero-scroll-hint {
-  position: absolute;
-  bottom: 28px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1;
-  color: rgba(255,255,255,0.5);
-  animation: gentleBounce 2.5s ease-in-out infinite;
-  cursor: pointer;
-}
-.hero-scroll-hint svg { width: 28px; height: 28px; stroke: currentColor; fill: none; stroke-width: 2; }
-@keyframes gentleBounce {
-  0%, 100% { transform: translateX(-50%) translateY(0); }
-  50% { transform: translateX(-50%) translateY(8px); }
-}
+/* TABLE */
+.tw{overflow-x:auto;margin:20px 0;-webkit-overflow-scrolling:touch}
+.ctable{width:100%;border-collapse:collapse;font-size:15px;min-width:480px}
+.ctable th{text-align:left;padding:12px 14px;background:var(--navy);color:#fff;font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:0.05em}
+.ctable th:first-child{border-radius:var(--radius-sm) 0 0 0}.ctable th:last-child{border-radius:0 var(--radius-sm) 0 0}
+.ctable td{padding:12px 14px;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.5}
+.ctable tr:nth-child(even) td{background:var(--ivory)}
+.ctable td:first-child{font-weight:600;color:var(--navy);white-space:nowrap}
 
-/* ========== SECTION CARDS GRID ========== */
-.cards-section {
-  padding: 48px 24px 60px;
-  max-width: 900px;
-  margin: 0 auto;
-}
-.cards-section-title {
-  text-align: center;
-  font-size: 1rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--text-muted);
-  margin-bottom: 32px;
-}
-.cards-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
-}
-.section-card {
-  position: relative;
-  background: #fff;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 24px;
-  cursor: pointer;
-  transition: all var(--transition);
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  overflow: hidden;
-  min-height: 88px;
-}
-.section-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 4px;
-  height: 100%;
-  border-radius: 4px 0 0 4px;
-  transition: width var(--transition);
-}
-.section-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 32px var(--shadow-md);
-  border-color: transparent;
-}
-.section-card:hover::before { width: 5px; }
-.section-card:active { transform: translateY(-1px); }
+/* PROJECT CARDS */
+.pcards{display:grid;grid-template-columns:1fr;gap:12px;margin:20px 0}
+.pcard{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;transition:all var(--transition)}
+.pcard:hover{box-shadow:0 4px 16px var(--shadow);transform:translateY(-2px)}
+.pcard-t{font-family:'Playfair Display',serif;font-weight:600;font-size:1rem;margin-bottom:4px}
+.pcard-d{font-size:14px;color:var(--text-light);margin:0 0 8px;line-height:1.5}
+.ptag{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em}
+.tag-c{background:rgba(74,111,165,0.12);color:var(--warm-blue)}
+.tag-w{background:rgba(200,149,108,0.15);color:var(--gold-dark)}
+.tag-r{background:rgba(122,158,126,0.12);color:var(--sage)}
 
-.card-icon {
-  width: 52px;
-  height: 52px;
-  border-radius: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 24px;
-  flex-shrink: 0;
-  transition: transform var(--transition);
-}
-.section-card:hover .card-icon { transform: scale(1.08); }
-.card-text { flex: 1; }
-.card-label {
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  margin-bottom: 4px;
-}
-.card-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.15rem;
-  font-weight: 700;
-  color: var(--navy);
-  margin-bottom: 4px;
-}
-.card-desc { font-size: 14px; color: var(--text-light); line-height: 1.5; margin: 0; }
-.card-arrow { color: var(--text-muted); transition: all var(--transition); flex-shrink: 0; }
-.card-arrow svg { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2; }
-.section-card:hover .card-arrow { color: var(--gold); transform: translateX(4px); }
+/* PLATFORM CARD */
+.plat{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:22px;margin-bottom:16px}
+.plat-h{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.plat-icon{font-size:28px}
+.plat-name{font-family:'Playfair Display',serif;font-weight:700;font-size:1.2rem}
+.plat-purp{font-weight:600;color:var(--gold-dark);font-size:15px;margin-bottom:8px}
+.plat ul{margin:8px 0 8px 20px}
+.plat li{margin-bottom:6px;font-size:16px}
+.plat-bl{margin-top:12px;padding-top:12px;border-top:1px solid var(--border);font-weight:600;font-size:15px;color:var(--navy)}
 
-/* Card accent colors */
-.card-gold::before { background: var(--gold); }
-.card-gold .card-icon { background: rgba(200, 149, 108, 0.12); }
-.card-gold .card-label { color: var(--gold-dark); }
+/* CALLOUT */
+.co{border-left:4px solid var(--gold);background:var(--ivory);padding:16px 20px;border-radius:0 var(--radius-sm) var(--radius-sm) 0;margin:16px 0 20px}
+.co.tip{border-left-color:var(--sage)}.co.info{border-left-color:var(--warm-blue)}
+.co-l{font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px}
+.co p:last-child{margin-bottom:0}
 
-.card-blue::before { background: var(--warm-blue); }
-.card-blue .card-icon { background: rgba(74, 111, 165, 0.12); }
-.card-blue .card-label { color: var(--warm-blue); }
+/* CONTENT PHOTO */
+.cphoto{border-radius:var(--radius);overflow:hidden;margin:24px 0;box-shadow:0 4px 20px var(--shadow)}
+.cphoto img{width:100%;display:block}
+.cphoto-cap{padding:10px 16px;background:var(--ivory);font-size:13px;color:var(--text-muted);font-style:italic}
 
-.card-navy::before { background: var(--navy); }
-.card-navy .card-icon { background: rgba(26, 39, 68, 0.10); }
-.card-navy .card-label { color: var(--navy-light); }
+/* PHOTO POST CARD */
+.post-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;margin:24px 0}
+.post-card-img{height:200px;overflow:hidden}
+.post-card-img img{width:100%;height:100%;object-fit:cover}
+.post-card-body{padding:20px}
+.post-card-body h4{margin-bottom:12px;font-family:'Playfair Display',serif}
+.post-platforms{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.post-plat-tag{padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;background:var(--ivory);color:var(--text-light)}
+.post-plat-tag.ig{background:rgba(193,53,132,0.1);color:#c13584}
+.post-plat-tag.tt{background:rgba(0,0,0,0.06);color:#333}
+.post-plat-tag.fb{background:rgba(24,119,242,0.1);color:#1877f2}
+.post-plat-tag.li{background:rgba(10,102,194,0.1);color:#0a66c2}
+.post-caption{font-size:15px;line-height:1.6;color:var(--text);margin:8px 0;padding:12px 14px;background:var(--ivory);border-radius:var(--radius-sm);cursor:pointer;transition:all var(--transition);border:1px solid transparent}
+.post-caption:hover{border-color:var(--gold)}
+.post-caption.copied-cap{border-color:var(--sage);background:rgba(122,158,126,0.06)}
+.post-caption-hint{font-size:11px;color:var(--text-muted);font-style:italic;text-align:right;margin-top:4px}
+.post-biz{margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
+.post-biz-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--gold-dark);margin-bottom:6px}
+.post-biz ul{margin:4px 0 0 16px;font-size:14px}
+.post-biz li{margin-bottom:4px;color:var(--text-light)}
 
-.card-sage::before { background: var(--sage); }
-.card-sage .card-icon { background: rgba(122, 158, 126, 0.12); }
-.card-sage .card-label { color: var(--sage); }
+/* CAMERA DIVIDER */
+.cdiv{display:flex;align-items:center;justify-content:center;gap:16px;margin:40px 0;color:var(--border)}
+.cdiv::before,.cdiv::after{content:'';flex:1;height:1px;background:var(--border)}
+.cdiv svg{width:24px;height:24px;stroke:var(--gold-light);fill:none;stroke-width:1.5;flex-shrink:0}
 
-.card-amber::before { background: #c0884a; }
-.card-amber .card-icon { background: rgba(192, 136, 74, 0.12); }
-.card-amber .card-label { color: #b07a40; }
+/* DECISION GUIDE */
+.dl{margin:16px 0}
+.di{display:flex;align-items:baseline;gap:12px;padding:8px 0;font-size:16px}
+.di .q{color:var(--text-light);flex-shrink:0}.di .ar{color:var(--gold);font-weight:700;flex-shrink:0}.di .a{font-weight:600;color:var(--navy)}
 
-.card-spark::before { background: linear-gradient(135deg, var(--gold), var(--warm-blue)); }
-.card-spark .card-icon { background: linear-gradient(135deg, rgba(200,149,108,0.15), rgba(74,111,165,0.15)); }
-.card-spark .card-label { color: var(--gold-dark); }
+/* FUN PROMPT TILE */
+.fpg{display:grid;grid-template-columns:1fr;gap:12px;margin:20px 0}
+.fpt{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;cursor:pointer;transition:all var(--transition);display:flex;align-items:flex-start;gap:12px}
+.fpt:hover{border-color:var(--gold);box-shadow:0 2px 12px var(--shadow)}
+.fpt.cop{border-color:var(--sage);background:rgba(122,158,126,0.05)}
+.fti{font-size:22px;flex-shrink:0;margin-top:2px}
+.ftt{font-size:15px;line-height:1.5;color:var(--text)}
+.fth{font-size:12px;color:var(--text-muted);margin-top:4px;font-style:italic}
 
-/* ========== SECTION PAGE LAYOUT ========== */
-.section-page { padding: 0 0 40px; }
-.section-hero {
-  position: relative;
-  height: 280px;
-  overflow: hidden;
-  margin-bottom: 0;
-}
-.section-hero img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.section-hero-overlay {
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: linear-gradient(to bottom, rgba(26,39,68,0.3) 0%, rgba(26,39,68,0.75) 100%);
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 24px;
-}
-.section-hero-label {
-  font-size: 12px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--gold-light);
-  margin-bottom: 8px;
-}
-.section-hero-title {
-  color: #fff;
-  font-size: clamp(1.8rem, 4.5vw, 2.6rem);
-  text-shadow: 0 2px 8px rgba(0,0,0,0.2);
-}
-.section-body {
-  max-width: var(--content-max);
-  margin: 0 auto;
-  padding: 32px 24px;
-}
-.section-intro {
-  font-size: 1.1rem;
-  line-height: 1.8;
-  color: var(--text);
-  margin-bottom: 36px;
-  font-weight: 300;
-}
-.section-intro strong { font-weight: 600; }
+/* CLOSING MSG */
+.cmsg{background:linear-gradient(135deg,var(--ivory),rgba(200,149,108,0.08));border-radius:var(--radius-lg);padding:28px 24px;margin-top:32px;border:1px solid rgba(200,149,108,0.2)}
+.cmsg p{font-size:17px;line-height:1.75}
+.cmsg p:last-child{margin-bottom:0}
 
-/* Back button */
-.back-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 0;
-  margin-bottom: 8px;
-  border: none;
-  background: none;
-  cursor: pointer;
-  font-size: 15px;
-  font-weight: 500;
-  color: var(--text-muted);
-  transition: color var(--transition);
-  -webkit-tap-highlight-color: transparent;
-}
-.back-btn:hover { color: var(--gold); }
-.back-btn svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; }
+/* PHILIP NOTE */
+.pnote{text-align:center;padding:40px 24px;margin:0 24px 20px;border:2px dashed var(--gold-light);border-radius:var(--radius-lg);background:rgba(200,149,108,0.04)}
+.pnote-l{font-family:'Playfair Display',serif;font-style:italic;color:var(--gold-dark);font-size:1.1rem;margin-bottom:8px}
+.pnote p{color:var(--text-muted);font-size:15px;margin:0}
 
-/* ========== ACCORDION ========== */
-.accordion { margin-bottom: 16px; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); background: #fff; }
-.accordion-header {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  width: 100%;
-  padding: 18px 20px;
-  border: none;
-  background: #fff;
-  cursor: pointer;
-  text-align: left;
-  font-family: 'Playfair Display', serif;
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: var(--navy);
-  transition: all var(--transition);
-  -webkit-tap-highlight-color: transparent;
-  min-height: 56px;
-}
-.accordion-header:hover { background: var(--ivory); }
-.accordion-chevron {
-  margin-left: auto;
-  flex-shrink: 0;
-  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-  color: var(--text-muted);
-}
-.accordion-chevron svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2.5; }
-.accordion.open .accordion-chevron { transform: rotate(180deg); color: var(--gold); }
-.accordion-body {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.accordion.open .accordion-body { max-height: 5000px; }
-.accordion-content {
-  padding: 4px 20px 24px;
-  font-size: 17px;
-  line-height: 1.75;
-}
-.accordion-content p { margin-bottom: 14px; }
-.accordion-content ul, .accordion-content ol { margin: 12px 0 18px 20px; }
-.accordion-content li { margin-bottom: 8px; }
-.accordion-content h4 { margin: 20px 0 10px; font-family: 'Source Sans 3', sans-serif; }
+/* BEFORE/AFTER */
+.ba{margin:16px 0}
+.bai{padding:14px 16px;border-radius:var(--radius-sm);margin-bottom:8px}
+.ba-bad{background:rgba(200,80,80,0.08);border-left:3px solid #c85050}
+.ba-good{background:rgba(122,158,126,0.08);border-left:3px solid var(--sage)}
+.ba-l{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px}
+.ba-bad .ba-l{color:#c85050}.ba-good .ba-l{color:var(--sage)}
+.ba-t{font-size:15px;color:var(--text);margin:0;font-style:italic}
 
-/* ========== PROMPT BLOCK ========== */
-.prompt-block {
-  position: relative;
-  background: var(--navy);
-  border-radius: var(--radius);
-  padding: 20px;
-  margin: 20px 0 24px;
-  overflow: hidden;
-}
-.prompt-block::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, var(--gold), var(--warm-blue));
-}
-.prompt-block pre {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 14px;
-  line-height: 1.65;
-  color: rgba(255,255,255,0.9);
-  white-space: pre-wrap;
-  word-break: break-word;
-  margin: 0;
-  padding-right: 40px;
-}
-.prompt-copy-btn {
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  padding: 8px 16px;
-  border: 1px solid rgba(255,255,255,0.2);
-  border-radius: var(--radius-sm);
-  background: rgba(255,255,255,0.08);
-  color: rgba(255,255,255,0.7);
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all var(--transition);
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  min-height: 36px;
-  -webkit-tap-highlight-color: transparent;
-}
-.prompt-copy-btn:hover { background: rgba(255,255,255,0.15); color: #fff; border-color: rgba(255,255,255,0.3); }
-.prompt-copy-btn.copied { background: rgba(122, 158, 126, 0.3); border-color: var(--sage); color: var(--sage-light); }
-.prompt-copy-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; }
+/* PROGRESS */
+.pchk{display:flex;align-items:center;gap:10px;margin:-4px 0 16px}
+.pchk input[type="checkbox"]{width:20px;height:20px;accent-color:var(--sage);cursor:pointer}
+.pchk label{font-size:14px;color:var(--text-muted);cursor:pointer;user-select:none}
 
-/* ========== STEP-BY-STEP ========== */
-.steps { margin: 20px 0; }
-.step {
-  display: flex;
-  gap: 16px;
-  margin-bottom: 24px;
-  position: relative;
-}
-.step-num {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: var(--gold);
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  font-size: 15px;
-  flex-shrink: 0;
-  margin-top: 2px;
-}
-.step-line {
-  position: absolute;
-  top: 40px;
-  left: 18px;
-  width: 2px;
-  bottom: -8px;
-  background: var(--border);
-}
-.step:last-child .step-line { display: none; }
-.step-content { flex: 1; }
-.step-title { font-weight: 600; font-size: 17px; margin-bottom: 6px; }
+/* AUTOMATION WORKFLOW */
+.workflow{display:flex;flex-direction:column;gap:0;margin:20px 0}
+.wf-step{display:flex;align-items:center;gap:14px;padding:14px 16px;background:#fff;border:1px solid var(--border);position:relative}
+.wf-step:first-child{border-radius:var(--radius) var(--radius) 0 0}
+.wf-step:last-child{border-radius:0 0 var(--radius) var(--radius)}
+.wf-step:not(:last-child){border-bottom:none}
+.wf-num{width:32px;height:32px;border-radius:50%;background:var(--gold);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0}
+.wf-txt{font-size:15px;line-height:1.4}
+.wf-time{margin-left:auto;font-size:13px;color:var(--text-muted);white-space:nowrap;font-weight:600}
 
-/* ========== COMPARISON TABLE ========== */
-.comparison-table-wrap { overflow-x: auto; margin: 20px 0; -webkit-overflow-scrolling: touch; }
-.comparison-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 15px;
-  min-width: 500px;
-}
-.comparison-table th {
-  text-align: left;
-  padding: 12px 14px;
-  background: var(--navy);
-  color: #fff;
-  font-weight: 600;
-  font-size: 13px;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-.comparison-table th:first-child { border-radius: var(--radius-sm) 0 0 0; }
-.comparison-table th:last-child { border-radius: 0 var(--radius-sm) 0 0; }
-.comparison-table td {
-  padding: 12px 14px;
-  border-bottom: 1px solid var(--border);
-  vertical-align: top;
-  line-height: 1.5;
-}
-.comparison-table tr:nth-child(even) td { background: var(--ivory); }
-.comparison-table td:first-child { font-weight: 600; color: var(--navy); white-space: nowrap; }
+/* ANIM */
+@keyframes fadeInUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.s1{animation:fadeInUp .6s ease forwards;animation-delay:.1s;opacity:0}
+.s2{animation:fadeInUp .6s ease forwards;animation-delay:.2s;opacity:0}
+.s3{animation:fadeInUp .6s ease forwards;animation-delay:.3s;opacity:0}
+.s4{animation:fadeInUp .6s ease forwards;animation-delay:.4s;opacity:0}
+.s5{animation:fadeInUp .6s ease forwards;animation-delay:.5s;opacity:0}
+.s6{animation:fadeInUp .6s ease forwards;animation-delay:.6s;opacity:0}
+.s7{animation:fadeInUp .6s ease forwards;animation-delay:.7s;opacity:0}
+.s8{animation:fadeInUp .6s ease forwards;animation-delay:.8s;opacity:0}
 
-/* ========== PROJECT CARDS ========== */
-.project-cards { display: grid; grid-template-columns: 1fr; gap: 12px; margin: 20px 0; }
-.project-card {
-  background: #fff;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 18px 20px;
-  transition: all var(--transition);
-}
-.project-card:hover { box-shadow: 0 4px 16px var(--shadow); transform: translateY(-2px); }
-.project-card-title { font-family: 'Playfair Display', serif; font-weight: 600; font-size: 1rem; margin-bottom: 4px; }
-.project-card-desc { font-size: 14px; color: var(--text-light); margin: 0 0 8px; line-height: 1.5; }
-.project-card-tag {
-  display: inline-block;
-  padding: 3px 10px;
-  border-radius: 20px;
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-.tag-chat { background: rgba(74, 111, 165, 0.12); color: var(--warm-blue); }
-.tag-cowork { background: rgba(200, 149, 108, 0.15); color: var(--gold-dark); }
-.tag-research { background: rgba(122, 158, 126, 0.12); color: var(--sage); }
-
-/* ========== PLATFORM CARDS ========== */
-.platform-card {
-  background: #fff;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 22px;
-  margin-bottom: 16px;
-}
-.platform-card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
-.platform-icon { font-size: 28px; }
-.platform-name { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.2rem; }
-.platform-purpose { font-weight: 600; color: var(--gold-dark); font-size: 15px; margin-bottom: 8px; }
-.platform-card ul { margin: 8px 0 8px 20px; }
-.platform-card li { margin-bottom: 6px; font-size: 16px; }
-.platform-bottom-line {
-  margin-top: 12px;
-  padding-top: 12px;
-  border-top: 1px solid var(--border);
-  font-weight: 600;
-  font-size: 15px;
-  color: var(--navy);
-}
-
-/* ========== TIP / CALLOUT BOXES ========== */
-.callout {
-  border-left: 4px solid var(--gold);
-  background: var(--ivory);
-  padding: 16px 20px;
-  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-  margin: 16px 0 20px;
-}
-.callout.tip { border-left-color: var(--sage); }
-.callout.info { border-left-color: var(--warm-blue); }
-.callout-label { font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
-.callout p:last-child { margin-bottom: 0; }
-
-/* ========== PHOTO IN CONTENT ========== */
-.content-photo {
-  border-radius: var(--radius);
-  overflow: hidden;
-  margin: 24px 0;
-  box-shadow: 0 4px 20px var(--shadow);
-}
-.content-photo img {
-  width: 100%;
-  display: block;
-}
-.content-photo-caption {
-  padding: 10px 16px;
-  background: var(--ivory);
-  font-size: 13px;
-  color: var(--text-muted);
-  font-style: italic;
-}
-
-/* ========== CAMERA DIVIDER ========== */
-.camera-divider {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  margin: 40px 0;
-  color: var(--border);
-}
-.camera-divider::before, .camera-divider::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: var(--border);
-}
-.camera-divider svg { width: 24px; height: 24px; stroke: var(--gold-light); fill: none; stroke-width: 1.5; flex-shrink: 0; }
-
-/* ========== DECISION GUIDE ========== */
-.decision-list { margin: 16px 0; }
-.decision-item {
-  display: flex;
-  align-items: baseline;
-  gap: 12px;
-  padding: 8px 0;
-  font-size: 16px;
-}
-.decision-item .q { color: var(--text-light); flex-shrink: 0; }
-.decision-item .arrow { color: var(--gold); font-weight: 700; flex-shrink: 0; }
-.decision-item .a { font-weight: 600; color: var(--navy); }
-
-/* ========== FUN PROMPT TILES ========== */
-.fun-prompts-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin: 20px 0; }
-.fun-prompt-tile {
-  background: #fff;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 16px 18px;
-  cursor: pointer;
-  transition: all var(--transition);
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-}
-.fun-prompt-tile:hover { border-color: var(--gold); box-shadow: 0 2px 12px var(--shadow); }
-.fun-prompt-tile.copied-tile { border-color: var(--sage); background: rgba(122,158,126,0.05); }
-.fun-tile-icon { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
-.fun-tile-text { font-size: 15px; line-height: 1.5; color: var(--text); }
-.fun-tile-hint { font-size: 12px; color: var(--text-muted); margin-top: 4px; font-style: italic; }
-
-/* ========== SECTION CLOSING MESSAGE ========== */
-.closing-message {
-  background: linear-gradient(135deg, var(--ivory), rgba(200,149,108,0.08));
-  border-radius: var(--radius-lg);
-  padding: 28px 24px;
-  margin-top: 32px;
-  border: 1px solid rgba(200,149,108,0.2);
-}
-.closing-message p { font-size: 17px; line-height: 1.75; }
-.closing-message p:last-child { margin-bottom: 0; }
-
-/* ========== PHILIP MESSAGE PLACEHOLDER ========== */
-.philip-note {
-  text-align: center;
-  padding: 40px 24px;
-  margin: 0 24px 20px;
-  border: 2px dashed var(--gold-light);
-  border-radius: var(--radius-lg);
-  background: rgba(200,149,108,0.04);
-}
-.philip-note-label {
-  font-family: 'Playfair Display', serif;
-  font-style: italic;
-  color: var(--gold-dark);
-  font-size: 1.1rem;
-  margin-bottom: 8px;
-}
-.philip-note p { color: var(--text-muted); font-size: 15px; margin: 0; }
-
-/* ========== SCROLL REVEAL ========== */
-.reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
-.reveal.visible { opacity: 1; transform: translateY(0); }
-
-/* ========== RESPONSIVE ========== */
-@media (min-width: 640px) {
-  .cards-grid { grid-template-columns: 1fr 1fr; }
-  .project-cards { grid-template-columns: 1fr 1fr; }
-  .fun-prompts-grid { grid-template-columns: 1fr 1fr; }
-}
-
-@media (min-width: 1024px) {
-  .mobile-nav { display: none; }
-  .sidebar { display: flex; }
-  .main-content {
-    margin-left: var(--sidebar-width);
-    padding-bottom: 60px;
-  }
-  .hero { min-height: 80vh; }
-  .section-hero { height: 340px; }
-  .section-hero-overlay { padding: 40px; }
-  .section-body { padding: 40px 40px; }
-  .cards-section { padding: 60px 40px 80px; }
-  .cards-grid { grid-template-columns: 1fr 1fr; gap: 20px; }
-}
-
-@media (min-width: 1200px) {
-  .cards-grid { grid-template-columns: 1fr 1fr 1fr; }
-}
-
-/* ========== PROGRESS CHECKBOX ========== */
-.progress-check {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: -4px 0 16px;
-}
-.progress-check input[type="checkbox"] {
-  width: 20px;
-  height: 20px;
-  accent-color: var(--sage);
-  cursor: pointer;
-}
-.progress-check label {
-  font-size: 14px;
-  color: var(--text-muted);
-  cursor: pointer;
-  user-select: none;
-}
-
-/* ========== BEFORE/AFTER EXAMPLE ========== */
-.before-after { margin: 16px 0; }
-.ba-item { padding: 14px 16px; border-radius: var(--radius-sm); margin-bottom: 8px; }
-.ba-bad { background: rgba(200, 80, 80, 0.08); border-left: 3px solid #c85050; }
-.ba-good { background: rgba(122, 158, 126, 0.08); border-left: 3px solid var(--sage); }
-.ba-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
-.ba-bad .ba-label { color: #c85050; }
-.ba-good .ba-label { color: var(--sage); }
-.ba-text { font-size: 15px; color: var(--text); margin: 0; font-style: italic; }
-
-/* ========== LOADING ANIMATION ========== */
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(24px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-.stagger-1 { animation: fadeInUp 0.6s ease forwards; animation-delay: 0.1s; opacity: 0; }
-.stagger-2 { animation: fadeInUp 0.6s ease forwards; animation-delay: 0.2s; opacity: 0; }
-.stagger-3 { animation: fadeInUp 0.6s ease forwards; animation-delay: 0.3s; opacity: 0; }
-.stagger-4 { animation: fadeInUp 0.6s ease forwards; animation-delay: 0.4s; opacity: 0; }
-.stagger-5 { animation: fadeInUp 0.6s ease forwards; animation-delay: 0.5s; opacity: 0; }
-.stagger-6 { animation: fadeInUp 0.6s ease forwards; animation-delay: 0.6s; opacity: 0; }
-.stagger-7 { animation: fadeInUp 0.6s ease forwards; animation-delay: 0.7s; opacity: 0; }
-
+@media(min-width:640px){.cards-grid{grid-template-columns:1fr 1fr}.pcards{grid-template-columns:1fr 1fr}.fpg{grid-template-columns:1fr 1fr}}
+@media(min-width:1024px){.mobile-nav{display:none}.sidebar{display:flex}.main-content{margin-left:var(--sidebar-width);padding-bottom:60px}.hero{min-height:80vh}.shero{height:340px}.shero-ov{padding:40px}.sbody{padding:40px}.cards-section{padding:60px 40px 80px}.cards-grid{grid-template-columns:1fr 1fr;gap:20px}}
+@media(min-width:1200px){.cards-grid{grid-template-columns:1fr 1fr 1fr}}
 </style>
 </head>
 <body>
 <div id="root"></div>
-
 <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-
 <script type="text/babel">
-const { useState, useEffect, useRef, useCallback, useMemo } = React;
+const {useState,useEffect,useRef,useCallback} = React;
 
-// ==================== ICONS (inline SVG) ====================
-const Icons = {
-  home: <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>,
-  rocket: <svg viewBox="0 0 24 24"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>,
-  chat: <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>,
-  briefcase: <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>,
-  camera: <svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>,
-  linkedin: <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>,
-  sparkles: <svg viewBox="0 0 24 24"><path d="M12 2L9.5 9.5 2 12l7.5 2.5L12 22l2.5-7.5L22 12l-7.5-2.5z"/></svg>,
-  chevDown: <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>,
-  chevLeft: <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>,
-  chevRight: <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>,
-  copy: <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>,
-  check: <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>,
-  aperture: <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="14.31" y1="8" x2="20.05" y2="17.94"/><line x1="9.69" y1="8" x2="21.17" y2="8"/><line x1="7.38" y1="12" x2="13.12" y2="2.06"/><line x1="9.69" y1="16" x2="3.95" y2="6.06"/><line x1="14.31" y1="16" x2="2.83" y2="16"/><line x1="16.62" y1="12" x2="10.88" y2="21.94"/></svg>,
+/* ===== ICONS ===== */
+const I={
+home:<svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>,
+rocket:<svg viewBox="0 0 24 24"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/></svg>,
+chat:<svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>,
+camera:<svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>,
+sparkles:<svg viewBox="0 0 24 24"><path d="M12 2L9.5 9.5 2 12l7.5 2.5L12 22l2.5-7.5L22 12l-7.5-2.5z"/></svg>,
+plane:<svg viewBox="0 0 24 24"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>,
+chevD:<svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>,
+chevL:<svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>,
+chevR:<svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>,
+copy:<svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>,
+check:<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>,
+aperture:<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="14.31" y1="8" x2="20.05" y2="17.94"/><line x1="9.69" y1="8" x2="21.17" y2="8"/><line x1="7.38" y1="12" x2="13.12" y2="2.06"/><line x1="9.69" y1="16" x2="3.95" y2="6.06"/><line x1="14.31" y1="16" x2="2.83" y2="16"/><line x1="16.62" y1="12" x2="10.88" y2="21.94"/></svg>,
 };
 
-// ==================== CONTENT DATA ====================
-const SECTIONS = [
-  { id: 'getting-started', title: 'Getting Started', subtitle: 'Your first steps with AI', icon: '🚀', label: 'Start Here', colorClass: 'card-gold', image: 'images/roger-cool-glasses.jpg', imageAlt: 'Roger smiling with cool glasses' },
-  { id: 'ai-personal', title: 'AI for Everyday Life', subtitle: 'Claude as your personal assistant', icon: '💬', label: 'AI — Personal', colorClass: 'card-blue', image: 'images/roger-julie-canoe.jpg', imageAlt: 'Roger and Julie in a canoe' },
-  { id: 'ai-professional', title: 'AI for Business', subtitle: 'Transform how you work', icon: '📊', label: 'AI — Professional', colorClass: 'card-navy', image: 'images/roger-networking.jpg', imageAlt: 'Roger networking at a Bay Angels event' },
-  { id: 'social-personal', title: 'Social Media — Personal', subtitle: 'Share what you love', icon: '📸', label: 'Social — Personal', colorClass: 'card-sage', image: 'images/roger-with-camera.jpg', imageAlt: 'Roger with his camera at Yosemite' },
-  { id: 'social-professional', title: 'Social Media — Professional', subtitle: 'Build your audience', icon: '💼', label: 'Social — Professional', colorClass: 'card-amber', image: 'images/roger-excited-panel.jpg', imageAlt: 'Roger on a panel' },
-  { id: 'cool-stuff', title: 'Cool Stuff & Tips', subtitle: 'Explore what\'s possible', icon: '✨', label: 'Explore', colorClass: 'card-spark', image: 'images/roger-gangster-suit.jpg', imageAlt: 'Roger in a sharp suit' },
+/* ===== DATA ===== */
+const SECTIONS=[
+{id:'getting-started',title:'Getting Started',sub:'Your first steps with AI',icon:'🚀',label:'Start Here',cc:'cg',img:'images/roger-cool-glasses.jpg',alt:'Roger smiling'},
+{id:'ai-personal',title:'AI for Everyday Life',sub:'Claude as your personal assistant',icon:'💬',label:'AI — Personal',cc:'cb',img:'images/roger-julie-canoe.jpg',alt:'Roger and Julie'},
+{id:'ai-professional',title:'AI for Business',sub:'Transform how you work',icon:'📊',label:'AI — Professional',cc:'cn',img:'images/roger-networking.jpg',alt:'Roger networking'},
+{id:'social-personal',title:'Social Media — Personal',sub:'Share what you love',icon:'📸',label:'Social — Personal',cc:'cs',img:'images/roger-with-camera.jpg',alt:'Roger with camera'},
+{id:'social-professional',title:'Social Media — Pro',sub:'Build your audience & automate',icon:'💼',label:'Social — Pro',cc:'ca',img:'images/roger-excited-panel.jpg',alt:'Roger on a panel'},
+{id:'travel',title:'Travel with AI',sub:'Plan trips like a pro',icon:'✈️',label:'Travel',cc:'ct',img:'images/roger-julie-car-show.jpg',alt:'Roger exploring'},
+{id:'cool-stuff',title:'Cool Stuff & Tips',sub:"Explore what's possible",icon:'✨',label:'Explore',cc:'ck',img:'images/roger-gangster-suit.jpg',alt:'Roger looking sharp'},
 ];
 
-const NAV_ITEMS = [
-  { id: 'home', label: 'Home', icon: Icons.home },
-  { id: 'getting-started', label: 'Start', icon: Icons.rocket },
-  { id: 'ai-personal', label: 'AI', icon: Icons.chat },
-  { id: 'social-personal', label: 'Social', icon: Icons.camera },
-  { id: 'cool-stuff', label: 'Explore', icon: Icons.sparkles },
+const NAV=[
+{id:'home',label:'Home',icon:I.home},
+{id:'getting-started',label:'Start',icon:I.rocket},
+{id:'ai-personal',label:'AI',icon:I.chat},
+{id:'social-personal',label:'Social',icon:I.camera},
+{id:'travel',label:'Travel',icon:I.plane},
+{id:'cool-stuff',label:'More',icon:I.sparkles},
 ];
 
-// ==================== UTILITY HOOKS ====================
-function useScrollReveal() {
-  const ref = useRef(null);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { el.classList.add('visible'); observer.unobserve(el); } },
-      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-  return ref;
+/* ===== HOOKS ===== */
+function useProgress(){
+const [p,setP]=useState(()=>{try{return JSON.parse(localStorage.getItem('rg-prog')||'{}')}catch{return {}}});
+const toggle=useCallback(k=>{setP(prev=>{const n={...prev,[k]:!prev[k]};localStorage.setItem('rg-prog',JSON.stringify(n));return n})},[]);
+return [p,toggle];
 }
 
-function useProgress() {
-  const [progress, setProgress] = useState(() => {
-    try { return JSON.parse(localStorage.getItem('rogers-guide-progress') || '{}'); } catch { return {}; }
-  });
-  const toggle = useCallback((key) => {
-    setProgress(prev => {
-      const next = { ...prev, [key]: !prev[key] };
-      localStorage.setItem('rogers-guide-progress', JSON.stringify(next));
-      return next;
-    });
-  }, []);
-  return [progress, toggle];
+/* ===== COMPONENTS ===== */
+function CamDiv(){return <div className="cdiv">{I.aperture}</div>}
+
+function Acc({title,id,children,prog,toggle}){
+const [open,setOpen]=useState(false);
+return(<div className={`acc ${open?'open':''}`}><button className="acc-h" onClick={()=>setOpen(!open)}><span>{title}</span><span className="acc-chev">{I.chevD}</span></button><div className="acc-body"><div className="acc-content">{prog&&id&&<div className="pchk"><input type="checkbox" id={`p-${id}`} checked={!!prog[id]} onChange={()=>toggle(id)}/><label htmlFor={`p-${id}`}>Mark as done</label></div>}{children}</div></div></div>);
 }
 
-// ==================== COMPONENTS ====================
-
-// --- Camera Divider ---
-function CameraDivider() {
-  return <div className="camera-divider">{Icons.aperture}</div>;
+function PB({text}){
+const [c,setC]=useState(false);
+const copy=async()=>{try{await navigator.clipboard.writeText(text);setC(true);setTimeout(()=>setC(false),2000)}catch{}};
+return(<div className="pb"><pre>{text}</pre><button className={`pb-copy ${c?'copied':''}`} onClick={copy}>{c?<>{I.check} Copied!</>:<>{I.copy} Copy</>}</button></div>);
 }
 
-// --- Accordion ---
-function Accordion({ title, id, children, progress, toggleProgress }) {
-  const [open, setOpen] = useState(false);
-  return (
-    <div className={`accordion ${open ? 'open' : ''}`}>
-      <button className="accordion-header" onClick={() => setOpen(!open)}>
-        <span>{title}</span>
-        <span className="accordion-chevron">{Icons.chevDown}</span>
-      </button>
-      <div className="accordion-body">
-        <div className="accordion-content">
-          {progress && id && (
-            <div className="progress-check">
-              <input type="checkbox" id={`prog-${id}`} checked={!!progress[id]} onChange={() => toggleProgress(id)} />
-              <label htmlFor={`prog-${id}`}>Mark as done</label>
-            </div>
-          )}
-          {children}
-        </div>
-      </div>
-    </div>
-  );
+function Steps({steps}){
+return(<div className="steps">{steps.map((s,i)=><div className="step" key={i}><div className="step-num">{i+1}</div><div className="step-line"/><div className="step-content"><div className="step-title">{s.title}</div><div>{s.content}</div></div></div>)}</div>);
 }
 
-// --- Prompt Block ---
-function PromptBlock({ text }) {
-  const [copied, setCopied] = useState(false);
-  const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch { /* fallback */ }
-  };
-  return (
-    <div className="prompt-block">
-      <pre>{text}</pre>
-      <button className={`prompt-copy-btn ${copied ? 'copied' : ''}`} onClick={handleCopy}>
-        {copied ? <>{Icons.check} Copied!</> : <>{Icons.copy} Copy</>}
-      </button>
-    </div>
-  );
+function CTable({headers,rows}){
+return(<div className="tw"><table className="ctable"><thead><tr>{headers.map((h,i)=><th key={i}>{h}</th>)}</tr></thead><tbody>{rows.map((r,i)=><tr key={i}>{r.map((c,j)=><td key={j}>{c}</td>)}</tr>)}</tbody></table></div>);
 }
 
-// --- Step by Step ---
-function Steps({ steps }) {
-  return (
-    <div className="steps">
-      {steps.map((s, i) => (
-        <div className="step" key={i}>
-          <div className="step-num">{i + 1}</div>
-          <div className="step-line" />
-          <div className="step-content">
-            <div className="step-title">{s.title}</div>
-            <div>{s.content}</div>
-          </div>
-        </div>
-      ))}
-    </div>
-  );
+function FPT({emoji,text}){
+const [c,setC]=useState(false);
+const copy=async()=>{try{await navigator.clipboard.writeText(text);setC(true);setTimeout(()=>setC(false),2000)}catch{}};
+return(<div className={`fpt ${c?'cop':''}`} onClick={copy}><span className="fti">{emoji}</span><div><div className="ftt">{text}</div><div className="fth">{c?'✓ Copied!':'Tap to copy'}</div></div></div>);
 }
 
-// --- Comparison Table ---
-function ComparisonTable({ headers, rows }) {
-  return (
-    <div className="comparison-table-wrap">
-      <table className="comparison-table">
-        <thead><tr>{headers.map((h,i) => <th key={i}>{h}</th>)}</tr></thead>
-        <tbody>{rows.map((row,i) => <tr key={i}>{row.map((cell,j) => <td key={j}>{cell}</td>)}</tr>)}</tbody>
-      </table>
-    </div>
-  );
+function CPhoto({src,alt,caption}){return(<div className="cphoto"><img src={src} alt={alt} loading="lazy"/>{caption&&<div className="cphoto-cap">{caption}</div>}</div>)}
+
+/* Post Card with copy-to-clipboard caption */
+function PostCard({img,alt,title,platforms,caption,hashtags,bizBenefits}){
+const [c,setC]=useState(false);
+const fullText=caption+(hashtags?'\n\n'+hashtags:'');
+const copy=async()=>{try{await navigator.clipboard.writeText(fullText);setC(true);setTimeout(()=>setC(false),2000)}catch{}};
+return(
+<div className="post-card">
+{img&&<div className="post-card-img"><img src={img} alt={alt} loading="lazy"/></div>}
+<div className="post-card-body">
+<h4>{title}</h4>
+<div className="post-platforms">{platforms.map((p,i)=><span key={i} className={`post-plat-tag ${p.toLowerCase().replace(/\s/g,'')}`}>{p}</span>)}</div>
+<div className={`post-caption ${c?'copied-cap':''}`} onClick={copy}>
+<div>{caption}</div>
+{hashtags&&<div style={{marginTop:'8px',color:'var(--warm-blue)',fontSize:'14px'}}>{hashtags}</div>}
+<div className="post-caption-hint">{c?'✓ Copied to clipboard!':'Tap to copy this caption'}</div>
+</div>
+{bizBenefits&&<div className="post-biz"><div className="post-biz-label">Business Benefits</div><ul>{bizBenefits.map((b,i)=><li key={i}>{b}</li>)}</ul></div>}
+</div>
+</div>
+);}
+
+function SPage({section,onBack,children}){
+useEffect(()=>{window.scrollTo({top:0,behavior:'smooth'})},[section.id]);
+return(<div className="section-page"><div className="shero"><img src={section.img} alt={section.alt} loading="eager"/><div className="shero-ov"><div className="shero-lbl">{section.label}</div><h1 className="shero-ttl">{section.title}</h1></div></div><div className="sbody"><button className="back-btn" onClick={onBack}>{I.chevL} All Sections</button>{children}</div></div>);
 }
 
-// --- Fun Prompt Tile (click to copy) ---
-function FunPromptTile({ emoji, text }) {
-  const [copied, setCopied] = useState(false);
-  const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch {}
-  };
-  return (
-    <div className={`fun-prompt-tile ${copied ? 'copied-tile' : ''}`} onClick={handleCopy}>
-      <span className="fun-tile-icon">{emoji}</span>
-      <div>
-        <div className="fun-tile-text">{text}</div>
-        <div className="fun-tile-hint">{copied ? '✓ Copied!' : 'Tap to copy'}</div>
-      </div>
-    </div>
-  );
+/* ===== SECTION 1: GETTING STARTED ===== */
+function S1({section,onBack,prog,toggle}){return(<SPage section={section} onBack={onBack}>
+<div className="sintro"><p>Welcome, Roger. This section gets you set up with <strong>Claude</strong> — the AI tool Philip uses every day to build documents, spreadsheets, business plans, and more.</p><p>This is the single most useful tool he's found, and he wants you to have it too. It'll take about 10 minutes.</p></div>
+<Acc title="Step 1: Download Claude" id="gs-dl" prog={prog} toggle={toggle}>
+<Steps steps={[
+{title:'On your iPhone or iPad',content:<p>Open the <strong>App Store</strong>, search for <strong>"Claude by Anthropic"</strong>, and tap <strong>Get</strong>. Look for the orange/brown Claude logo.</p>},
+{title:'On your Mac',content:<p>Visit <a href="https://claude.ai/download" target="_blank" rel="noopener">claude.ai/download</a> or search "Claude" in the Mac App Store.</p>},
+{title:'Or use any web browser',content:<p>Go to <a href="https://claude.ai" target="_blank" rel="noopener">claude.ai</a>. Works in Safari, Chrome, or any browser.</p>},
+]}/>
+</Acc>
+<Acc title="Step 2: Sign In" id="gs-si" prog={prog} toggle={toggle}>
+<p>Use your Chief People email: <strong>roger@chiefpeople.com</strong></p>
+<p>The easiest method is <strong>"Continue with Google"</strong> — just tap it and select your Google account.</p>
+<p>If that email isn't connected to Google, sign up with email and password. Claude will send a verification code.</p>
+</Acc>
+<Acc title="Step 3: Subscribe to Claude Pro ($20/month)" id="gs-pro" prog={prog} toggle={toggle}>
+<p><strong>Why Pro?</strong> The free tier has message limits. Pro removes them, gives you the best models, and unlocks extended thinking.</p>
+<Steps steps={[
+{title:'Open Settings',content:<p>Tap your profile icon, then <strong>Settings</strong>.</p>},
+{title:'Find Subscription',content:<p>Look for <strong>Upgrade to Pro</strong>.</p>},
+{title:'Enter payment',content:<p>Add a credit card. $20/month, cancel anytime.</p>},
+]}/>
+<div className="co"><div className="co-l">Philip's take</div><p>"Just do it. When you're learning, the last thing you want is to hit a wall mid-conversation."</p></div>
+</Acc>
+<Acc title="Step 4: Your First Conversation" id="gs-fc" prog={prog} toggle={toggle}>
+<p>Here's your icebreaker. Copy this, paste it into Claude, and hit send:</p>
+<PB text={`Hi Claude — my name is Roger King. I'm 77 years old, I'm the founder of Bay Angels (one of Silicon Valley's oldest angel investment networks), and I'm learning to use AI tools for the first time. My son Philip set me up with you.\n\nCan you introduce yourself, tell me what you're capable of, and suggest three things I could ask you about right now that would show me what you can do? Keep it simple and conversational — I'm just getting started.`}/>
+<p><strong>What happens next:</strong> Claude will respond conversationally and suggest things to explore. Just keep talking. There's no wrong move.</p>
+</Acc>
+<Acc title="Add to Your Home Screen" id="gs-hs" prog={prog} toggle={toggle}>
+<Steps steps={[
+{title:'Open this page in Safari',content:<p>If you're not in Safari, copy the URL and open it there.</p>},
+{title:'Tap the Share button',content:<p>The square with an arrow pointing up, at the bottom of the screen.</p>},
+{title:'Tap "Add to Home Screen"',content:<p>Give it a name like "Roger's Guide" and tap <strong>Add</strong>.</p>},
+{title:'Done!',content:<p>Now you have an app-like icon on your home screen.</p>},
+]}/>
+</Acc>
+</SPage>)}
+
+/* ===== SECTION 2: AI PERSONAL ===== */
+function S2({section,onBack,prog,toggle}){return(<SPage section={section} onBack={onBack}>
+<div className="sintro"><p>Claude isn't just for work. Think of it as a patient, knowledgeable friend who's available 24/7, never judges your questions, and never gets tired of explaining things.</p></div>
+<Acc title="What is Claude?" id="aip-w" prog={prog} toggle={toggle}>
+<p>Claude is <strong>not</strong> a search engine. It's a conversation.</p>
+<ul><li>It knows things from its training on millions of books and articles</li><li>It can read documents, analyze spreadsheets, write content, help you think</li><li>It remembers everything within a single conversation</li><li>Every new conversation starts fresh</li></ul>
+<div className="co"><div className="co-l">The simple way to think about it</div><p>Imagine you could call someone who's read every book, every manual, every article — and they're infinitely patient. That's Claude.</p></div>
+</Acc>
+<Acc title="Chat vs. Cowork vs. Voice Mode" id="aip-m" prog={prog} toggle={toggle}>
+<CTable headers={['Feature','Chat','Cowork','Voice']} rows={[
+['What it is','Text conversation','Claude works with files','Talk like a phone call'],
+['Best for','Questions, writing, ideas','Documents, spreadsheets, projects','Quick questions, hands-free'],
+['Power','Full','Full + file access','More limited'],
+['Find it','Main interface','Desktop app','Microphone icon'],
+]}/>
+<div className="co"><div className="co-l">Philip's recommendation</div><p>"Start with Chat. Try Voice when comfortable. Graduate to Cowork when you want Claude to actually <em>build</em> things."</p></div>
+</Acc>
+<Acc title="Voice Mode — Like Having a Conversation" id="aip-v" prog={prog} toggle={toggle}>
+<p><strong>How:</strong> Tap the microphone icon in the Claude app.</p>
+<p><strong>Great for:</strong></p>
+<ul><li>Asking questions while driving or cooking</li><li>Brainstorming out loud</li><li>Getting explanations read to you</li><li>Practicing a pitch or rehearsing what you want to say</li></ul>
+<div className="co"><div className="co-l">Think of it this way</div><p>Voice is like <strong>chatting</strong> with Claude. Chat is like <strong>emailing</strong> Claude. Both useful, different purposes.</p></div>
+</Acc>
+<Acc title="Better Questions, Better Answers — 6 Rules" id="aip-p" prog={prog} toggle={toggle}>
+<Steps steps={[
+{title:'Be specific',content:<><div className="ba"><div className="bai ba-bad"><div className="ba-l">Instead of</div><p className="ba-t">"Help me plan a trip"</p></div><div className="bai ba-good"><div className="ba-l">Try</div><p className="ba-t">"Help me plan a 5-day photography trip to Cuba in March, budget $3,000, focused on street photography in Havana"</p></div></div></>},
+{title:'Give context',content:<p>Tell Claude who you are, what you're working on, and why.</p>},
+{title:'Tell Claude what you want',content:<p>A list? A paragraph? A step-by-step guide? A spreadsheet? Say so.</p>},
+{title:'Ask follow-ups',content:<p>"Can you go deeper on point 3?" or "Make it simpler" or "Give me an example."</p>},
+{title:'New conversations for new topics',content:<p>Don't cram everything into one chat.</p>},
+{title:"Don't be afraid to experiment",content:<p>You can't break anything.</p>},
+]}/>
+</Acc>
+<Acc title="The House Manual Prompt — Your 'Aha' Moment" id="aip-h" prog={prog} toggle={toggle}>
+<p>A real prompt that produces a professional guest manual for your home in about 60 seconds.</p>
+<PB text={`I need you to create a comprehensive house manual for guests staying at my home. Warm and welcoming but thorough.\n\nInclude:\n1. Welcome & Overview\n2. Arrival & Access (lockbox code, parking, gate code)\n3. Wi-Fi & Technology (network, password, TV/streaming setup)\n4. Kitchen & Appliances\n5. Heating & Cooling\n6. Outdoor Spaces (pool/hot tub, grill, patio)\n7. House Rules\n8. Local Recommendations (restaurants, grocery, pharmacies, hidden gems)\n9. Emergency Information\n10. Checkout Procedures\n\nLeave [brackets] for specific details I need to fill in. Make it feel like a high-end Airbnb experience.`}/>
+<CPhoto src="images/family-property.jpg" alt="The family property" caption="Your beautiful property — imagine handing every guest a polished guide to enjoying it."/>
+</Acc>
+<Acc title="More Things to Try" id="aip-more" prog={prog} toggle={toggle}>
+<div className="fpg">
+<FPT emoji="🗺️" text="Plan a 7-day driving trip from San Francisco to the Grand Canyon with photography stops along the way"/>
+<FPT emoji="🍽️" text="I have salmon, asparagus, and lemons. What should I make for dinner? Give me two options — one simple, one impressive."/>
+<FPT emoji="✉️" text="Help me write a thank-you note to a founder whose pitch I judged at a competition. Personal, not generic."/>
+<FPT emoji="🧠" text="Explain blockchain to me like I'm a smart person who just hasn't been paying attention."/>
+<FPT emoji="📖" text="Recommend 5 books about photography for someone who's been shooting 30+ years but wants to see with fresh eyes."/>
+<FPT emoji="⚖️" text="I'm deciding between two investment opportunities. Help me think through the pros and cons systematically."/>
+</div>
+</Acc>
+</SPage>)}
+
+/* ===== SECTION 3: AI PROFESSIONAL ===== */
+function S3({section,onBack,prog,toggle}){return(<SPage section={section} onBack={onBack}>
+<div className="sintro"><p>This is where Claude goes from helpful to <strong>transformative</strong>. Philip has used Claude to build entire business plans, financial models, pitch coaching strategies, and marketing campaigns.</p></div>
+<Acc title="Understanding the Models — Sonnet vs. Opus" id="aib-m" prog={prog} toggle={toggle}>
+<h4>Sonnet 4.5 — The Fast Analyst</h4><p>Smart, fast, great for 90% of things.</p>
+<h4>Opus 4.5 — The Senior Partner</h4><p>Slower but significantly more powerful for complex reasoning and strategic thinking.</p>
+<h4>Extended Thinking</h4><p>Turn it on for either model. Claude "thinks before speaking" — step by step. Much better results.</p>
+<div className="co"><div className="co-l">Philip's recommendation</div><p>"Use Sonnet 4.5 with Extended Thinking for 9 out of 10 things. Switch to Opus for important work — pitch decks, business plans, critical emails."</p></div>
+<h4>Quick Decision Guide</h4>
+<div className="dl">
+<div className="di"><span className="q">Email?</span><span className="ar">→</span><span className="a">Sonnet</span></div>
+<div className="di"><span className="q">Trip planning?</span><span className="ar">→</span><span className="a">Sonnet</span></div>
+<div className="di"><span className="q">Business plan?</span><span className="ar">→</span><span className="a">Opus</span></div>
+<div className="di"><span className="q">Pitch deck?</span><span className="ar">→</span><span className="a">Opus</span></div>
+<div className="di"><span className="q">Not sure?</span><span className="ar">→</span><span className="a">Start with Sonnet, upgrade if needed</span></div>
+</div>
+</Acc>
+<Acc title="Chat vs. Cowork — The Deep Dive" id="aib-cw" prog={prog} toggle={toggle}>
+<p><strong>Cowork</strong> separates Claude from any other AI:</p>
+<ul><li><strong>Create actual files</strong> — Word docs, spreadsheets, PDFs</li><li><strong>Work with uploads</strong> — drop in a spreadsheet, pitch deck, contract</li><li><strong>Multi-step tasks</strong> — research → analyze → build → refine</li><li><strong>Build things on your desktop</strong>, not just in chat</li></ul>
+<div className="co"><div className="co-l">Philip on Cowork</div><p>"Perhaps the most impactful thing in AI in the past six months. It knocked dozens of startups out of the water."</p></div>
+</Acc>
+<Acc title="Advanced Prompting" id="aib-ap" prog={prog} toggle={toggle}>
+<Steps steps={[
+{title:'Give Claude a role',content:<p>"You are a financial analyst with 20 years of SaaS experience..." This focuses everything.</p>},
+{title:'Use structured requests',content:<p>"I need you to: 1) Analyze X, 2) Compare Y, 3) Recommend Z"</p>},
+{title:'Provide examples',content:<p>"Here's an example of what I want: [example]. Now do similar for my situation."</p>},
+{title:"Iterate, don't restart",content:<p>"This is good, but make the tone more conversational" or "Expand section 3."</p>},
+{title:'Set constraints',content:<p>"Under 500 words. Bullet points. No jargon."</p>},
+{title:'Think step by step',content:<p>"Walk me through your reasoning before recommending."</p>},
+{title:'Chain conversations',content:<p>Research → Application → Refinement. Layer by layer.</p>},
+]}/>
+</Acc>
+<Acc title="Commission Army Financial Model — Power Prompt" id="aib-ca" prog={prog} toggle={toggle}>
+<p>Open <strong>Cowork</strong>, paste this in, and watch Claude build a full investor-ready Excel model.</p>
+<PB text={`Build a comprehensive Excel financial model for Commission Army, a two-sided referral marketplace. Professional, investor-ready.\n\nTab 1: Revenue Model — 24 months, subscription fees ($10/mo individuals, $49.95/mo businesses) + 20% transaction fees. MRR/ARR tracking.\nTab 2: CAC Model — By channel, LTV:CAC ratio (target 3:1), payback period.\nTab 3: Growth Dashboard — S-curve modeling, active vs. registered, churn waterfall.\nTab 4: Hiring Plan — Monthly headcount, trigger thresholds, fully loaded costs at 1.3x.\nTab 5: Fundraising — $500K seed round, use of funds, runway, breakeven analysis.\nTab 6: Summary — Key metrics, Month 18 targets, traffic light KPIs.\n\nAll assumptions adjustable. Input cells in yellow. Charts in each tab. Professional formatting.`}/>
+</Acc>
+<Acc title="What Philip Has Built with Claude" id="aib-port" prog={prog} toggle={toggle}>
+<div className="pcards">
+<div className="pcard"><div className="pcard-t">Commission Army Business Plan</div><p className="pcard-d">Full 12-section business plan</p><span className="ptag tag-w">Cowork</span></div>
+<div className="pcard"><div className="pcard-t">Pitch Coaching Credentials Research</div><p className="pcard-d">Roger's qualifications dossier</p><span className="ptag tag-r">Research</span></div>
+<div className="pcard"><div className="pcard-t">Pitch to an Angel Launch Strategy</div><p className="pcard-d">Go-to-market for coaching service</p><span className="ptag tag-w">Cowork</span></div>
+<div className="pcard"><div className="pcard-t">Bay Angels Scoring Rubric</div><p className="pcard-d">10-criterion weighted system</p><span className="ptag tag-w">Cowork</span></div>
+<div className="pcard"><div className="pcard-t">Client Social Media Reach</div><p className="pcard-d">55 clients across 17 regions</p><span className="ptag tag-w">Cowork</span></div>
+<div className="pcard"><div className="pcard-t">Photography Retrospective</div><p className="pcard-d">Decades of fine art photography</p><span className="ptag tag-w">Cowork</span></div>
+</div>
+<div className="cmsg"><p><strong>Roger</strong> — every single item above was built with Claude. You won't get here overnight, and you don't need to. Start with the basics, try the prompts, and find the parts useful to <strong>you</strong>.</p></div>
+</Acc>
+</SPage>)}
+
+/* ===== SECTION 4: SOCIAL PERSONAL ===== */
+function S4({section,onBack,prog,toggle}){return(<SPage section={section} onBack={onBack}>
+<div className="sintro"><p>Social media isn't about becoming an influencer. For you, it's about sharing the things you love — your photography, your trips to Cuba, your car projects — with people who care. And every post you make quietly builds your brand across <strong>all</strong> your ventures.</p></div>
+<Acc title="Platform Breakdown" id="sp-pl" prog={prog} toggle={toggle}>
+<div className="plat"><div className="plat-h"><span className="plat-icon">📘</span><span className="plat-name">Facebook</span></div><div className="plat-purp">Sharing memories with friends and family</div><ul><li>Your audience is people you already know</li><li>Post: trip photos, family updates, car projects</li></ul><div className="plat-bl">Keep using it casually. It's your digital photo album.</div></div>
+<div className="plat"><div className="plat-h"><span className="plat-icon">📸</span><span className="plat-name">Instagram</span></div><div className="plat-purp">THE platform for your photography</div><ul><li>Strong audience for photography and travel</li><li>Posts (permanent), Stories (24h), Reels (short video = growth)</li><li>Your handle: <strong>@iamhavana</strong></li></ul><div className="plat-bl">Your primary personal platform. Your photography deserves to be seen.</div></div>
+<div className="plat"><div className="plat-h"><span className="plat-icon">🎵</span><span className="plat-name">TikTok</span></div><div className="plat-purp">Short-form video — the most viral platform</div><ul><li>Older creators with authentic content do extremely well</li><li><strong>AutoCut:</strong> TikTok auto-edits long videos into short clips</li><li>Authentic beats professional every time</li></ul><div className="plat-bl">Post 3-4x/week and your audience WILL grow.</div></div>
+</Acc>
+
+<Acc title="Your Photos = Ready-Made Content" id="sp-posts" prog={prog} toggle={toggle}>
+<p>Every photo you already have is content waiting to be posted. Here's exactly what to post, with captions ready to copy. <strong>One photo becomes 4 platform posts.</strong></p>
+
+<PostCard img="images/roger-with-camera.jpg" alt="Roger at Yosemite" title="The Photographer at Work" platforms={['ig','tt','fb']}
+caption={`Tunnel View, Yosemite. I've been coming here for 30 years and the light never looks the same twice. That's what keeps me coming back with my camera.\n\nPhotography isn't about the gear — it's about patience and showing up.`}
+hashtags="#YosemiteNationalPark #LandscapePhotography #FilmPhotography #NaturePhotography #PhotographyLife"
+bizBenefits={['Drives traffic to fine art print sales','Builds @iamhavana following','Establishes credibility for photography workshops','Humanizes your professional brand on LinkedIn']}/>
+
+<PostCard img="images/roger-julie-car-show.jpg" alt="Roger and Julie at car show" title="The Car Show with Julie" platforms={['ig','tt','fb','li']}
+caption={`There's nothing quite like spending a Saturday at a car show with your best girl. These machines aren't just metal and chrome — each one tells a story.\n\nJulie humors my obsession. That's love.`}
+hashtags="#ClassicCars #CarShow #VintageAuto #WeekendVibes #CoupleGoals"
+bizBenefits={['Relatable lifestyle content builds personal brand','Cross-posts to LinkedIn show personality behind the professional','TikTok walk-around videos of cars go viral with car community']}/>
+
+<PostCard img="images/roger-julie-canoe.jpg" alt="Roger and Julie canoeing" title="Adventure Doesn't Stop" platforms={['ig','tt','fb']}
+caption={`They say adventure is for the young. I respectfully disagree.\n\n77 and still paddling. The best views are earned, not googled.`}
+hashtags="#NeverTooOld #Adventure #CoupleGoals #OutdoorLife #LiveYourLife"
+bizBenefits={['Authentic lifestyle content is the highest-performing category on all platforms','At 77, adventure content breaks stereotypes — algorithms love the contrast','Builds personal brand that supports ALL business ventures']}/>
+
+<PostCard img="images/roger-bay-angels.jpg" alt="The Bay Angel" title="The Original Bay Angel" platforms={['ig','li','fb']}
+caption={`They asked me to pose as an angel for Bay Angels back in the day. The Golden Gate Bridge behind me, wings and all.\n\nNearly 30 years later, we're still backing founders who dare to dream big. Some things don't change.`}
+hashtags="#BayAngels #AngelInvesting #SiliconValley #StartupLife #GoldenGateBridge #Throwback"
+bizBenefits={['Iconic brand image for Bay Angels','Pitch coaching credibility — shows longevity and personality','Commission Army awareness — "the angel investor building a startup"','LinkedIn gold — this photo with a story gets massive engagement']}/>
+
+<PostCard img="images/roger-with-family.jpg" alt="Family gathering" title="The Whole Crew" platforms={['fb','ig']}
+caption={`This is why everything else matters. The deals, the pitches, the late nights building companies — it all comes back to these people.\n\nFamily first. Always.`}
+hashtags="#Family #FamilyFirst #Blessed #MakingMemories"
+bizBenefits={['Family content humanizes your professional brand','People do business with people they like — this makes you likeable','Cross-post to LinkedIn with a "what I learned from raising a family" angle']}/>
+
+<PostCard img="images/roger-gangster-suit.jpg" alt="Roger in a sharp suit" title="Suited Up" platforms={['ig','li','tt']}
+caption={`My son says I look like a mob boss. I prefer "distinguished angel investor."\n\nEither way, the suit stays.`}
+hashtags="#SuitUp #Style #SiliconValley #AngelInvestor #Distinguished"
+bizBenefits={['This kind of personality-driven content goes viral on TikTok','Professional headshot alternative for LinkedIn','Shows personality — the #1 factor in social media growth']}/>
+</Acc>
+
+<Acc title="Getting Started on Instagram" id="sp-ig" prog={prog} toggle={toggle}>
+<Steps steps={[
+{title:'Download Instagram',content:<p>App Store → search "Instagram" → download.</p>},
+{title:'Log in',content:<p>Tap "Log in" then "Continue with Facebook" to connect your existing account.</p>},
+{title:'Your handle is @iamhavana',content:<p>If something seems off, don't worry — we can recover it.</p>},
+{title:'Post your first photo',content:<p>Tap the + button → Post → choose a Cuba shot → write a caption → Share.</p>},
+{title:'Try your first Reel',content:<p>Tap + → Reel → select a video → trim to 30 seconds → add text → Share. Reels reach people who don't follow you yet.</p>},
+]}/>
+</Acc>
+
+<Acc title="Your Photography Deserves an Audience" id="sp-photo" prog={prog} toggle={toggle}>
+<p>You've been shooting for decades. Fine art photographers are building real audiences on Instagram, and driving significant <strong>print sales</strong> directly from their social presence.</p>
+<p>Your Cuba street photography, your landscapes, your behind-the-scenes stories — this builds a following not because of tricks, but because the work is <strong>genuinely good</strong>.</p>
+<div className="co"><div className="co-l">The opportunity</div><p>Every photo you post is a potential fine art print sale. Your Instagram bio can link directly to a print shop. Collectors find photographers on Instagram every day. Post consistently, use hashtags like #FineArtPhotography #CubaPhotography, and watch what happens.</p></div>
+</Acc>
+</SPage>)}
+
+/* ===== SECTION 5: SOCIAL PROFESSIONAL ===== */
+function S5({section,onBack,prog,toggle}){return(<SPage section={section} onBack={onBack}>
+<div className="sintro"><p>Here's where social media becomes a business tool. You've spent 30 years building an incredible reputation. LinkedIn turns that reputation into an audience — and an audience into clients.</p></div>
+
+<Acc title="LinkedIn: Your Professional Platform" id="spro-li" prog={prog} toggle={toggle}>
+<p>Why LinkedIn matters for <em>you</em>:</p>
+<ul><li>Founded one of Silicon Valley's oldest angel groups</li><li>Judged startups on three continents</li><li>Published in <strong>Forbes</strong> and <strong>Fortune</strong>, appeared on <strong>CNN</strong></li><li>Built ChiefPeople to 135 employees</li></ul>
+<p>All of this is <strong>gold</strong> — but only if people see it.</p>
+<CPhoto src="images/roger-bay-angels-panel.jpg" alt="Roger at Bay Angels panel" caption="Every panel and event is LinkedIn content waiting to happen."/>
+</Acc>
+
+<Acc title="Your Professional Photos = LinkedIn Content" id="spro-posts" prog={prog} toggle={toggle}>
+<PostCard img="images/roger-networking.jpg" alt="Roger networking" title="The Networking Event" platforms={['li']}
+caption={`After 30 years of angel investing, I've learned that the best deals don't start with a pitch deck.\n\nThey start with a conversation over a glass of wine. The deck comes later — after trust is built.\n\nFounders: stop leading with your slides. Start leading with your story.`}
+bizBenefits={['Positions Roger as pitch coaching authority','Drives inbound leads for Guiding Angels / Pitch to an Angel','Bay Angels brand visibility','Commission Army: "even the angel investor values relationships over transactions"']}/>
+
+<PostCard img="images/roger-excited-panel.jpg" alt="Roger on a panel" title="The Panel Discussion" platforms={['li','ig']}
+caption={`I've sat on hundreds of panels about startups and investing. Here's the one thing I wish every founder in the audience understood:\n\nInvestors aren't looking for the perfect business plan. We're looking for founders who know their numbers cold and can explain why they — specifically they — are the right person to build this.\n\nThat's it. Everything else is noise.`}
+bizBenefits={['Direct pitch coaching content — this IS the service, demonstrated','Establishes expertise that justifies $250/hour coaching rate','Algorithm loves opinionated takes with specific advice']}/>
+
+<PostCard img="images/roger-and-sons.jpg" alt="Roger with his sons" title="What I Learned from My Sons" platforms={['li','fb']}
+caption={`My sons taught me more about business than any MBA program could.\n\nFrom them I learned that the best ideas often come from the people closest to the problem. That persistence beats pedigree. And that the next generation sees opportunities we completely miss.\n\nIf you're a founder over 50: listen to the young people around you. If you're a founder under 30: listen to the people who've been through a market cycle.\n\nThe magic is in the middle.`}
+bizBenefits={['Humanizes Roger\'s professional brand','Cross-generational appeal expands LinkedIn reach','Shows wisdom without arrogance — the sweet spot for coaching credibility']}/>
+</Acc>
+
+<Acc title="Automating Your Social Media" id="spro-auto" prog={prog} toggle={toggle}>
+<p>Here's the secret: <strong>you don't need to post in real-time</strong>. You can create a week's worth of content in 30 minutes using Claude, then schedule it all to post automatically.</p>
+<h4>The Workflow</h4>
+<div className="workflow">
+<div className="wf-step"><div className="wf-num">1</div><div className="wf-txt"><strong>Shoot.</strong> Take photos/videos when the moment happens. Just capture it.</div><div className="wf-time">0 min</div></div>
+<div className="wf-step"><div className="wf-num">2</div><div className="wf-txt"><strong>Batch with Claude.</strong> Paste the prompt below with descriptions of 5-10 photos. Claude writes captions for every platform at once.</div><div className="wf-time">10 min</div></div>
+<div className="wf-step"><div className="wf-num">3</div><div className="wf-txt"><strong>Schedule.</strong> Use Buffer, Later, or Hootsuite to schedule posts for the whole week. Upload photo + paste caption + set time.</div><div className="wf-time">15 min</div></div>
+<div className="wf-step"><div className="wf-num">4</div><div className="wf-txt"><strong>Engage.</strong> When notifications come in, reply to comments. This is where relationships happen.</div><div className="wf-time">5 min/day</div></div>
+</div>
+<p style={{textAlign:'center',fontWeight:600,color:'var(--gold-dark)',margin:'16px 0'}}><strong>Total time: ~30 minutes per week for consistent presence on 4 platforms.</strong></p>
+
+<h4>The Batch Content Prompt</h4>
+<PB text={`I have 5 photos I want to turn into social media posts. For each photo, write optimized captions for: Instagram (with hashtags), LinkedIn (thought leadership angle), Facebook (casual/personal), and TikTok (hook + short caption).\n\nPhoto 1: [describe the photo — who's in it, where, what's happening]\nPhoto 2: [describe]\nPhoto 3: [describe]\nPhoto 4: [describe]\nPhoto 5: [describe]\n\nContext about me: I'm Roger King, 77. Founder of Bay Angels (angel investing since 1998). Pitch coach. Photographer. Building Commission Army (referral marketplace startup). Based in the Bay Area.\n\nMake each platform's voice different:\n- Instagram: visual storytelling, relevant hashtags\n- LinkedIn: professional insight, conversation-starting\n- Facebook: warm, personal, conversational\n- TikTok: hook in first line, casual and punchy`}/>
+
+<h4>Scheduling Tools</h4>
+<CTable headers={['Tool','Best For','Cost','Platforms']} rows={[
+['Buffer','Simplicity — easiest to learn','Free (3 channels)','All major platforms'],
+['Later','Visual planning — see your grid','Free (1 profile/platform)','Instagram-focused'],
+['Hootsuite','Power users — analytics','$99/mo','Everything'],
+['Meta Business Suite','Facebook + Instagram','Free','Facebook & Instagram only'],
+]}/>
+<div className="co tip"><div className="co-l">Philip's recommendation</div><p>Start with <strong>Buffer</strong>. It's free for 3 channels and dead simple. Connect Instagram, LinkedIn, and Facebook. That covers your bases. If you want to get more sophisticated later, upgrade — but Buffer is enough to start.</p></div>
+</Acc>
+
+<Acc title="Audience = Opportunity Pipeline" id="spro-pipe" prog={prog} toggle={toggle}>
+<p style={{fontSize:'1.1rem',textAlign:'center',margin:'20px 0',fontWeight:600}}>Followers → Credibility → Inbound Leads → Paying Clients</p>
+<ul><li><strong>Pitch coaching:</strong> LinkedIn followers see your content → some are founders → they need coaching → $250/hour through Pitch to an Angel</li>
+<li><strong>Commission Army:</strong> "I'm building a referral marketplace — here's why the timing is right"</li>
+<li><strong>Bay Angels:</strong> Every post reinforces 30 years of credibility</li>
+<li><strong>Photography:</strong> Instagram followers → print sales, workshop bookings</li></ul>
+<CTable headers={['Platform','Personal','Professional']} rows={[
+['Facebook','Memories with friends/family','Not useful professionally'],
+['Instagram','Photography, travel, cars','Bay Angels events, print sales'],
+['TikTok','Fun video, virality','Thought leadership clips'],
+['LinkedIn','Not primary','Pitch coaching pipeline, Bay Angels credibility'],
+]}/>
+</Acc>
+</SPage>)}
+
+/* ===== SECTION 6: TRAVEL WITH AI ===== */
+function S6({section,onBack,prog,toggle}){return(<SPage section={section} onBack={onBack}>
+<div className="sintro"><p>Did you know Claude can be your personal travel agent? Upload a flight itinerary, and it'll plan your entire trip — restaurants, activities, logistics, even find discounts. Here's how to make every trip easier, cheaper, and more memorable.</p></div>
+
+<Acc title="Claude as Your Personal Travel Agent" id="tr-agent" prog={prog} toggle={toggle}>
+<p>Think of Claude as a travel concierge who's been to every city, read every review, and never gets tired of your questions. Here's what it can do:</p>
+<ul>
+<li><strong>Build a complete itinerary</strong> — day by day, hour by hour if you want</li>
+<li><strong>Find the best restaurants</strong> — filtered by cuisine, price, walkability from your hotel</li>
+<li><strong>Optimize your route</strong> — minimize driving/walking, cluster nearby attractions</li>
+<li><strong>Research visa requirements</strong> — especially important for Cuba trips</li>
+<li><strong>Translate phrases</strong> — get a pocket phrasebook for any language</li>
+<li><strong>Pack smart</strong> — custom packing list based on weather, activities, and trip length</li>
+<li><strong>Analyze costs</strong> — estimate daily budget, compare hotels, find savings</li>
+</ul>
+<div className="co"><div className="co-l">The key insight</div><p>Claude doesn't just give generic travel advice. When you tell it your specific interests — photography, cars, food, history — it tailors every recommendation. No travel agent knows you better than an AI you've briefed properly.</p></div>
+</Acc>
+
+<Acc title="The Trip Planning Prompt" id="tr-plan" prog={prog} toggle={toggle}>
+<p>Copy this, fill in the brackets, and watch Claude build your entire trip.</p>
+<PB text={`I'm planning a trip and I want you to be my personal travel concierge. Here are the details:\n\nDestination: [city/country]\nDates: [arrival date] to [departure date]\nTraveling with: [solo / with Julie / family group]\nBudget: [budget level — moderate, comfortable, luxury]\nInterests: Photography, local cuisine, history, architecture, vintage cars, street markets\nAccommodation: [already booked at Hotel X / need recommendations]\nSpecial requirements: [dietary restrictions, mobility considerations, etc.]\n\nPlease create:\n1. A day-by-day itinerary with morning, afternoon, and evening activities\n2. Restaurant recommendations for each day (lunch and dinner) — include addresses, price range, and what to order\n3. Photography spots — best times of day for lighting, locations tourists miss\n4. Transportation plan — how to get between locations efficiently\n5. A packing list based on the weather forecast for those dates\n6. Estimated daily costs breakdown\n7. 3-5 hidden gems that most tourists completely miss\n8. Key phrases in the local language if applicable\n\nMake it detailed but flexible — I don't want to feel rushed.`}/>
+</Acc>
+
+<Acc title="Upload Your Itinerary for Analysis" id="tr-upload" prog={prog} toggle={toggle}>
+<p>Already have flights and hotels booked? Upload the confirmation emails or PDFs to Claude and let it work from there.</p>
+<PB text={`I've attached my travel itinerary. Please:\n\n1. Summarize my flights and hotel bookings in a clean table\n2. Flag any tight connections or potential issues (short layovers, early check-in times)\n3. Suggest activities to fill the gaps between booked events\n4. Find the best restaurants within walking distance of my hotel\n5. Create a Google Maps list of all recommended locations (give me the addresses so I can save them)\n6. Identify any days where I'm over-scheduled and suggest what to cut\n7. What's the weather forecast looking like? Should I adjust my plans?`}/>
+<div className="co tip"><div className="co-l">How to upload</div><p>In the Claude app, tap the paperclip icon (or drag and drop on desktop) to attach a PDF, screenshot, or email. Claude reads it instantly and can work with all the details.</p></div>
+</Acc>
+
+<Acc title="Finding Deals and Discounts" id="tr-deals" prog={prog} toggle={toggle}>
+<p>Claude can help you save money on almost every aspect of travel.</p>
+<PB text={`I'm flying from San Francisco to [destination] on [dates]. Help me find the best deal:\n\n1. Which airlines typically have the best prices for this route?\n2. What day of the week is cheapest to fly?\n3. Should I book a round trip or two one-ways?\n4. Are there any nearby alternative airports that might be cheaper?\n5. What credit card travel perks should I be using? (I have [list your cards])\n6. Any current promotions or loyalty programs I should sign up for before booking?\n7. Should I book now or wait — what does pricing history suggest?`}/>
+<h4>More Ways to Save</h4>
+<ul>
+<li><strong>Hotel comparison:</strong> "Compare the Marriott downtown vs. the boutique hotel on Calle Obispo. Factor in location, amenities, and total cost including meals nearby."</li>
+<li><strong>Senior discounts:</strong> "What senior discounts are available for museums, transit, and attractions in [city]?"</li>
+<li><strong>Off-peak timing:</strong> "When is the cheapest time to visit [destination] that still has good weather?"</li>
+<li><strong>Package deals:</strong> "Would a flight+hotel package save me money vs. booking separately?"</li>
+</ul>
+</Acc>
+
+<Acc title="Cuba Trip Planning — Specific to You" id="tr-cuba" prog={prog} toggle={toggle}>
+<p>Since Cuba is your specialty, here's a prompt tailored for your trips:</p>
+<PB text={`I'm planning my next photography trip to Havana, Cuba. I've been many times — this isn't my first visit. I want to go deeper than the tourist spots.\n\nDates: [dates]\nFocus: Street photography, vintage cars, local music scene, architecture\nGroup: [solo / with Julie / leading a photography group]\n\nPlease help me with:\n1. Neighborhoods I might not have explored yet — beyond Habana Vieja and Vedado\n2. Best times and locations for golden hour photography\n3. Paladares (private restaurants) that locals actually eat at, not just tourists\n4. Live music venues — where do Cubans go on weeknights?\n5. Current regulations — what's changed recently for US travelers?\n6. Cash and connectivity tips — what works for internet access and payments now?\n7. A photography-focused walking route for each day that covers diverse subjects\n8. Any car shows, vintage car gatherings, or restoration shops I could visit?`}/>
+<CPhoto src="images/roger-bay-angels.jpg" alt="Roger in Cuba" caption="From Bay Angels to Havana streets — your photography takes you everywhere."/>
+</Acc>
+
+<Acc title="The Future: AI-Powered Reservations" id="tr-future" prog={prog} toggle={toggle}>
+<p>Here's where it gets exciting. AI tools are rapidly evolving, and the next wave includes the ability to <strong>take action on your behalf</strong> — not just plan, but actually book.</p>
+<h4>What's Possible Today</h4>
+<ul>
+<li>Claude builds your complete itinerary with all details</li>
+<li>You click the links or call the numbers Claude provides to book</li>
+<li>Claude drafts booking emails you can send directly</li>
+<li>Upload confirmations back to Claude to keep your trip organized</li>
+</ul>
+<h4>What's Coming Soon</h4>
+<ul>
+<li><strong>Direct booking:</strong> Claude connects to travel platforms and makes reservations for you</li>
+<li><strong>Price monitoring:</strong> AI watches prices and alerts you when they drop</li>
+<li><strong>Auto-rebooking:</strong> If a flight gets cheaper after you book, AI catches it</li>
+<li><strong>Live concierge:</strong> During your trip, ask Claude to find a restaurant nearby, check availability, and send you a reservation link — all in one step</li>
+</ul>
+<div className="co"><div className="co-l">Philip's take</div><p>"The gap between 'AI plans your trip' and 'AI books your trip' is closing fast. Right now, Claude is the best trip planner alive. Soon, it'll be the best travel agent too. Get comfortable using it for planning now, and the booking automation will feel natural when it arrives."</p></div>
+</Acc>
+</SPage>)}
+
+/* ===== SECTION 7: COOL STUFF ===== */
+function S7({section,onBack,prog,toggle}){return(<SPage section={section} onBack={onBack}>
+<div className="sintro"><p>This section is just for fun. Things that might surprise you, delight you, or make you say <em>"wait, it can do THAT?"</em></p></div>
+<Acc title="Voice Mode Tricks" id="cs-v" prog={prog} toggle={toggle}>
+<div className="fpg">
+<FPT emoji="🚗" text="Ask Claude to explain quantum computing while you're driving — just tap the mic"/>
+<FPT emoji="🧪" text="Quiz me on angel investing terminology — test what you know"/>
+<FPT emoji="💭" text="Brainstorm Commission Army marketing ideas — talk through it out loud"/>
+<FPT emoji="🎭" text="Practice a pitch with Claude playing a skeptical investor"/>
+</div>
+</Acc>
+<Acc title="Things You Didn't Know Claude Could Do" id="cs-cap" prog={prog} toggle={toggle}>
+<ul><li><strong>Read PDFs</strong> — "Here's a pitch deck — strengths and weaknesses?"</li>
+<li><strong>Analyze spreadsheets</strong> — "Here's my expenses — where am I overspending?"</li>
+<li><strong>Write code</strong> — This is how Philip built the Commission Army MVP</li>
+<li><strong>Create presentations, docs, spreadsheets</strong></li>
+<li><strong>Write emails in any tone</strong> — formal, casual, diplomatic, firm</li>
+<li><strong>Translate languages</strong> — useful for Cuba trips</li>
+<li><strong>Explain medical test results</strong> — upload a PDF, ask what it means</li></ul>
+</Acc>
+<Acc title="Fun Prompts to Try" id="cs-fun" prog={prog} toggle={toggle}>
+<PB text={`I'm a photographer who leads trips to Cuba. Write me a 60-second elevator pitch for my photography workshops.`}/>
+<PB text={`I founded one of Silicon Valley's oldest angel investment groups. Write me a short LinkedIn bio that sounds credible but not stuffy.`}/>
+<PB text={`Explain cryptocurrency to me like I'm a smart person who just hasn't been paying attention.`}/>
+<PB text={`I'm 77 and want to start posting on Instagram. Give me 10 post ideas based on: photography, classic cars, Cuba travel, and angel investing.`}/>
+</Acc>
+<Acc title='The "Wow Moment"' id="cs-wow" prog={prog} toggle={toggle}>
+<p>This single prompt is designed to genuinely impress you.</p>
+<PB text={`Analyze my professional background and tell me what business opportunities I'm missing.\n\nI'm Roger King, 77. Founded Bay Angels in 1998 — one of Silicon Valley's oldest angel investment networks. Reviewed thousands of pitch decks over 30 years. Judged startup competitions on three continents (Beijing, Seoul, Tokyo, Prague, Athens, Havana). Published in Forbes and Fortune, appeared on CNN. Built ChiefPeople to 135 employees. Currently building Commission Army (referral marketplace) and offer pitch coaching through Pitch to an Angel.\n\nTop 5 opportunities I might not have considered? Think creatively — speaking, publishing, consulting, digital products, partnerships. Estimate revenue for each.`}/>
+</Acc>
+<Acc title="Photo Gallery — A Life Well Lived" id="cs-gal" prog={prog} toggle={toggle}>
+<div style={{display:'grid',gap:'16px',gridTemplateColumns:'1fr 1fr'}}>
+<CPhoto src="images/roger-bay-angels.jpg" alt="Bay Angel" caption="The original Bay Angel"/>
+<CPhoto src="images/roger-julie-canoe.jpg" alt="Adventures" caption="Adventures with Julie"/>
+<CPhoto src="images/roger-with-family.jpg" alt="Family" caption="The whole crew"/>
+<CPhoto src="images/roger-family-toast.jpg" alt="Toast" caption="Cheers to family"/>
+<CPhoto src="images/roger-and-mike.jpg" alt="Roger & Mike" caption="Roger & Mike"/>
+<CPhoto src="images/roger-gangster-suit.jpg" alt="Sharp" caption="Looking sharp"/>
+</div>
+</Acc>
+</SPage>)}
+
+/* ===== LANDING PAGE ===== */
+function Landing({onNav}){return(
+<div>
+<div className="hero">
+<div className="hero-bg"><img src="images/roger-bay-angels.jpg" alt="Roger King"/></div>
+<div className="hero-content">
+<h1 className="s1">Hey Roger.</h1>
+<p className="hero-sub s2">Welcome to your personal guide to AI, social media, and technology.</p>
+<p className="hero-sub s3" style={{fontSize:'clamp(0.95rem,2vw,1.1rem)',marginTop:'4px'}}>Take it at your own pace. There's no rush.</p>
+<p className="hero-from s4">Built for you by Philip</p>
+</div>
+<div className="hero-scroll s5" onClick={()=>document.querySelector('.cards-section')?.scrollIntoView({behavior:'smooth'})}>{I.chevD}</div>
+</div>
+<div className="cards-section">
+<div className="cards-title">Your Sections</div>
+<div className="cards-grid">{SECTIONS.map((s,i)=>(
+<div key={s.id} className={`scard ${s.cc} s${i+2}`} onClick={()=>onNav(s.id)}>
+<div className="cicon"><span>{s.icon}</span></div>
+<div className="ctxt"><div className="clbl">{s.label}</div><div className="cttl">{s.title}</div><p className="cdsc">{s.sub}</p></div>
+<div className="carr">{I.chevR}</div>
+</div>))}</div>
+</div>
+<div className="pnote"><div className="pnote-l">A note from Philip</div><p>[Philip's personal message will go here]</p></div>
+<CamDiv/>
+<footer style={{textAlign:'center',padding:'20px 24px 40px',color:'var(--text-muted)',fontSize:'14px'}}><p style={{marginBottom:'4px'}}>Made with love, 2026</p></footer>
+</div>
+)}
+
+/* ===== APP ===== */
+function App(){
+const [page,setPage]=useState(()=>{const h=window.location.hash.replace('#','');return h||'home'});
+const [prog,toggle]=useProgress();
+useEffect(()=>{const h=()=>{const hash=window.location.hash.replace('#','');if(hash)setPage(hash)};window.addEventListener('hashchange',h);return()=>window.removeEventListener('hashchange',h)},[]);
+const nav=useCallback(id=>{setPage(id);window.location.hash=id;window.scrollTo({top:0,behavior:'smooth'})},[]);
+const home=useCallback(()=>{setPage('home');window.location.hash='home';window.scrollTo({top:0,behavior:'smooth'})},[]);
+
+const MAP={'getting-started':S1,'ai-personal':S2,'ai-professional':S3,'social-personal':S4,'social-professional':S5,'travel':S6,'cool-stuff':S7};
+const sec=SECTIONS.find(s=>s.id===page);
+const Comp=MAP[page];
+const activeNav=page==='home'?'home':page==='getting-started'?'getting-started':page.startsWith('ai-')?'ai-personal':page.startsWith('social-')?'social-personal':page==='travel'?'travel':page==='cool-stuff'?'cool-stuff':'home';
+
+return(<>
+<nav className="sidebar">
+<div className="sidebar-logo" onClick={home}>Roger's Guide</div>
+<div className="sidebar-sub">AI, Social Media & Technology</div>
+<button className={`slink ${page==='home'?'active':''}`} onClick={home}>{I.home}<span>Home</span></button>
+<div className="sdiv"/>
+{SECTIONS.map(s=><button key={s.id} className={`slink ${page===s.id?'active':''}`} onClick={()=>nav(s.id)}><span style={{fontSize:'18px',width:'20px',textAlign:'center'}}>{s.icon}</span><span>{s.title}</span></button>)}
+<div className="sfooter"><p>Built with love by Philip.<br/>Powered by Claude.</p></div>
+</nav>
+<main className="main-content">
+{page==='home'&&<Landing onNav={nav}/>}
+{Comp&&sec&&<Comp section={sec} onBack={home} prog={prog} toggle={toggle}/>}
+</main>
+<nav className="mobile-nav">{NAV.map(item=>(
+<button key={item.id} className={`mnb ${activeNav===item.id?'active':''}`} onClick={()=>item.id==='home'?home():nav(item.id)}>{item.icon}<span>{item.label}</span></button>
+))}</nav>
+</>);
 }
 
-// --- Content Photo ---
-function ContentPhoto({ src, alt, caption }) {
-  return (
-    <div className="content-photo">
-      <img src={src} alt={alt} loading="lazy" />
-      {caption && <div className="content-photo-caption">{caption}</div>}
-    </div>
-  );
-}
-
-// --- Section Page Shell ---
-function SectionPage({ section, onBack, children }) {
-  useEffect(() => { window.scrollTo({ top: 0, behavior: 'smooth' }); }, [section.id]);
-  return (
-    <div className="section-page page-active">
-      <div className="section-hero">
-        <img src={section.image} alt={section.imageAlt} loading="eager" />
-        <div className="section-hero-overlay">
-          <div className="section-hero-label">{section.label}</div>
-          <h1 className="section-hero-title">{section.title}</h1>
-        </div>
-      </div>
-      <div className="section-body">
-        <button className="back-btn" onClick={onBack}>{Icons.chevLeft} All Sections</button>
-        {children}
-      </div>
-    </div>
-  );
-}
-
-// ==================== SECTION 1: GETTING STARTED ====================
-function GettingStartedSection({ section, onBack, progress, toggleProgress }) {
-  return (
-    <SectionPage section={section} onBack={onBack}>
-      <div className="section-intro">
-        <p>Welcome, Roger. This section gets you set up with <strong>Claude</strong> — the AI tool Philip uses every day to build documents, spreadsheets, business plans, and more.</p>
-        <p>This is the single most useful tool he's found, and he wants you to have it too. It'll take about 10 minutes.</p>
-      </div>
-
-      <Accordion title="Step 1: Download Claude" id="gs-download" progress={progress} toggleProgress={toggleProgress}>
-        <Steps steps={[
-          { title: 'On your iPhone or iPad', content: <p>Open the <strong>App Store</strong>, search for <strong>"Claude by Anthropic"</strong>, and tap <strong>Get</strong>. Look for the orange/brown Claude logo — it looks like a small sun.</p> },
-          { title: 'On your Mac', content: <p>Visit <a href="https://claude.ai/download" target="_blank" rel="noopener">claude.ai/download</a> or search "Claude" in the Mac App Store.</p> },
-          { title: 'Or use any web browser', content: <p>Go to <a href="https://claude.ai" target="_blank" rel="noopener">claude.ai</a>. Works in Safari, Chrome, or any browser you prefer.</p> },
-        ]} />
-        <div className="callout info">
-          <div className="callout-label">What to look for</div>
-          <p>The Claude logo is a distinctive warm orange/brown circle. If you see a purple or blue AI logo, that's a different app.</p>
-        </div>
-      </Accordion>
-
-      <Accordion title="Step 2: Sign In" id="gs-signin" progress={progress} toggleProgress={toggleProgress}>
-        <p>Use your Chief People email: <strong>roger@chiefpeople.com</strong></p>
-        <p>The easiest method is <strong>"Continue with Google"</strong> — just tap it and select your Google account.</p>
-        <p>If your Chief People email isn't connected to Google, you can sign up with email and password instead. Claude will send you a verification code — check your inbox and enter it.</p>
-      </Accordion>
-
-      <Accordion title="Step 3: Subscribe to Claude Pro ($20/month)" id="gs-pro" progress={progress} toggleProgress={toggleProgress}>
-        <p><strong>Why Pro?</strong> The free tier has message limits that'll frustrate you when you're exploring. Pro removes those limits, gives you access to the best AI models, and unlocks features like extended thinking.</p>
-        <Steps steps={[
-          { title: 'Open Settings', content: <p>Tap your profile icon in the top corner, then <strong>Settings</strong>.</p> },
-          { title: 'Find Subscription', content: <p>Look for <strong>Subscription</strong> or <strong>Upgrade to Pro</strong>.</p> },
-          { title: 'Enter payment', content: <p>Follow the prompts to add a credit card. It's $20/month — you can cancel anytime.</p> },
-        ]} />
-        <div className="callout">
-          <div className="callout-label">Philip's take</div>
-          <p>"Just do it. When you're learning, the last thing you want is to hit a wall mid-conversation. Twenty bucks a month is the best investment you'll make in yourself this year."</p>
-        </div>
-      </Accordion>
-
-      <Accordion title="Step 4: Your First Conversation" id="gs-first" progress={progress} toggleProgress={toggleProgress}>
-        <p>Here's your icebreaker. Copy this prompt, paste it into Claude, and hit send:</p>
-        <PromptBlock text={`Hi Claude — my name is Roger King. I'm 77 years old, I'm the founder of Bay Angels (one of Silicon Valley's oldest angel investment networks), and I'm learning to use AI tools for the first time. My son Philip set me up with you.
-
-Can you introduce yourself, tell me what you're capable of, and suggest three things I could ask you about right now that would show me what you can do? Keep it simple and conversational — I'm just getting started.`} />
-        <p><strong>What happens next:</strong> Claude will respond conversationally, introduce itself, and suggest things to explore. You can just... keep talking. Ask follow-up questions. Say "tell me more about that." There's no wrong move.</p>
-        <div className="callout tip">
-          <div className="callout-label">Tip</div>
-          <p>Think of your first Claude conversation like meeting a new colleague. You're just getting acquainted. There are no dumb questions.</p>
-        </div>
-      </Accordion>
-
-      <Accordion title="Add to Your Home Screen" id="gs-homescreen" progress={progress} toggleProgress={toggleProgress}>
-        <p>Want this guide always one tap away? Add it to your iPhone or iPad home screen:</p>
-        <Steps steps={[
-          { title: 'Open this page in Safari', content: <p>If you're not already in Safari, copy the URL and open it there.</p> },
-          { title: 'Tap the Share button', content: <p>It's the square with an arrow pointing up, at the bottom of the screen.</p> },
-          { title: 'Tap "Add to Home Screen"', content: <p>Scroll down in the share menu until you see it. Give it a name like "Roger's Guide" and tap <strong>Add</strong>.</p> },
-          { title: 'Done!', content: <p>Now you have an app-like icon on your home screen. Tap it anytime to jump back in.</p> },
-        ]} />
-      </Accordion>
-    </SectionPage>
-  );
-}
-
-// ==================== SECTION 2: AI FOR EVERYDAY LIFE ====================
-function AIPersonalSection({ section, onBack, progress, toggleProgress }) {
-  return (
-    <SectionPage section={section} onBack={onBack}>
-      <div className="section-intro">
-        <p>Claude isn't just for work. Think of it as a patient, knowledgeable friend who's available 24/7, never judges your questions, and never gets tired of explaining things.</p>
-      </div>
-
-      <Accordion title="What is Claude?" id="aip-what" progress={progress} toggleProgress={toggleProgress}>
-        <p>Claude is <strong>not</strong> a search engine. It's a conversation. You talk to it like you'd talk to a very smart person, and it talks back.</p>
-        <ul>
-          <li>It doesn't browse the internet by default — it knows things from its training on millions of books, articles, and documents</li>
-          <li>It can read documents you upload, analyze spreadsheets, write content, and help you think through problems</li>
-          <li>It remembers everything you say within a single conversation</li>
-          <li>Every new conversation starts fresh — it doesn't remember past chats unless you tell it</li>
-        </ul>
-        <div className="callout">
-          <div className="callout-label">The simple way to think about it</div>
-          <p>Imagine you could call someone who's read every book, every manual, every article — and they're infinitely patient. That's Claude.</p>
-        </div>
-      </Accordion>
-
-      <Accordion title="Chat vs. Cowork vs. Voice Mode" id="aip-modes" progress={progress} toggleProgress={toggleProgress}>
-        <ComparisonTable
-          headers={['Feature', 'Chat', 'Cowork', 'Voice']}
-          rows={[
-            ['What it is', 'Text conversation', 'Claude works with your files', 'Talk like a phone call'],
-            ['Best for', 'Questions, writing, thinking through ideas', 'Building documents, spreadsheets, multi-step projects', 'Quick questions, brainstorming, hands-free'],
-            ['Capacity', 'Full power', 'Full power + file access', 'More limited — conversational only'],
-            ['Where to find it', 'Main Claude interface', 'Claude desktop app', 'Microphone icon in Claude app'],
-          ]}
-        />
-        <div className="callout">
-          <div className="callout-label">Philip's recommendation</div>
-          <p>"Start with Chat. Try Voice when you're comfortable — it's fun and engaging. Graduate to Cowork when you want Claude to actually <em>build</em> things for you."</p>
-        </div>
-      </Accordion>
-
-      <Accordion title="Voice Mode — Like Having a Conversation" id="aip-voice" progress={progress} toggleProgress={toggleProgress}>
-        <p><strong>How to use it:</strong> Tap the microphone icon in the Claude app.</p>
-        <p><strong>What it's great for:</strong></p>
-        <ul>
-          <li>Asking questions while you're driving or cooking</li>
-          <li>Having a brainstorming conversation out loud</li>
-          <li>Getting explanations read aloud to you</li>
-          <li>Practicing a pitch or rehearsing what you want to say</li>
-        </ul>
-        <p><strong>What it can't do:</strong> It doesn't have the same depth as Chat. It can't read your files, build documents, or do multi-step complex work.</p>
-        <div className="callout">
-          <div className="callout-label">Think of it this way</div>
-          <p>Voice is like <strong>chatting</strong> with Claude. Chat is like <strong>emailing</strong> Claude. Both useful, different purposes. You'll probably love Voice — it's the most natural way to interact.</p>
-        </div>
-      </Accordion>
-
-      <Accordion title="Better Questions, Better Answers — 6 Rules" id="aip-prompting" progress={progress} toggleProgress={toggleProgress}>
-        <Steps steps={[
-          { title: 'Be specific', content: <><p>Vague questions get vague answers.</p><div className="before-after"><div className="ba-item ba-bad"><div className="ba-label">Instead of</div><p className="ba-text">"Help me plan a trip"</p></div><div className="ba-item ba-good"><div className="ba-label">Try</div><p className="ba-text">"Help me plan a 5-day photography trip to Cuba in March, budget $3,000, focused on street photography in Havana"</p></div></div></> },
-          { title: 'Give context', content: <p>Tell Claude who you are, what you're working on, and why. It doesn't know you unless you tell it.</p> },
-          { title: 'Tell Claude what you want', content: <p>A list? A paragraph? A step-by-step guide? A spreadsheet? Say so. The more specific your format request, the better the result.</p> },
-          { title: 'Ask follow-ups', content: <p>The first answer isn't always the best. Say "Can you go deeper on point 3?" or "Make it simpler" or "Give me an example."</p> },
-          { title: 'Start new conversations for new topics', content: <p>Don't cram everything into one chat. Fresh conversations get cleaner, more focused results.</p> },
-          { title: 'Don\'t be afraid to experiment', content: <p>You can't break anything. The worst that happens is you get an answer you don't love, and you try again.</p> },
-        ]} />
-        <div className="before-after" style={{marginTop: '20px'}}>
-          <div className="ba-item ba-bad">
-            <div className="ba-label">Weak prompt</div>
-            <p className="ba-text">"Tell me about angel investing"</p>
-          </div>
-          <div className="ba-item ba-good">
-            <div className="ba-label">Strong prompt</div>
-            <p className="ba-text">"I'm the founder of Bay Angels, an angel investment network in Silicon Valley that's been operating since 1998. I want to write a LinkedIn post explaining what angel investing is to people who've never heard of it. Keep it under 200 words and make it conversational, not academic."</p>
-          </div>
-        </div>
-      </Accordion>
-
-      <Accordion title="The House Manual Prompt — Your First 'Aha' Moment" id="aip-house" progress={progress} toggleProgress={toggleProgress}>
-        <p>This is a real, detailed prompt you can paste into Claude right now. It'll produce a professional guest manual for your home in about 60 seconds.</p>
-        <PromptBlock text={`I need you to create a comprehensive house manual for guests who are renting or staying at my home. This should be warm and welcoming but thorough.
-
-Please include the following sections:
-
-1. Welcome & Overview — A warm greeting, brief description of the home, and what makes it special
-2. Arrival & Access — How to get in (lockbox code, key location, parking instructions, gate code if applicable)
-3. Wi-Fi & Technology — Network name, password, how to use the TV/streaming setup, smart home devices if any
-4. Kitchen & Appliances — How to use the coffee maker, dishwasher, oven, any quirky appliances. Where to find dishes, utensils, trash bags, etc.
-5. Heating & Cooling — How to operate the thermostat, ceiling fans, fireplace if applicable
-6. Outdoor Spaces — Pool/hot tub instructions, grill, patio furniture, garden
-7. House Rules — Quiet hours, smoking policy, pet policy, maximum occupancy, shoes on/off
-8. Local Recommendations — Nearby restaurants, grocery stores, pharmacies, gas stations, beaches/parks, hidden gems
-9. Emergency Information — Emergency contacts, nearest hospital, fire extinguisher location, first aid kit, circuit breaker
-10. Checkout Procedures — What to do before leaving (trash, dishes, linens, lockup, thermostat settings)
-
-Format this as a clean, professional document with clear headings and a friendly but informative tone. Leave placeholder brackets [like this] anywhere I need to fill in specific details like addresses, codes, or names. Make it feel like a high-end Airbnb experience.`} />
-        <div className="callout tip">
-          <div className="callout-label">How to use this</div>
-          <p>Paste this into Claude Chat (or Cowork if you want it to create an actual Word document file). Fill in the [brackets] with your specific details. You'll have a professional guest manual in about 60 seconds.</p>
-        </div>
-        <ContentPhoto src="images/family-property.jpg" alt="The family property" caption="Your beautiful property — imagine handing every guest a polished guide to enjoying it." />
-      </Accordion>
-
-      <Accordion title="More Things to Try" id="aip-more" progress={progress} toggleProgress={toggleProgress}>
-        <div className="fun-prompts-grid">
-          <FunPromptTile emoji="🗺️" text="Plan a 7-day driving trip from San Francisco to the Grand Canyon with photography stops along the way" />
-          <FunPromptTile emoji="🍽️" text="I have salmon, asparagus, and lemons. What should I make for dinner? Give me two options — one simple, one impressive." />
-          <FunPromptTile emoji="✉️" text="Help me write a thank-you note to a founder whose pitch I judged at a competition. I want it to feel personal, not generic." />
-          <FunPromptTile emoji="🧠" text="Explain blockchain to me like I'm a smart person who just hasn't been paying attention to it." />
-          <FunPromptTile emoji="⚖️" text="I'm trying to decide between two investment opportunities. Help me think through the pros and cons systematically." />
-          <FunPromptTile emoji="📖" text="Recommend 5 books about photography that would inspire someone who's been shooting for 30+ years but wants to see with fresh eyes." />
-        </div>
-      </Accordion>
-    </SectionPage>
-  );
-}
-
-// ==================== SECTION 3: AI FOR BUSINESS ====================
-function AIProSection({ section, onBack, progress, toggleProgress }) {
-  return (
-    <SectionPage section={section} onBack={onBack}>
-      <div className="section-intro">
-        <p>This is where Claude goes from helpful to <strong>transformative</strong>. Philip has used Claude to build entire business plans, financial models, pitch coaching strategies, and marketing campaigns. Here's how — and here are the exact prompts you can use to do the same.</p>
-      </div>
-
-      <Accordion title="Understanding the Models — Sonnet vs. Opus" id="aib-models" progress={progress} toggleProgress={toggleProgress}>
-        <h4>Sonnet 4.5 — The Fast Analyst</h4>
-        <p>Smart, fast, great for 90% of things. Think of it as a very talented analyst who works quickly. This is your everyday workhorse.</p>
-        <h4>Opus 4.5 — The Senior Partner</h4>
-        <p>Slower, uses more of your message quota, but significantly more powerful for complex reasoning, nuanced writing, and strategic thinking. Think of it as a senior partner who takes their time but delivers exceptional work.</p>
-        <h4>Extended Thinking</h4>
-        <p>A mode you can turn on for either model. It lets Claude "think before speaking" — working through the problem step by step before giving you an answer. Makes both models significantly better.</p>
-        <div className="callout">
-          <div className="callout-label">Philip's recommendation</div>
-          <p>"Use Sonnet 4.5 with Extended Thinking for 9 out of 10 things. It's fast, it's smart, and it handles almost everything. Switch to Opus 4.5 with Extended Thinking when you're working on something really important — a pitch deck, a business plan, a critical email. That's your heavy artillery."</p>
-        </div>
-        <CameraDivider />
-        <h4>Quick Decision Guide</h4>
-        <div className="decision-list">
-          <div className="decision-item"><span className="q">Writing an email?</span> <span className="arrow">→</span> <span className="a">Sonnet</span></div>
-          <div className="decision-item"><span className="q">Planning a trip?</span> <span className="arrow">→</span> <span className="a">Sonnet</span></div>
-          <div className="decision-item"><span className="q">Building a business plan?</span> <span className="arrow">→</span> <span className="a">Opus</span></div>
-          <div className="decision-item"><span className="q">Drafting a pitch deck?</span> <span className="arrow">→</span> <span className="a">Opus</span></div>
-          <div className="decision-item"><span className="q">Quick questions?</span> <span className="arrow">→</span> <span className="a">Sonnet</span></div>
-          <div className="decision-item"><span className="q">Complex financial analysis?</span> <span className="arrow">→</span> <span className="a">Opus</span></div>
-          <div className="decision-item"><span className="q">Not sure?</span> <span className="arrow">→</span> <span className="a">Start with Sonnet. If it's not deep enough, switch to Opus.</span></div>
-        </div>
-        <p>To switch models: look for the model selector at the top of your conversation in Claude. Tap it to see your options.</p>
-      </Accordion>
-
-      <Accordion title="Chat vs. Cowork — The Deep Dive" id="aib-cowork" progress={progress} toggleProgress={toggleProgress}>
-        <p><strong>Cowork</strong> is what separates Claude from any other AI tool. Here's what it can do that Chat can't:</p>
-        <ul>
-          <li><strong>Create actual files</strong> — Word docs, Excel spreadsheets, PDFs, presentations</li>
-          <li><strong>Work with files you upload</strong> — drop in a spreadsheet, a pitch deck, a contract</li>
-          <li><strong>Execute multi-step tasks</strong> — research → analyze → build document → refine</li>
-          <li><strong>Access your computer's file system</strong> (with your permission)</li>
-          <li><strong>Build things that live on your desktop</strong>, not just in the chat window</li>
-        </ul>
-        <div className="callout">
-          <div className="callout-label">Philip on Cowork</div>
-          <p>"Cowork is perhaps the most impactful thing that's happened in AI in the past six months. It knocked dozens of startups completely out of the water. This single feature turned Claude from a chatbot into a business partner."</p>
-        </div>
-        <p><strong>The simple distinction:</strong> Chat is for conversations. Cowork is for getting work done.</p>
-      </Accordion>
-
-      <Accordion title="Advanced Prompting Guide" id="aib-advanced" progress={progress} toggleProgress={toggleProgress}>
-        <p>Building on the basics from the previous section, here are more powerful techniques:</p>
-        <Steps steps={[
-          { title: 'Give Claude a role', content: <p>"You are a financial analyst with 20 years of experience in SaaS metrics..." This focuses the response and changes the depth and vocabulary Claude uses.</p> },
-          { title: 'Use structured requests', content: <p>Break complex asks into numbered sections. "I need you to: 1) Analyze X, 2) Compare Y, 3) Recommend Z." Claude follows structure well.</p> },
-          { title: 'Provide examples', content: <p>"Here's an example of what I'm looking for: [example]. Now do something similar for my situation." Examples are worth a thousand words of instructions.</p> },
-          { title: 'Iterate, don\'t restart', content: <p>If the first draft is 70% right, say "This is good, but change the tone to be more conversational" or "Expand section 3 and shorten section 1." Build on what Claude gives you.</p> },
-          { title: 'Set constraints', content: <p>"Keep it under 500 words." "Use bullet points." "Write at an 8th-grade reading level." "No jargon." Constraints make outputs better.</p> },
-          { title: 'Ask Claude to think step by step', content: <p>"Walk me through your reasoning before giving me a recommendation." This produces much better answers for complex questions.</p> },
-          { title: 'Chain conversations', content: <p>Start with research ("What are the best practices for X?"), then application ("Now build me a Y using those"), then refinement ("Make it more Z"). Layer by layer.</p> },
-        ]} />
-      </Accordion>
-
-      <Accordion title="The Commission Army Financial Model — Power Prompt" id="aib-commission" progress={progress} toggleProgress={toggleProgress}>
-        <p>This is the crown jewel. A comprehensive prompt that builds a full Excel financial model for Commission Army. Open <strong>Cowork</strong> in Claude, paste this in, and watch it build a professional, investor-ready spreadsheet.</p>
-        <PromptBlock text={`I need you to build a comprehensive Excel financial model for Commission Army, a two-sided referral marketplace platform. This should be a professional, investor-ready spreadsheet with the following tabs:
-
-Tab 1: Revenue Model
-- Monthly projections for 24 months
-- Two revenue streams: subscription fees ($10/month individual referrers after first 1,000 free; $49.95/month businesses after first 100 free) and transaction fees (20% take rate on all referral commissions flowing through the platform)
-- Inputs at the top for: monthly new referrer signups, monthly new business signups, average transaction value per successful referral, referral conversion rate, monthly churn rate
-- Monthly Recurring Revenue (MRR) and Annual Recurring Revenue (ARR)
-- Show free tier vs. paid tier separately
-
-Tab 2: Customer Acquisition Cost (CAC) Model
-- Marketing spend by channel (content marketing, paid social, events/partnerships, referral incentives)
-- CAC calculation by segment (referrers vs. businesses)
-- LTV:CAC ratio tracking (target: 3:1 minimum)
-- CAC payback period in months
-
-Tab 3: Subscriber Growth Dashboard
-- Cumulative referrers and businesses over 24 months
-- Growth curves (S-curve modeling for marketplace network effects)
-- Monthly active users vs. total registered
-- Churn waterfall: new adds, churned, reactivated, net
-
-Tab 4: Hiring Plan & Operational Costs
-- Monthly headcount plan for 24 months
-- Roles: Founder(s), CTO/Lead Engineer (Month 3-4), Marketing hire (Month 4-6), Ops/Support (Month 6-8)
-- Trigger thresholds for each hire
-- Fully loaded cost per employee (salary + benefits + overhead at 1.3x)
-- Total monthly burn rate
-
-Tab 5: Fundraising & Runway
-- Seed round: $500,000
-- Use of funds: Product Development 40%, Go-to-Market 30%, Operations 20%, Reserve 10%
-- Monthly cash flow (revenue minus expenses)
-- Runway calculation and breakeven analysis
-- Include insight: how AI tools mean you can build an MVP with near-zero engineering spend
-
-Tab 6: Summary Dashboard
-- Key metrics: MRR, ARR, total users, burn rate, runway, LTV:CAC
-- Month 18 targets: 1,500 businesses, 25,000 referrers, $375K monthly transaction volume
-- Traffic light indicators for each KPI
-
-Make all assumptions explicit and adjustable. Highlight input cells in yellow. Include charts in each tab. Professional formatting throughout.`} />
-        <div className="callout tip">
-          <div className="callout-label">How to use this</div>
-          <p>Open Cowork in the Claude desktop app, paste this prompt, and Claude will build a complete Excel file you can download and open. Every assumption is adjustable — change the numbers and watch the model update.</p>
-        </div>
-      </Accordion>
-
-      <Accordion title="What Philip Has Built with Claude" id="aib-portfolio" progress={progress} toggleProgress={toggleProgress}>
-        <p>Every single item below was built using Claude. This is what's possible.</p>
-        <div className="project-cards">
-          <div className="project-card"><div className="project-card-title">Commission Army Business Plan</div><p className="project-card-desc">Full 12-section business plan for the referral marketplace startup</p><span className="project-card-tag tag-cowork">Cowork</span></div>
-          <div className="project-card"><div className="project-card-title">Roger King Pitch Coaching Credentials</div><p className="project-card-desc">Research dossier on Roger's qualifications for pitch coaching</p><span className="project-card-tag tag-research">Research</span></div>
-          <div className="project-card"><div className="project-card-title">Pitch to an Angel Launch Strategy</div><p className="project-card-desc">Go-to-market strategy for the Guiding Angels coaching service</p><span className="project-card-tag tag-cowork">Cowork</span></div>
-          <div className="project-card"><div className="project-card-title">Roger King Judging Dossier</div><p className="project-card-desc">Competition prep document for pitch judging events</p><span className="project-card-tag tag-chat">Chat</span></div>
-          <div className="project-card"><div className="project-card-title">Bay Angels Pitch Scoring Rubric</div><p className="project-card-desc">10-criterion weighted scoring system for evaluating pitches</p><span className="project-card-tag tag-cowork">Cowork</span></div>
-          <div className="project-card"><div className="project-card-title">Client Social Media Reach Spreadsheet</div><p className="project-card-desc">55 international clients across 17 regions, mapped and analyzed</p><span className="project-card-tag tag-cowork">Cowork</span></div>
-          <div className="project-card"><div className="project-card-title">Bay Angels Submission Spreadsheet</div><p className="project-card-desc">Redesigned intake and tracking system for startup applications</p><span className="project-card-tag tag-cowork">Cowork</span></div>
-          <div className="project-card"><div className="project-card-title">Cord-Cutting Guide</div><p className="project-card-desc">Step-by-step cable-to-streaming transition guide built for elderly clients</p><span className="project-card-tag tag-chat">Chat</span></div>
-          <div className="project-card"><div className="project-card-title">Roger's Photography Retrospective</div><p className="project-card-desc">Presentation showcasing decades of Roger's fine art photography</p><span className="project-card-tag tag-cowork">Cowork</span></div>
-        </div>
-        <div className="closing-message">
-          <p><strong>Roger</strong> — all of this was built with Claude. Every single item. Philip's been using this tool every day for months, and this is what's possible.</p>
-          <p>You won't get here overnight, and you don't need to. Start with the basics, try the prompts in this guide, and build from there. The point isn't to match what Philip does — it's to see what's possible and find the parts that are useful to <strong>you</strong>.</p>
-        </div>
-      </Accordion>
-    </SectionPage>
-  );
-}
-
-// ==================== SECTION 4: SOCIAL MEDIA — PERSONAL ====================
-function SocialPersonalSection({ section, onBack, progress, toggleProgress }) {
-  return (
-    <SectionPage section={section} onBack={onBack}>
-      <div className="section-intro">
-        <p>Social media isn't about becoming an influencer. For you, it's about sharing the things you love — your photography, your trips to Cuba, your car projects — with the people who care about them.</p>
-      </div>
-
-      <ContentPhoto src="images/roger-julie-car-show.jpg" alt="Roger and Julie at a car show" caption="Roger and Julie at a car show — exactly the kind of content that makes great social media." />
-
-      <Accordion title="Platform Breakdown" id="sp-platforms" progress={progress} toggleProgress={toggleProgress}>
-        <div className="platform-card">
-          <div className="platform-card-header"><span className="platform-icon">📘</span><span className="platform-name">Facebook</span></div>
-          <div className="platform-purpose">For Roger: Sharing memories with friends and family</div>
-          <ul>
-            <li>Not a growth platform anymore — your audience is people you already know</li>
-            <li>What to post: trip photos, family updates, life milestones, car project updates</li>
-          </ul>
-          <div className="platform-bottom-line">Keep using it casually. It's a digital photo album for your existing circle.</div>
-        </div>
-
-        <div className="platform-card">
-          <div className="platform-card-header"><span className="platform-icon">📸</span><span className="platform-name">Instagram</span></div>
-          <div className="platform-purpose">For Roger: THE platform for your photography</div>
-          <ul>
-            <li><strong>Audience potential:</strong> Strong — especially for photography and travel content</li>
-            <li><strong>What to post:</strong> Cuba photos, car projects, fine art photography, Bay Angels events</li>
-            <li><strong>Key features:</strong> Posts (permanent), Stories (24 hours), Reels (short video — where growth happens)</li>
-          </ul>
-          <div className="platform-bottom-line">This should be your primary personal platform. Your photography deserves to be seen.</div>
-        </div>
-
-        <div className="platform-card">
-          <div className="platform-card-header"><span className="platform-icon">🎵</span><span className="platform-name">TikTok</span></div>
-          <div className="platform-purpose">For Roger: Short-form video, the most viral platform</div>
-          <ul>
-            <li>Massive audience, skews younger — but older creators with authentic content often do <em>extremely</em> well</li>
-            <li><strong>AutoCut:</strong> TikTok can automatically edit your long videos into short clips</li>
-            <li><strong>The big insight:</strong> Authentic posting beats professional posting every time. A real, unpolished clip of you working on a car or walking through Havana will outperform a professionally produced video.</li>
-          </ul>
-          <div className="platform-bottom-line">Worth exploring for video content. Post 3-4x/week and your audience WILL grow.</div>
-        </div>
-
-        <div className="platform-card">
-          <div className="platform-card-header"><span className="platform-icon">💼</span><span className="platform-name">LinkedIn</span></div>
-          <div className="platform-purpose">For Roger: Professional audience and credibility</div>
-          <p style={{fontSize:'15px',color:'var(--text-light)',marginTop:'8px'}}>Full treatment in the Professional Social Media section →</p>
-        </div>
-      </Accordion>
-
-      <Accordion title="Getting Started on Instagram — Step by Step" id="sp-insta-setup" progress={progress} toggleProgress={toggleProgress}>
-        <Steps steps={[
-          { title: 'Download Instagram', content: <p>Open the App Store on your iPhone/iPad. Search <strong>"Instagram"</strong>. Download it — look for the rainbow-gradient camera icon.</p> },
-          { title: 'Log in', content: <p>Open the app and tap <strong>"Log in"</strong> (not "Create new account"). Tap <strong>"Continue with Facebook"</strong> — this connects to your existing account.</p> },
-          { title: 'Find your account', content: <p>Your handle is <strong>@iamhavana</strong>. If something seems off, don't worry — we can recover it.</p> },
-          { title: 'Get oriented', content: <><p>Here's what you're looking at:</p><ul><li><strong>Home (house icon)</strong> — Your feed, posts from people you follow</li><li><strong>Search (magnifying glass)</strong> — Discover new content</li><li><strong>+ button (center)</strong> — This is how you post</li><li><strong>Reels (play button)</strong> — Short videos</li><li><strong>Profile (your photo)</strong> — Your page, your posts</li></ul></> },
-        ]} />
-      </Accordion>
-
-      <Accordion title="Post Your First Photo" id="sp-first-photo" progress={progress} toggleProgress={toggleProgress}>
-        <Steps steps={[
-          { title: 'Tap the + button', content: <p>It's at the bottom center of the screen.</p> },
-          { title: 'Select "Post"', content: <p>You'll see options — choose <strong>Post</strong> for a standard photo.</p> },
-          { title: 'Choose a photo', content: <p>Pick one of your Cuba shots or a favorite from your camera roll. Something you're proud of.</p> },
-          { title: 'Optional: Apply a filter', content: <p>Subtle ones like <strong>Clarendon</strong> or <strong>Juno</strong> look great for photography. Or skip filters entirely — your photos are strong enough.</p> },
-          { title: 'Write a caption', content: <p>Keep it simple. <em>"Havana, 2023. One of my favorite streets to photograph."</em> Add hashtags: <strong>#Cuba #Havana #StreetPhotography #Travel</strong></p> },
-          { title: 'Tap "Share"', content: <p>That's it! Your photo is now visible to your followers and anyone searching those hashtags.</p> },
-        ]} />
-      </Accordion>
-
-      <Accordion title="Post Your First Reel (Short Video)" id="sp-reel" progress={progress} toggleProgress={toggleProgress}>
-        <Steps steps={[
-          { title: 'Tap +, then "Reel"', content: <p>Same + button, but choose <strong>Reel</strong> this time.</p> },
-          { title: 'Record or select a video', content: <p>You can record something new OR select an existing video from your camera roll.</p> },
-          { title: 'Edit it', content: <p>The editor lets you: trim the clip, add text overlay, add music from Instagram's library. Keep it under 30 seconds for your first one.</p> },
-          { title: 'Add a caption and share', content: <p>Same as a photo — write something, add hashtags, tap Share.</p> },
-        ]} />
-        <div className="callout tip">
-          <div className="callout-label">Why Reels matter</div>
-          <p>Regular posts are mostly seen by people who already follow you. Reels get shown to people who <strong>don't</strong> follow you — that's how you grow your audience. Instagram's algorithm pushes Reels to new viewers.</p>
-        </div>
-      </Accordion>
-
-      <Accordion title="The Built-In Editors" id="sp-editors" progress={progress} toggleProgress={toggleProgress}>
-        <p>Both Instagram and TikTok have editing tools built right in. You don't need Premiere Pro or Final Cut.</p>
-        <ComparisonTable
-          headers={['Tool', 'Instagram', 'TikTok']}
-          rows={[
-            ['Trim video', '✓', '✓'],
-            ['Text overlay', '✓', '✓'],
-            ['Music library', '✓', '✓'],
-            ['Filters & effects', '✓', '✓ (more options)'],
-            ['Auto-edit (AutoCut)', '—', '✓ (game-changer)'],
-            ['Stickers', '✓', '✓'],
-          ]}
-        />
-        <p>If you can use a smartphone camera, you can use these editors. They're designed for everyone.</p>
-      </Accordion>
-
-      <Accordion title="Your Photography Deserves an Audience" id="sp-photography" progress={progress} toggleProgress={toggleProgress}>
-        <ContentPhoto src="images/roger-with-camera.jpg" alt="Roger with his camera at Yosemite" caption="Roger at Yosemite — decades of photographic experience and an eye that can't be taught." />
-        <p>Roger, you've been shooting for decades. You have an incredible eye. The world has shifted — fine art photographers are building real audiences on Instagram, and some are driving significant print sales directly from their social presence.</p>
-        <p>Your Cuba street photography, your landscape work, your behind-the-scenes stories — this is exactly the kind of content that builds a following. Not because of algorithms or tricks, but because the work is <strong>genuinely good</strong>.</p>
-        <p>Consider this: every photo you post is a potential fine art print sale. Your Instagram bio can link directly to a print shop. Collectors find photographers on Instagram every day.</p>
-        <div className="callout">
-          <div className="callout-label">The opportunity</div>
-          <p>Post consistently (3-5 times a week), use relevant hashtags (#FineArtPhotography #CubaPhotography #StreetPhotography), engage with other photographers, and watch what happens. Your work speaks for itself.</p>
-        </div>
-      </Accordion>
-    </SectionPage>
-  );
-}
-
-// ==================== SECTION 5: SOCIAL MEDIA — PROFESSIONAL ====================
-function SocialProSection({ section, onBack, progress, toggleProgress }) {
-  return (
-    <SectionPage section={section} onBack={onBack}>
-      <div className="section-intro">
-        <p>Here's where social media becomes a business tool. You've spent 30 years building an incredible network and reputation in Silicon Valley. LinkedIn lets you turn that reputation into an audience — and an audience into clients.</p>
-      </div>
-
-      <Accordion title="LinkedIn: Your Professional Platform" id="spro-linkedin" progress={progress} toggleProgress={toggleProgress}>
-        <p>Why LinkedIn matters for <em>you</em> specifically:</p>
-        <ul>
-          <li>You founded one of Silicon Valley's oldest angel groups</li>
-          <li>You've judged startups on three continents — Beijing, Seoul, Tokyo, Prague, Athens, Havana</li>
-          <li>You've been published in <strong>Forbes</strong> and <strong>Fortune</strong>, appeared on <strong>CNN</strong></li>
-          <li>You built ChiefPeople to 135 employees</li>
-          <li>You have real testimonials from founders you've helped raise funds</li>
-        </ul>
-        <p>All of this is <strong>gold</strong> on LinkedIn — but only if people see it.</p>
-        <ContentPhoto src="images/roger-bay-angels-panel.jpg" alt="Roger at a Bay Angels panel" caption="Every panel, every event, every judging session is LinkedIn content waiting to happen." />
-        <h4>How Consistent Posting Works</h4>
-        <ul>
-          <li>The LinkedIn algorithm rewards frequency. Posting <strong>3-5x/week</strong> dramatically increases visibility.</li>
-          <li>Every post is seen by your connections AND people in their network</li>
-          <li>Over time, followers compound. 100 becomes 500 becomes 2,000. Each new follower is a potential coaching client.</li>
-        </ul>
-      </Accordion>
-
-      <Accordion title="What to Post on LinkedIn" id="spro-what" progress={progress} toggleProgress={toggleProgress}>
-        <h4>Content Ideas That Work</h4>
-        <div className="fun-prompts-grid">
-          <FunPromptTile emoji="🎯" text="I've reviewed 5,000+ pitch decks. Here are the 3 mistakes I see in 90% of them." />
-          <FunPromptTile emoji="💡" text="We first invested in OpenTable when it was little more than an idea on a napkin. Here's what I saw that others missed." />
-          <FunPromptTile emoji="⏱️" text="I can tell in 90 seconds if a founder knows their business. Here's what I'm looking for." />
-          <FunPromptTile emoji="🔮" text="I started Bay Angels in 1998 in Sausalito. Here's what I've learned in 27 years of angel investing." />
-        </div>
-        <div className="callout">
-          <div className="callout-label">The key insight</div>
-          <p>Every post is a micro-pitch for your Guiding Angels / Pitch to an Angel coaching services. You're not selling — you're <strong>demonstrating credibility</strong>. People will come to you.</p>
-        </div>
-      </Accordion>
-
-      <Accordion title="Authentic vs. Professional Posting" id="spro-authentic" progress={progress} toggleProgress={toggleProgress}>
-        <p><strong>The counterintuitive truth:</strong></p>
-        <ul>
-          <li>Spending money on professional content (produced videos, designed graphics, paid campaigns) often produces <strong>zero results</strong> on LinkedIn</li>
-          <li>Authentic, text-based posts with real stories and real opinions <strong>consistently outperform</strong> polished content</li>
-          <li>The algorithm rewards engagement (comments, shares), and people engage with authentic voices, not marketing material</li>
-        </ul>
-        <ContentPhoto src="images/roger-and-sons.jpg" alt="Roger with his sons" caption="Real moments, real stories — this is what resonates online." />
-        <p>Your real stories — angel investing since 1995, building ChiefPeople to 135 employees, judging startups in Havana and Seoul — are infinitely more compelling than any designed graphic or polished video.</p>
-      </Accordion>
-
-      <Accordion title="Audience = Opportunity" id="spro-pipeline" progress={progress} toggleProgress={toggleProgress}>
-        <h4>The Pipeline</h4>
-        <p style={{fontSize:'1.1rem',textAlign:'center',margin:'20px 0',fontWeight:600,color:'var(--navy)'}}>
-          Followers → Credibility → Inbound Leads → Paying Clients
-        </p>
-        <p>For you specifically:</p>
-        <ul>
-          <li>LinkedIn followers see your pitch coaching content</li>
-          <li>Some of them are founders who need coaching</li>
-          <li>They reach out to you</li>
-          <li>Paying clients at $250/hour through Guiding Angels / Pitch to an Angel</li>
-        </ul>
-        <p>This is also the pipeline for <strong>Commission Army awareness</strong> — "I'm building a referral marketplace — here's why the timing is right."</p>
-      </Accordion>
-
-      <Accordion title="Platform Purpose Summary" id="spro-summary" progress={progress} toggleProgress={toggleProgress}>
-        <ComparisonTable
-          headers={['Platform', 'Personal Use', 'Professional Use']}
-          rows={[
-            ['Facebook', 'Share memories with friends/family', 'Not useful professionally'],
-            ['Instagram', 'Photography, travel, car projects', 'Bay Angels event promotion, fine art print sales'],
-            ['TikTok', 'Fun video content, virality', 'Possible thought leadership clips'],
-            ['LinkedIn', 'Not primary for personal', 'Pitch coaching pipeline, Bay Angels credibility, Commission Army awareness'],
-          ]}
-        />
-      </Accordion>
-    </SectionPage>
-  );
-}
-
-// ==================== SECTION 6: COOL STUFF & TIPS ====================
-function CoolStuffSection({ section, onBack, progress, toggleProgress }) {
-  return (
-    <SectionPage section={section} onBack={onBack}>
-      <div className="section-intro">
-        <p>This section is just for fun. These are things that might surprise you, delight you, or make you say <em>"wait, it can do THAT?"</em></p>
-      </div>
-
-      <Accordion title="Voice Mode Tricks" id="cs-voice" progress={progress} toggleProgress={toggleProgress}>
-        <div className="fun-prompts-grid">
-          <FunPromptTile emoji="🚗" text="Ask Claude to explain quantum computing while you're driving — just tap the mic and ask" />
-          <FunPromptTile emoji="🧪" text="Quiz me on angel investing terminology — test what you know" />
-          <FunPromptTile emoji="💭" text="Have Claude brainstorm Commission Army marketing ideas — just talk through it out loud" />
-          <FunPromptTile emoji="🎭" text="Practice a pitch with Claude playing the role of a skeptical investor — it'll push back on your weak points" />
-        </div>
-      </Accordion>
-
-      <Accordion title="Things You Didn't Know Claude Could Do" id="cs-capabilities" progress={progress} toggleProgress={toggleProgress}>
-        <ul>
-          <li><strong>Read and analyze a PDF</strong> — "Here's a pitch deck — what are the strengths and weaknesses?"</li>
-          <li><strong>Analyze a spreadsheet</strong> — "Here's my expenses — where am I overspending?"</li>
-          <li><strong>Write code</strong> — This is how Philip built the Commission Army MVP</li>
-          <li><strong>Create professional presentations</strong> — Word documents, spreadsheets, slide decks</li>
-          <li><strong>Help you write emails in a specific tone</strong> — formal, casual, diplomatic, firm</li>
-          <li><strong>Translate between languages</strong> — useful for your Cuba trips</li>
-          <li><strong>Explain medical test results in plain English</strong> — upload a PDF of your lab results and ask Claude to explain what everything means</li>
-        </ul>
-      </Accordion>
-
-      <Accordion title="Fun Prompts to Try" id="cs-fun" progress={progress} toggleProgress={toggleProgress}>
-        <PromptBlock text={`I'm a photographer who leads trips to Cuba. Write me a 60-second elevator pitch for my photography workshops that I could give at a networking event.`} />
-        <PromptBlock text={`I founded one of Silicon Valley's oldest angel investment groups. Write me a short bio for LinkedIn that sounds credible but not stuffy.`} />
-        <PromptBlock text={`Explain cryptocurrency to me like I'm a smart person who just hasn't been paying attention to it.`} />
-        <PromptBlock text={`I'm 77 and I want to start posting on Instagram. Give me 10 post ideas based on my interests: photography, classic cars, Cuba travel, and angel investing.`} />
-      </Accordion>
-
-      <Accordion title='The "Wow Moment" — Try This One' id="cs-wow" progress={progress} toggleProgress={toggleProgress}>
-        <p>This single prompt is designed to genuinely impress you. Paste it into Claude and see what comes back.</p>
-        <PromptBlock text={`I want you to analyze my professional background and tell me what business opportunities I'm missing.
-
-Here's my background: I'm Roger King, 77 years old. I founded Bay Angels in 1998 — one of Silicon Valley's oldest angel investment networks. I've personally reviewed thousands of pitch decks over 30 years. I've judged startup competitions on three continents (Beijing, Seoul, Tokyo, Prague, Athens, Havana). I've been published in Forbes and Fortune and appeared on CNN multiple times discussing startup culture. I built a recruiting company (ChiefPeople) to 135 employees before the dotcom crash. I'm currently developing a startup called Commission Army (a referral marketplace) and I offer pitch coaching through a venture called Pitch to an Angel.
-
-Based on this background, what are the top 5 business opportunities I should be pursuing that I might not have considered? Think creatively — consider speaking, publishing, consulting, digital products, partnerships, and anything else that leverages my unique background. For each opportunity, estimate the potential revenue and explain why it's a good fit.`} />
-        <div className="callout">
-          <div className="callout-label">What to expect</div>
-          <p>Claude will analyze your entire background and suggest specific, actionable business opportunities with revenue estimates. It's like hiring a strategy consultant for a 60-second conversation. This is the kind of thing that shows the real power of AI.</p>
-        </div>
-      </Accordion>
-
-      <Accordion title="Photo Gallery — A Life Well Lived" id="cs-gallery" progress={progress} toggleProgress={toggleProgress}>
-        <div style={{display:'grid',gap:'16px',gridTemplateColumns:'1fr 1fr'}}>
-          <ContentPhoto src="images/roger-bay-angels.jpg" alt="Roger as the Bay Angel" caption="The original Bay Angel" />
-          <ContentPhoto src="images/roger-julie-canoe.jpg" alt="Roger and Julie" caption="Adventures with Julie" />
-          <ContentPhoto src="images/roger-with-family.jpg" alt="Roger with family" caption="The whole crew" />
-          <ContentPhoto src="images/roger-family-toast.jpg" alt="Family toast" caption="Cheers to family" />
-          <ContentPhoto src="images/roger-and-mike.jpg" alt="Roger and Mike" caption="Roger & Mike" />
-          <ContentPhoto src="images/roger-gangster-suit.jpg" alt="Roger in a suit" caption="Looking sharp" />
-        </div>
-      </Accordion>
-    </SectionPage>
-  );
-}
-
-// ==================== LANDING PAGE ====================
-function LandingPage({ onNavigate }) {
-  return (
-    <div className="page-active">
-      <div className="hero grain">
-        <div className="hero-bg">
-          <img src="images/roger-bay-angels.jpg" alt="Roger King — The Bay Angel" />
-        </div>
-        <div className="hero-content">
-          <h1 className="stagger-1">Hey Roger.</h1>
-          <p className="hero-subtitle stagger-2">Welcome to your personal guide to AI, social media, and technology.</p>
-          <p className="hero-subtitle stagger-3" style={{fontSize:'clamp(0.95rem, 2vw, 1.1rem)', marginTop:'4px'}}>Take it at your own pace. There's no rush.</p>
-          <p className="hero-from stagger-4">Built for you by Philip</p>
-        </div>
-        <div className="hero-scroll-hint stagger-5" onClick={() => document.querySelector('.cards-section')?.scrollIntoView({ behavior: 'smooth' })}>
-          {Icons.chevDown}
-        </div>
-      </div>
-
-      <div className="cards-section">
-        <div className="cards-section-title">Your Sections</div>
-        <div className="cards-grid">
-          {SECTIONS.map((s, i) => (
-            <div
-              key={s.id}
-              className={`section-card ${s.colorClass} stagger-${i + 2}`}
-              onClick={() => onNavigate(s.id)}
-            >
-              <div className="card-icon"><span>{s.icon}</span></div>
-              <div className="card-text">
-                <div className="card-label">{s.label}</div>
-                <div className="card-title">{s.title}</div>
-                <p className="card-desc">{s.subtitle}</p>
-              </div>
-              <div className="card-arrow">{Icons.chevRight}</div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="philip-note">
-        <div className="philip-note-label">A note from Philip</div>
-        <p>[Philip's personal message will go here]</p>
-      </div>
-
-      <CameraDivider />
-
-      <footer style={{textAlign:'center',padding:'20px 24px 40px',color:'var(--text-muted)',fontSize:'14px'}}>
-        <p style={{marginBottom:'4px'}}>Made with love, 2026</p>
-      </footer>
-    </div>
-  );
-}
-
-// ==================== APP SHELL ====================
-function App() {
-  const [page, setPage] = useState(() => {
-    const hash = window.location.hash.replace('#', '');
-    return hash || 'home';
-  });
-  const [progress, toggleProgress] = useProgress();
-
-  useEffect(() => {
-    const handleHash = () => {
-      const hash = window.location.hash.replace('#', '');
-      if (hash) setPage(hash);
-    };
-    window.addEventListener('hashchange', handleHash);
-    return () => window.removeEventListener('hashchange', handleHash);
-  }, []);
-
-  const navigate = useCallback((id) => {
-    setPage(id);
-    window.location.hash = id;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, []);
-
-  const goHome = useCallback(() => {
-    setPage('home');
-    window.location.hash = 'home';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, []);
-
-  const sectionMap = {
-    'getting-started': GettingStartedSection,
-    'ai-personal': AIPersonalSection,
-    'ai-professional': AIProSection,
-    'social-personal': SocialPersonalSection,
-    'social-professional': SocialProSection,
-    'cool-stuff': CoolStuffSection,
-  };
-
-  const currentSection = SECTIONS.find(s => s.id === page);
-  const SectionComponent = sectionMap[page];
-
-  // Determine active nav tab
-  const activeNav = page === 'home' ? 'home'
-    : page === 'getting-started' ? 'getting-started'
-    : page.startsWith('ai-') ? 'ai-personal'
-    : page.startsWith('social-') ? 'social-personal'
-    : page === 'cool-stuff' ? 'cool-stuff'
-    : 'home';
-
-  return (
-    <>
-      {/* Desktop Sidebar */}
-      <nav className="sidebar">
-        <div className="sidebar-logo" onClick={goHome}>Roger's Guide</div>
-        <div className="sidebar-subtitle">AI, Social Media & Technology</div>
-        <button className={`sidebar-link ${page === 'home' ? 'active' : ''}`} onClick={goHome}>
-          {Icons.home}<span>Home</span>
-        </button>
-        <div className="sidebar-divider" />
-        {SECTIONS.map(s => (
-          <button
-            key={s.id}
-            className={`sidebar-link ${page === s.id ? 'active' : ''}`}
-            onClick={() => navigate(s.id)}
-          >
-            <span style={{fontSize:'18px',width:'20px',textAlign:'center'}}>{s.icon}</span>
-            <span>{s.title}</span>
-          </button>
-        ))}
-        <div className="sidebar-footer">
-          <p>Built with love by Philip.<br />Powered by Claude.</p>
-        </div>
-      </nav>
-
-      {/* Main Content */}
-      <main className="main-content">
-        {page === 'home' && <LandingPage onNavigate={navigate} />}
-        {SectionComponent && currentSection && (
-          <SectionComponent
-            section={currentSection}
-            onBack={goHome}
-            progress={progress}
-            toggleProgress={toggleProgress}
-          />
-        )}
-      </main>
-
-      {/* Mobile Bottom Nav */}
-      <nav className="mobile-nav">
-        {NAV_ITEMS.map(item => (
-          <button
-            key={item.id}
-            className={`mobile-nav-btn ${activeNav === item.id ? 'active' : ''}`}
-            onClick={() => item.id === 'home' ? goHome() : navigate(item.id)}
-          >
-            {item.icon}
-            <span>{item.label}</span>
-          </button>
-        ))}
-      </nav>
-    </>
-  );
-}
-
-// ==================== MOUNT ====================
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<App />);
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
 </script>
 </body>
 </html>

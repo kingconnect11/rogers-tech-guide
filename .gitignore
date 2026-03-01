@@ -1,6 +1,5 @@
 .DS_Store
-/Images/
 *.heic
 *.mov
 .playwright-mcp/
-*.png
+.vercel
