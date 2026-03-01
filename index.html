@@ -62,7 +62,7 @@ img{max-width:100%;height:auto;display:block}
 /* HERO */
 .hero{position:relative;min-height:85vh;display:flex;flex-direction:column;justify-content:center;padding:60px 24px 40px;overflow:hidden}
 .hero-bg{position:absolute;top:0;left:0;right:0;bottom:0;z-index:0}
-.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center 20%}
+.hero-bg img{width:100%;height:100%;object-fit:cover}
 .hero-bg::after{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(to bottom,rgba(26,39,68,0.55) 0%,rgba(26,39,68,0.70) 50%,rgba(26,39,68,0.88) 100%)}
 .hero-content{position:relative;z-index:1;max-width:var(--content-max);margin:0 auto;text-align:center}
 .hero h1{color:#fff;font-size:clamp(2.2rem,6vw,3.6rem);margin-bottom:16px;font-weight:700;text-shadow:0 2px 12px rgba(0,0,0,0.2)}
@@ -271,6 +271,19 @@ img{max-width:100%;height:auto;display:block}
 .s7{animation:fadeInUp .6s ease forwards;animation-delay:.7s;opacity:0}
 .s8{animation:fadeInUp .6s ease forwards;animation-delay:.8s;opacity:0}
 
+/* FOCAL POINT EDIT MODE */
+.fp-edit-banner{position:fixed;top:0;left:0;right:0;z-index:9999;background:var(--navy);color:#fff;text-align:center;padding:10px 20px;font-size:14px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:12px}
+.fp-edit-banner button{padding:6px 16px;border:1px solid rgba(255,255,255,0.3);border-radius:6px;background:rgba(255,255,255,0.1);color:#fff;font-size:13px;font-weight:600;cursor:pointer}
+.fp-edit-banner button:hover{background:rgba(255,255,255,0.2)}
+.fp-edit-banner .fp-done{background:var(--sage);border-color:var(--sage)}
+.fp-container{position:relative;cursor:crosshair!important}
+.fp-container img{cursor:crosshair!important}
+.fp-crosshair{position:absolute;width:28px;height:28px;border:2px solid #fff;border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;box-shadow:0 0 0 2px rgba(0,0,0,0.4),inset 0 0 0 1px rgba(0,0,0,0.2);z-index:10}
+.fp-crosshair::before,.fp-crosshair::after{content:'';position:absolute;background:#fff;box-shadow:0 0 2px rgba(0,0,0,0.4)}
+.fp-crosshair::before{width:2px;height:10px;top:50%;left:50%;transform:translate(-50%,-50%)}
+.fp-crosshair::after{width:10px;height:2px;top:50%;left:50%;transform:translate(-50%,-50%)}
+.fp-label{position:absolute;bottom:8px;left:8px;background:rgba(0,0,0,0.7);color:#fff;font-size:11px;padding:3px 8px;border-radius:4px;pointer-events:none;z-index:10;font-family:'JetBrains Mono',monospace}
+
 @media(min-width:640px){.cards-grid{grid-template-columns:1fr 1fr}.pcards{grid-template-columns:1fr 1fr}.fpg{grid-template-columns:1fr 1fr}}
 @media(min-width:1024px){.mobile-nav{display:none}.sidebar{display:flex}.main-content{margin-left:var(--sidebar-width);padding-bottom:60px}.hero{min-height:80vh}.shero{height:340px}.shero-ov{padding:40px}.sbody{padding:40px}.cards-section{padding:60px 40px 80px}.cards-grid{grid-template-columns:1fr 1fr;gap:20px}}
 @media(min-width:1200px){.cards-grid{grid-template-columns:1fr 1fr 1fr}}
@@ -283,6 +296,100 @@ img{max-width:100%;height:auto;display:block}
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 <script type="text/babel">
 const {useState,useEffect,useRef,useCallback} = React;
+
+/* ===== FOCAL POINT SYSTEM ===== */
+const EDIT_MODE = new URLSearchParams(window.location.search).has('edit');
+
+// Default focal points (x%, y%) — edit these or use ?edit mode to set visually
+const DEFAULT_FOCAL = {
+  'images/roger-bay-angels.jpg': '50% 25%',
+  'images/roger-cool-glasses.jpg': '50% 30%',
+  'images/roger-julie-canoe.jpg': '50% 35%',
+  'images/roger-networking.jpg': '50% 35%',
+  'images/roger-with-camera.jpg': '60% 25%',
+  'images/roger-excited-panel.jpg': '50% 30%',
+  'images/roger-julie-car-show.jpg': '50% 30%',
+  'images/roger-gangster-suit.jpg': '50% 20%',
+  'images/roger-bay-angels-panel.jpg': '50% 30%',
+  'images/roger-with-family.jpg': '50% 35%',
+  'images/roger-family-toast.jpg': '50% 30%',
+  'images/roger-and-sons.jpg': '50% 25%',
+  'images/roger-and-mike.jpg': '50% 30%',
+  'images/family-property.jpg': '50% 40%',
+};
+
+function getSavedFocal() {
+  try { return JSON.parse(localStorage.getItem('rg-focal') || '{}'); } catch { return {}; }
+}
+
+function getFocal(src) {
+  const saved = getSavedFocal();
+  // Extract filename from src
+  const key = src.replace(/^\.?\/?/, '');
+  return saved[key] || DEFAULT_FOCAL[key] || '50% 50%';
+}
+
+function saveFocal(src, x, y) {
+  const saved = getSavedFocal();
+  const key = src.replace(/^\.?\/?/, '');
+  saved[key] = `${Math.round(x)}% ${Math.round(y)}%`;
+  localStorage.setItem('rg-focal', JSON.stringify(saved));
+  return saved[key];
+}
+
+// FocalImage — applies object-position from config, editable in ?edit mode
+function FocalImage({src, alt, className, style, loading}) {
+  const [pos, setPos] = useState(() => getFocal(src));
+  const [clicking, setClicking] = useState(false);
+  const containerRef = useRef(null);
+
+  const handleClick = (e) => {
+    if (!EDIT_MODE) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    const newPos = saveFocal(src, x, y);
+    setPos(newPos);
+  };
+
+  const imgStyle = { ...style, objectFit: 'cover', objectPosition: pos, width: '100%', height: '100%' };
+  const [px, py] = pos.split(' ');
+
+  if (EDIT_MODE) {
+    return (
+      <div ref={containerRef} className="fp-container" style={{position:'relative',width:'100%',height:'100%',overflow:'hidden'}} onClick={handleClick}>
+        <img src={src} alt={alt} className={className} style={imgStyle} loading={loading || 'lazy'} />
+        <div className="fp-crosshair" style={{left: px, top: py}} />
+        <div className="fp-label">{pos}</div>
+      </div>
+    );
+  }
+
+  return <img src={src} alt={alt} className={className} style={imgStyle} loading={loading || 'lazy'} />;
+}
+
+// Edit mode banner
+function EditBanner() {
+  if (!EDIT_MODE) return null;
+  const exportConfig = () => {
+    const saved = getSavedFocal();
+    const text = JSON.stringify(saved, null, 2);
+    navigator.clipboard.writeText(text);
+    alert('Focal points copied to clipboard! Paste into DEFAULT_FOCAL in index.html to make permanent.');
+  };
+  const resetAll = () => {
+    localStorage.removeItem('rg-focal');
+    window.location.reload();
+  };
+  return (
+    <div className="fp-edit-banner">
+      <span>Focal Point Editor — click on any image where Roger's face is</span>
+      <button onClick={exportConfig}>Export Config</button>
+      <button onClick={resetAll}>Reset All</button>
+      <button className="fp-done" onClick={() => { window.location.search = ''; }}>Done</button>
+    </div>
+  );
+}
 
 /* ===== ICONS ===== */
 const I={
@@ -355,7 +462,7 @@ const copy=async()=>{try{await navigator.clipboard.writeText(text);setC(true);se
 return(<div className={`fpt ${c?'cop':''}`} onClick={copy}><span className="fti">{emoji}</span><div><div className="ftt">{text}</div><div className="fth">{c?'✓ Copied!':'Tap to copy'}</div></div></div>);
 }
 
-function CPhoto({src,alt,caption}){return(<div className="cphoto"><img src={src} alt={alt} loading="lazy"/>{caption&&<div className="cphoto-cap">{caption}</div>}</div>)}
+function CPhoto({src,alt,caption}){return(<div className="cphoto"><FocalImage src={src} alt={alt} loading="lazy" style={{height:'auto',objectFit:'contain'}}/>{caption&&<div className="cphoto-cap">{caption}</div>}</div>)}
 
 /* Post Card with copy-to-clipboard caption */
 function PostCard({img,alt,title,platforms,caption,hashtags,bizBenefits}){
@@ -364,7 +471,7 @@ const fullText=caption+(hashtags?'\n\n'+hashtags:'');
 const copy=async()=>{try{await navigator.clipboard.writeText(fullText);setC(true);setTimeout(()=>setC(false),2000)}catch{}};
 return(
 <div className="post-card">
-{img&&<div className="post-card-img"><img src={img} alt={alt} loading="lazy"/></div>}
+{img&&<div className="post-card-img"><FocalImage src={img} alt={alt} loading="lazy"/></div>}
 <div className="post-card-body">
 <h4>{title}</h4>
 <div className="post-platforms">{platforms.map((p,i)=><span key={i} className={`post-plat-tag ${p.toLowerCase().replace(/\s/g,'')}`}>{p}</span>)}</div>
@@ -380,7 +487,7 @@ return(
 
 function SPage({section,onBack,children}){
 useEffect(()=>{window.scrollTo({top:0,behavior:'smooth'})},[section.id]);
-return(<div className="section-page"><div className="shero"><img src={section.img} alt={section.alt} loading="eager"/><div className="shero-ov"><div className="shero-lbl">{section.label}</div><h1 className="shero-ttl">{section.title}</h1></div></div><div className="sbody"><button className="back-btn" onClick={onBack}>{I.chevL} All Sections</button>{children}</div></div>);
+return(<div className="section-page"><div className="shero"><FocalImage src={section.img} alt={section.alt} loading="eager"/><div className="shero-ov"><div className="shero-lbl">{section.label}</div><h1 className="shero-ttl">{section.title}</h1></div></div><div className="sbody"><button className="back-btn" onClick={onBack}>{I.chevL} All Sections</button>{children}</div></div>);
 }
 
 /* ===== SECTION 1: GETTING STARTED ===== */
@@ -759,7 +866,7 @@ function S7({section,onBack,prog,toggle}){return(<SPage section={section} onBack
 function Landing({onNav}){return(
 <div>
 <div className="hero">
-<div className="hero-bg"><img src="images/roger-bay-angels.jpg" alt="Roger King"/></div>
+<div className="hero-bg"><FocalImage src="images/roger-bay-angels.jpg" alt="Roger King"/></div>
 <div className="hero-content">
 <h1 className="s1">Hey Roger.</h1>
 <p className="hero-sub s2">Welcome to your personal guide to AI, social media, and technology.</p>
@@ -797,7 +904,8 @@ const Comp=MAP[page];
 const activeNav=page==='home'?'home':page==='getting-started'?'getting-started':page.startsWith('ai-')?'ai-personal':page.startsWith('social-')?'social-personal':page==='travel'?'travel':page==='cool-stuff'?'cool-stuff':'home';
 
 return(<>
-<nav className="sidebar">
+<EditBanner/>
+<nav className="sidebar" style={EDIT_MODE?{top:'44px'}:{}}>
 <div className="sidebar-logo" onClick={home}>Roger's Guide</div>
 <div className="sidebar-sub">AI, Social Media & Technology</div>
 <button className={`slink ${page==='home'?'active':''}`} onClick={home}>{I.home}<span>Home</span></button>
