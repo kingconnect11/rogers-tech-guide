@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="color-scheme" content="light">
+<title>Workbook Maker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/kit/kit.css">
+<style>
+.fields{display:grid;gap:12px}
+@media (min-width:640px){.fields.two{grid-template-columns:1fr 1fr}}
+label.f{display:block;font-weight:700;font-size:15px;margin:0 0 4px}
+.in{width:100%;font:inherit;font-size:17px;padding:10px 12px;border:1.5px solid #d8ccb9;border-radius:10px;background:#fff;color:var(--ink);min-height:46px}
+textarea.in{min-height:140px;font-family:'JetBrains Mono',ui-monospace,Menlo,monospace;font-size:14px}
+.tabs{display:flex;gap:8px;margin:0 0 14px;flex-wrap:wrap}
+.tabs button{min-height:44px;padding:8px 16px;border-radius:999px;border:2px solid var(--ink);background:#fff;font:inherit;font-weight:700;cursor:pointer}
+.tabs button[aria-pressed="true"]{background:var(--ink);color:#fff}
+.err{color:var(--red);font-weight:600}
+.wb + .wb{margin-top:30px}
+@media print{.wb{break-before:page}.wb:first-child{break-before:auto}}
+</style>
+</head>
+<body>
+<div class="bar"><a href="/#build">Back to Roger's Guide</a><button class="btn ghost" id="printBtn" type="button" hidden>Print workbooks</button></div>
+<div class="wrap">
+
+<div class="no-print">
+  <p class="eyebrow">Kit</p>
+  <h1>Workbook maker</h1>
+  <p class="lead">Personal pitch workbooks from a few details per founder: one at a time, or a whole cohort from their sign-up spreadsheet. Then print them, or save as one PDF.</p>
+  <div class="note"><p>Nothing typed here leaves this page or is saved. For a deeper workbook built from a founder's full intake or deck, use the "Make their personal workbook" prompt on the guide's ChatGPT tab; this maker is for speed and for groups.</p></div>
+
+  <div class="tabs" role="group" aria-label="How many founders">
+    <button type="button" data-mode="one" aria-pressed="true">One founder</button>
+    <button type="button" data-mode="many" aria-pressed="false">A whole cohort</button>
+  </div>
+
+  <form id="one" class="card" autocomplete="off">
+    <div class="fields two">
+      <div><label class="f" for="name">Founder's name</label><input class="in" id="name" required placeholder="For example: Alex Rivera"></div>
+      <div><label class="f" for="company">Company</label><input class="in" id="company" required placeholder="For example: Harbor Health"></div>
+    </div>
+    <div style="margin-top:12px"><label class="f" for="what">What they do, in one line</label><input class="in" id="what" placeholder="For example: fills cancelled clinic appointments from a waitlist"></div>
+    <div style="margin-top:12px"><label class="f" for="opening">Their current opening line (optional)</label><input class="in" id="opening" placeholder="Exactly as they say it today"></div>
+    <div class="fields two" style="margin-top:12px">
+      <div><label class="f" for="stage">Stage</label><select class="in" id="stage"><option>Pre-seed</option><option selected>Seed</option><option>Series A</option></select></div>
+      <div><label class="f" for="event">Next pitch is</label><select class="in" id="event"><option>Demo day</option><option>Angel group</option><option>Investor meeting</option><option>Competition</option></select></div>
+      <div><label class="f" for="date">Date (optional)</label><input class="in" id="date" placeholder="For example: 4 December"></div>
+      <div><label class="f" for="slot">Slot length in minutes</label><input class="in" id="slot" inputmode="numeric" value="5"></div>
+      <div><label class="f" for="raise">Raising (optional)</label><input class="in" id="raise" placeholder="For example: $1.5 million"></div>
+      <div><label class="f" for="proof">Their strongest proof (optional)</label><input class="in" id="proof" placeholder="For example: 40 clinics, 6 in 10 slots filled"></div>
+    </div>
+    <p style="margin-top:14px"><button class="btn" type="submit">Make the workbook</button></p>
+  </form>
+
+  <div id="many" class="card" hidden>
+    <p>Paste rows from the sign-up spreadsheet (copy straight from Google Sheets or Excel, or a CSV). The first row must be the headings below, in any order. Only <strong>name</strong> and <strong>company</strong> are required.</p>
+    <p class="copybox" style="margin:0 0 12px">name, company, what, opening, stage, event, date, slot, raise, proof</p>
+    <label class="f" for="rows">Rows</label>
+    <textarea class="in" id="rows" placeholder="name&#9;company&#9;what&#9;stage&#9;slot"></textarea>
+    <p id="rowsErr" class="err" role="alert"></p>
+    <div class="row" style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn" id="makeMany" type="button">Make the workbooks</button><button class="btn ghost" id="sample" type="button">Fill in a sample</button></div>
+  </div>
+</div>
+
+<div id="out" aria-live="polite"></div>
+</div>
+
+<script>
+(function () {
+'use strict';
+function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+
+var AUDIENCE = {
+  'Demo day': 'A demo day room is mostly angels, many of them former operators. You get one short pitch and few questions, so the room decides from what you say, not from a conversation. The goal is that someone walks up to you afterward.',
+  'Angel group': 'An angel group screening committee hears many companies in one sitting and decides in minutes whether to invite you back. They are checking whether you are fundable, whether you are coachable, and whether they understood you.',
+  'Investor meeting': 'One investor, or a small partnership, with time to interrupt. Expect questions from the first minute. The goal is a second meeting, so leave them with something they want to check.',
+  'Competition': 'A judging panel with a scoring sheet, often from different backgrounds. They score clarity, the size of the opportunity, the team and the presentation itself. Make every part easy to score.'
+};
+var LISTEN = {
+  'Pre-seed': ['Is the problem real, and have you talked to the people who have it?', 'Why is this team the one to solve it?', 'What will this money prove, and by when?'],
+  'Seed': ['Do customers pay, and how quickly do they decide?', 'Is this a company, or a feature that a bigger player adds next year?', 'What milestone does this round reach, and what will the next round need to see?'],
+  'Series A': ['Are growth and retention strong month after month?', 'Where does the next dollar of growth come from, and what does it cost?', 'Why is now the moment for a larger round?']
+};
+var QUESTIONS = {
+  'Pre-seed': ['Who has paid you, or promised to, and how do you know they will?', 'Why are you the people to build this?', 'What will be true in twelve months that is not true today?'],
+  'Seed': ['How do you find customers today, and what does each one cost you?', 'What stops a bigger company from adding this as a feature?', 'What does this round get you to, and how long does it last?'],
+  'Series A': ['What are your growth and retention by month for the last year?', 'What breaks first when you triple in size?', 'Why raise this much, now?']
+};
+var SPLIT = [['Your first 30 seconds', .1], ['The problem', .2], ['The solution and your proof', .3], ['The market and how you make money', .2], ['The team', .1], ['The ask', .1]];
+
+function clock(sec) { sec = Math.round(sec / 5) * 5; var m = Math.floor(sec / 60), s = sec % 60; return m + ':' + (s < 10 ? '0' : '') + s; }
+function norm(v, list, d) { v = (v || '').trim().toLowerCase(); for (var i = 0; i < list.length; i++) { if (list[i].toLowerCase().indexOf(v) === 0 && v) return list[i]; } return d; }
+
+function workbook(f) {
+  var stage = norm(f.stage, ['Pre-seed', 'Seed', 'Series A'], 'Seed');
+  var event = norm(f.event, ['Demo day', 'Angel group', 'Investor meeting', 'Competition'], 'Demo day');
+  var slot = Math.max(1, Math.min(30, parseFloat(f.slot) || 5));
+  var first = (f.name || '').trim().split(/\s+/)[0] || 'there';
+  var co = esc(f.company);
+  var total = 0;
+  var rows = SPLIT.map(function (p) { var sec = slot * 60 * p[1]; total += sec; return '<tr><td>' + p[0] + '</td><td>' + clock(sec) + '</td><td>' + clock(total) + '</td></tr>'; }).join('');
+  var when = esc(event.toLowerCase()) + (f.date ? ', ' + esc(f.date) : '');
+  return '<article class="wb">' +
+  '<section class="page"><p class="eyebrow">Pitch an Angel</p><h1>' + co + ': your pitch workbook</h1>' +
+  '<p class="lead">Prepared by Roger King for ' + esc(f.name) + ', ahead of your ' + when + '.</p>' +
+  '<p>Do one section a day with a pencil. Bring it to our session, or into the room.</p>' +
+  '<div class="card soft"><p class="eyebrow">You told us</p>' + (f.what ? '<p><strong>What you do:</strong> ' + esc(f.what) + '</p>' : '') + '<p style="margin:0"><strong>Where you are:</strong> ' + esc(stage) + (f.raise ? ', raising ' + esc(f.raise) : '') + '. A ' + slot + '-minute slot.</p></div>' +
+  '</section>' +
+  '<section class="page"><p class="eyebrow">Section 1</p><h2 style="margin-top:0">Your audience</h2><p>' + AUDIENCE[event] + '</p>' +
+  '<p>At ' + esc(stage.toLowerCase()) + ', they are listening for three things:</p><ol>' + LISTEN[stage].map(function (q) { return '<li>' + q + '</li>'; }).join('') + '</ol>' +
+  '<h3>Exercise</h3><p>Write the one sentence you want them to repeat at dinner tonight.</p><div class="write"></div></section>' +
+  '<section class="page"><p class="eyebrow">Section 2</p><h2 style="margin-top:0">Your first 30 seconds</h2><p>You have about 30 seconds before an investor decides whether to lean in.</p>' +
+  (f.opening ? '<p>Your opening today:</p><div class="example">"' + esc(f.opening) + '"</div><p>Read it aloud. Would a stranger know what ' + co + ' does, and why it matters now?</p>' : '') +
+  '<p>A strong opening answers four things in plain words: what goes wrong, what you do about it, your proof, and who you are.</p>' +
+  (f.proof ? '<p>Your strongest proof, from what you told us: <strong>' + esc(f.proof) + '</strong>. Get it into the first 30 seconds.</p>' : '') +
+  '<h3>Write yours</h3><p class="small">What goes wrong. What you do. Your proof. Who you are. Under 30 seconds out loud.</p><div class="write tall"></div></section>' +
+  '<section class="page"><p class="eyebrow">Section 3</p><h2 style="margin-top:0">Problem and solution: get to the point</h2><p>The most common mistake: most of the time on the problem and almost none on the solution. In a ' + slot + '-minute slot, the problem gets ' + clock(slot * 60 * .2) + ' at most.</p>' +
+  '<div class="grid2"><div><h3>The problem, in two sentences</h3><div class="write"></div></div><div><h3>Your solution, in two sentences</h3><div class="write"></div></div></div></section>' +
+  '<section class="page"><p class="eyebrow">Section 4</p><h2 style="margin-top:0">The three questions you will be asked</h2><p>Answer each in two sentences or less. Short answers sound confident.</p>' +
+  QUESTIONS[stage].map(function (q, i) { return '<h3>' + (i + 1) + '. "' + q + '"</h3><div class="write short"></div>'; }).join('') + '</section>' +
+  '<section class="page"><p class="eyebrow">Section 5</p><h2 style="margin-top:0">Your ask</h2><p>Say it in one breath: how much, on what terms, to reach what, by when.</p>' +
+  '<div class="example">"We are raising ' + (f.raise ? esc(f.raise) : '[amount]') + ' on [a SAFE or priced round] to reach [milestone] in [months]."</div><div class="write short"></div></section>' +
+  '<section class="page"><p class="eyebrow">Section 6</p><h2 style="margin-top:0">Your ' + slot + ' minutes, planned</h2><table><tr><th>Part</th><th>Time</th><th>Running total</th></tr>' + rows + '</table>' +
+  '<p>Whatever your strongest point is, spend the most time there.</p>' +
+  '<h3>Practice log</h3><table><tr><th>Date</th><th>Time taken</th><th>One thing to fix</th></tr><tr><td>&nbsp;</td><td></td><td></td></tr><tr><td>&nbsp;</td><td></td><td></td></tr><tr><td>&nbsp;</td><td></td><td></td></tr></table>' +
+  '<h3>Next step</h3><p>' + esc(first) + ', if you would like me to hear the full pitch before your ' + esc(event.toLowerCase()) + ', start at pitchanangel.com.</p>' +
+  '<p class="small">Roger King, Pitch an Angel. Built on Roger\'s five rules: know the audience, create interest, connect the basics, deliver with command, and use the deck as support, not a crutch.</p></section>' +
+  '</article>';
+}
+
+function parseRows(text) {
+  var lines = text.replace(/\r/g, '').split('\n').filter(function (l) { return l.trim(); });
+  if (lines.length < 2) throw new Error('Paste the heading row and at least one founder.');
+  var sep = lines[0].indexOf('\t') >= 0 ? '\t' : ',';
+  function split(line) {
+    if (sep === '\t') return line.split('\t');
+    var out = [], cur = '', q = false;
+    for (var i = 0; i < line.length; i++) {
+      var c = line[i];
+      if (c === '"') { if (q && line[i + 1] === '"') { cur += '"'; i++; } else q = !q; }
+      else if (c === ',' && !q) { out.push(cur); cur = ''; }
+      else cur += c;
+    }
+    out.push(cur); return out;
+  }
+  var head = split(lines[0]).map(function (h) { return h.trim().toLowerCase(); });
+  if (head.indexOf('name') < 0 || head.indexOf('company') < 0) throw new Error('The first row needs headings, including "name" and "company".');
+  return lines.slice(1).map(function (l) {
+    var cells = split(l), o = {};
+    head.forEach(function (h, i) { o[h] = (cells[i] || '').trim(); });
+    return o;
+  }).filter(function (o) { return o.name && o.company; });
+}
+
+var out = document.getElementById('out'), printBtn = document.getElementById('printBtn');
+function show(list) {
+  out.innerHTML = '<p class="no-print small" style="margin:24px 0 12px">' + list.length + ' workbook' + (list.length === 1 ? '' : 's') + ' ready. Use Print workbooks at the top, then Save as PDF to email them.</p>' + list.map(workbook).join('');
+  printBtn.hidden = false;
+  out.scrollIntoView({ behavior: 'smooth' });
+}
+
+document.querySelectorAll('[data-mode]').forEach(function (b) {
+  b.addEventListener('click', function () {
+    var many = b.getAttribute('data-mode') === 'many';
+    document.querySelectorAll('[data-mode]').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+    document.getElementById('one').hidden = many;
+    document.getElementById('many').hidden = !many;
+  });
+});
+document.getElementById('one').addEventListener('submit', function (e) {
+  e.preventDefault();
+  var f = {};
+  ['name', 'company', 'what', 'opening', 'stage', 'event', 'date', 'slot', 'raise', 'proof'].forEach(function (k) { f[k] = document.getElementById(k).value; });
+  show([f]);
+});
+document.getElementById('makeMany').addEventListener('click', function () {
+  var err = document.getElementById('rowsErr'); err.textContent = '';
+  try { var list = parseRows(document.getElementById('rows').value); if (!list.length) throw new Error('No rows with both a name and a company.'); show(list); }
+  catch (e) { err.textContent = e.message; }
+});
+document.getElementById('sample').addEventListener('click', function () {
+  document.getElementById('rows').value = 'name,company,what,opening,stage,event,date,slot,raise,proof\n' +
+    'Alex Rivera,Harbor Health,fills cancelled clinic appointments from a waitlist,"Harbor Health is an AI-powered patient engagement platform",Seed,Demo day,4 December,5,$1.5 million,"40 clinics, 6 in 10 slots filled"\n' +
+    'Sam Okafor,Tidewater Robotics,builds robots that inspect ship hulls underwater,,Pre-seed,Angel group,,10,$750k,two paid pilots with port operators\n' +
+    'Priya Nair,Month End Co,automates month-end close for small accounting firms,,Series A,Investor meeting,,20,$8 million,"$2.1M annual revenue, 140% net retention"';
+});
+printBtn.addEventListener('click', function () { window.print(); });
+})();
+</script>
+</body>
+</html>
