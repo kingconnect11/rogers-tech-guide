@@ -57,6 +57,7 @@ main{max-width:var(--max);margin:0 auto;padding:20px 20px calc(var(--nav-h) + 40
 .tab svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
 .tab[aria-current="page"]{color:var(--ink);background:var(--ivory)}
 .side{display:none}
+@media (max-width:400px){.tab{font-size:12px}.tab svg{width:22px;height:22px}}
 @media (min-width:1000px){
   .tabbar,.topbar{display:none}
   .side{display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;width:var(--side-w);padding:28px 18px;border-right:1px solid var(--line);background:var(--paper);overflow-y:auto}
@@ -154,6 +155,7 @@ textarea.in{min-height:110px;resize:vertical}
 .offer .top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
 .offer .price{font-variant-numeric:lining-nums;font-family:'Playfair Display',serif;font-size:1.7rem;font-weight:700;white-space:nowrap}
 .offer .who{font-size:16px;color:var(--muted);margin:2px 0 10px}
+.launch{color:var(--red);font-weight:700;font-size:16px;margin:6px 0 0}
 .say{font-style:italic;color:var(--ink-2);border-left:3px solid var(--gold);padding-left:12px;margin:12px 0 0}
 
 /* Calculator */
@@ -190,6 +192,25 @@ textarea.in{min-height:110px;resize:vertical}
 .verdict.park{background:var(--red-soft);border:1px solid #f0c9cf}
 .verdict.later{background:var(--gold-soft);border:1px solid #ecd9c2}
 .verdict.wait{background:var(--ivory);border:1px solid var(--line)}
+
+/* Field guide */
+.tbl-wrap{overflow-x:auto;margin:10px 0 16px;border:1px solid var(--line);border-radius:var(--radius-sm);background:#fff}
+.tbl{width:100%;border-collapse:collapse;font-size:17px}
+.tbl th,.tbl td{text-align:left;vertical-align:top;padding:11px 14px;border-top:1px solid var(--line)}
+.tbl thead th{border-top:none;font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);background:var(--ivory)}
+.tbl tbody th{font-weight:700;white-space:normal;min-width:120px}
+ol.steps{list-style:none;counter-reset:s;padding:0;margin:8px 0 16px}
+ol.steps li{counter-increment:s;position:relative;padding:4px 0 12px 50px;min-height:40px}
+ol.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:36px;height:36px;border-radius:50%;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px}
+ol.steps li strong{display:block}
+ol.steps li span{display:block;color:var(--ink-2);font-size:17px}
+a.chapter{display:flex;gap:16px;align-items:center;text-decoration:none;color:inherit}
+a.chapter .n{font-variant-numeric:lining-nums;flex:none;width:44px;height:44px;border-radius:50%;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-family:'Playfair Display',serif;font-size:20px}
+a.chapter .n.dot{background:var(--gold)}
+a.chapter .ct{display:block;font-family:'Playfair Display',serif;font-weight:700;font-size:1.25rem}
+a.chapter .cw{display:block;color:var(--muted);font-size:17px}
+.pager{margin-top:28px;justify-content:space-between}
+.linkback{font-weight:700;text-decoration:none}
 
 /* Timeline */
 .tl{border-left:3px solid var(--line);margin:10px 0 0 10px;padding-left:20px}
@@ -262,19 +283,22 @@ var WEEKS = [
     { id: 'w1c', t: 'Ask George to open two doors for a workshop', d: 'The East Bay SBDC and Innovit. The pitch email is on the ChatGPT tab.' },
     { id: 'w1d', t: 'Agree the Full Program with Philip, Michael and George', d: 'Price, who does what, and how the money splits.' },
     { id: 'w1e', t: 'Give your ChatGPT the new offers file', d: 'Download it from the ChatGPT tab and add it to your Pitch an Angel project.' },
+    { id: 'w1g', t: 'Try voice mode on one real email', d: 'Open your Pitch an Angel project, tap voice, talk it through, then say "Now write it up as an email." Guide, part 3.' },
     { id: 'w1f', t: 'Set up a free booking link with Philip', d: 'Calendly is gone from the website. Until the new link is in, your invite emails ask founders to reply with times.' }
   ]},
   { id: 'w2', title: 'Week 2', dates: '4 to 10 November', ends: '2026-11-11', items: [
     { id: 'w2a', t: 'Run the first Pitch Clinic', d: 'Pick the date with Philip. Six founders, five minutes each, your feedback.' },
     { id: 'w2b', t: 'Reply to every answer within a day', d: 'ChatGPT drafts, you send.' },
     { id: 'w2c', t: 'Send the workshop email to five organizations', d: 'Accelerators, incubators, university programs, small business centers.' },
-    { id: 'w2d', t: 'Close the first Full Program', d: 'Half is paid at the start.' }
+    { id: 'w2d', t: 'Close the first Full Program', d: 'Half is paid at the start.' },
+    { id: 'w2e', t: 'Take one founder end to end with ChatGPT', d: 'Prep packet, session, and the report within 48 hours. Guide, part 3.' }
   ]},
   { id: 'w3', title: 'Week 3', dates: '11 to 17 November', ends: '2026-11-18', items: [
     { id: 'w3a', t: 'Send every written report within 48 hours', d: 'Paste the Zoom transcript into ChatGPT with the report prompt.' },
     { id: 'w3b', t: 'Ask every happy founder for one sentence we can quote', d: 'With their permission, it goes on the website.' },
     { id: 'w3c', t: 'Book December and January workshop dates', d: 'Programs plan their spring cohorts now.' },
-    { id: 'w3d', t: 'Monday 16 November: 20 minutes with Philip on the numbers', d: 'Bring the four numbers from the Plan tab.' }
+    { id: 'w3d', t: 'Monday 16 November: 20 minutes with Philip on the numbers', d: 'Bring the four numbers from the Plan tab.' },
+    { id: 'w3e', t: 'Talk out article 3 and publish it yourself', d: '"You are pitching investors, not selling the product." Guide, part 4.' }
   ]}
 ];
 
@@ -284,6 +308,19 @@ var DAILY = [
   { id: 'handoff', t: 'Hand one job to ChatGPT', d: 'A report, a follow-up, a post. If it does not need you in the room, ChatGPT goes first.' },
   { id: 'log', t: 'Log any payment that came in', d: 'It moves your November number.' }
 ];
+
+/* ---------- launch pricing (same table as pitch-to-an-angel app/lib/pricing.ts) ---------- */
+var LAUNCH_ENDS = new Date('2026-11-30T23:59:59-08:00');
+function launchOn() { return new Date() <= LAUNCH_ENDS; }
+function launchDaysLeft() { return Math.max(0, Math.ceil((LAUNCH_ENDS - new Date()) / 86400000)); }
+var PRICE = {
+  single: ['$495', '$750'], sprint: ['$1,095', '$1,695'], comp: ['$1,495', '$2,295'],
+  deck: ['$395 to $1,500+', '$595 to $2,400+'], full: ['$4,500', '$6,900'],
+  panel: ['$750', '$1,150'], workshop: ['From $2,500', 'From $3,900']
+};
+function pr(k) { return launchOn() ? PRICE[k][0] : PRICE[k][1]; }
+function launchLine(k) { return launchOn() && PRICE[k] ? 'Launch price until 30 November. Then ' + PRICE[k][1].replace('From ', 'from ') + '.' : ''; }
+var LAUNCH_SAY = 'Until the end of November I am at my launch prices. If you pay by the 30th, you keep that price even if we meet in December.';
 
 /* ---------- offers ---------- */
 var RUNGS = [
@@ -307,37 +344,37 @@ var OFFERS = [
     say: 'Let\'s talk for 15 minutes and I will tell you honestly what would help most.' },
   { rung: 2, name: 'Pitch Clinic seat', price: '$149', status: 'soon', who: 'You, plus one guest from the team',
     inc: ['A monthly 90-minute Zoom', 'Six founders pitch for five minutes each and get your feedback', 'Up to 15 more can watch for $49'],
-    best: 'Founders who are not ready to spend $495 yet, and people who learn by watching.',
+    best: 'Founders who are not ready for a full session yet, and people who learn by watching.',
     say: 'Once a month I hear six pitches live. You can take a seat or just watch and learn.' },
   { rung: 2, name: 'Recorded course with a personal workbook', price: '$149', status: 'soon', who: 'You on video, once',
     inc: ['Eight ten-minute lessons', 'A workbook built from their own company', 'Sells while you sleep'],
     best: 'Founders anywhere in the world, and anyone who buys after a workshop.',
     say: 'Everything I teach in a session, in eight short lessons, with a workbook made for your company.' },
-  { rung: 3, name: 'Single Session', price: '$495', status: 'live', who: 'You',
+  { rung: 3, name: 'Single Session', pk: 'single', price: pr('single'), status: 'live', who: 'You',
     inc: ['45 minutes live', 'Written report within 48 hours', '15-minute follow-up within six weeks'],
     best: 'A founder raising soon, with a deck, who wants an honest read.',
     say: 'I will tell you honestly what an investor will notice, and what to fix first.' },
-  { rung: 3, name: 'Three Sessions Sprint', price: '$1,095', status: 'live', who: 'You',
+  { rung: 3, name: 'Three Sessions Sprint', pk: 'sprint', price: pr('sprint'), status: 'live', who: 'You',
     inc: ['Sessions of 45, 45 and 30 minutes over several weeks', 'A written report after each'],
     best: 'A pitch event or investor meetings in the next six weeks, with the pitch still changing.',
     say: 'One pass finds the problems. The second and third make sure they are fixed before it counts.' },
-  { rung: 3, name: 'Comprehensive Review', price: '$1,495', status: 'live', who: 'You and Philip',
+  { rung: 3, name: 'Comprehensive Review', pk: 'comp', price: pr('comp'), status: 'live', who: 'You and Philip',
     inc: ['An hour with you and your written report', 'Philip\'s Strategy and Design Review of the deck', 'A 45-minute follow-up with both of you'],
     best: 'When the deck is as weak as the pitch.',
     say: 'I work on how you pitch. Philip works on the deck. Then we look at it together.' },
-  { rung: 4, name: 'Philip\'s deck reviews and redesign', price: '$395 to $1,500+', status: 'live', who: 'Philip',
-    inc: ['Deck Design Review $395', 'Strategy and Design Review $695, with an hour together', 'Deck Redesign from $1,500, up to 15 slides'],
+  { rung: 4, name: 'Philip\'s deck reviews and redesign', pk: 'deck', price: pr('deck'), status: 'live', who: 'Philip',
+    inc: ['Deck Design Review, slide by slide', 'Strategy and Design Review, with an hour together', 'Deck Redesign, up to 15 slides'],
     best: 'Founders whose story is fine but whose slides get in the way.',
     say: 'Philip goes slide by slide. He has rebuilt founders\' decks and goes further on design than I do.' },
-  { rung: 5, name: 'The Full Program', price: '$4,500', status: 'new', who: 'You, Philip, Michael DeBoard and George Parrish',
-    inc: ['You: four one-hour pitch sessions, a report after each', 'Philip: three sessions on the deck, plus a redesign of up to 15 slides', 'Michael: pricing, a books health check, and the structure of the raise', 'To finish: a mock angel panel with all four of you', 'Six to eight weeks. Half to start, half at the midpoint', 'Founding price for the first three founders, then $5,900'],
+  { rung: 5, name: 'The Full Program', pk: 'full', price: pr('full'), status: 'new', who: 'You, Philip, Michael DeBoard and George Parrish',
+    inc: ['You: four one-hour pitch sessions, a report after each', 'Philip: three sessions on the deck, plus a redesign of up to 15 slides', 'Michael: pricing, a books health check, and the structure of the raise', 'To finish: a mock angel panel with all four of you', 'Six to eight weeks. Half to start, half at the midpoint', 'Launch price for up to three founders'],
     best: 'A serious raise where the pitch, the deck and the numbers all need to be right.',
     say: 'Your pitch, your deck and your numbers, checked by four people before the first investor meeting.' },
-  { rung: 5, name: 'Mock Angel Panel', price: '$750', status: 'new', who: 'You, Philip, Michael and George',
+  { rung: 5, name: 'Mock Angel Panel', pk: 'panel', price: pr('panel'), status: 'new', who: 'You, Philip, Michael and George',
     inc: ['The founder pitches for ten minutes', 'Twenty minutes of real questions, the way a screening committee asks them', 'A scorecard from each panelist within 48 hours'],
     best: 'The week before a pitch event or a big investor meeting.',
     say: 'Pitch to four of us the way a screening committee would hear you, before the day that counts.' },
-  { rung: 6, name: 'Cohort pitch workshop', price: 'From $2,500', status: 'new', who: 'You, with George or Michael as a guest',
+  { rung: 6, name: 'Cohort pitch workshop', pk: 'workshop', price: pr('workshop'), status: 'new', who: 'You, with George or Michael as a guest',
     inc: ['Two hours, Zoom or in person, up to 20 founders', 'Your five rules, three founders pitch live', 'A personal workbook for every founder'],
     best: 'Accelerators, incubators, university programs and small business centers.',
     say: 'I can get your whole cohort ready to pitch in one afternoon, and every founder leaves with their own workbook.' },
@@ -375,9 +412,9 @@ var MESSAGES = [
   { id: 'past', title: 'A past client', when: 'Everyone you have coached. Best first message of all.',
     text: 'Hi [first name], how is the raise going? I have been thinking about [company] since our session. If you are heading into more meetings, I am happy to do a follow-up run-through. And if you know another founder getting ready to raise in the next few months, I would be glad to give them an honest read.' },
   { id: 'network', title: 'Someone in your network', when: 'Lawyers, accountants, bankers, other angels, old recruiting contacts.',
-    text: 'Hi [first name], I am taking on a few founders this month who are getting ready to pitch angel investors. If you know someone raising in the next 90 days, I would be glad to give them an honest read on their pitch before they go in. They can start at pitchanangel.com, or just reply and I will reach out. Thank you.' },
+    text: 'Hi [first name], I am taking on a few founders this month who are getting ready to pitch angel investors. If you know someone raising in the next 90 days, I would be glad to give them an honest read on their pitch before they go in. They can start at pitchanangel.com, or just reply and I will reach out.' + (launchOn() ? ' Until the end of November I am at my launch prices.' : '') + ' Thank you.' },
   { id: 'met', title: 'A founder you met or judged', when: 'Anyone whose pitch you have heard at an event.',
-    text: 'Hi [first name], I enjoyed hearing about [company] at [event]. If you are raising soon, I now coach founders one-on-one on the pitch itself: what lands with angels, what loses them, and how to handle the hard questions. Happy to talk for 15 minutes if it would help.' },
+    text: 'Hi [first name], I enjoyed hearing about [company] at [event]. If you are raising soon, I now coach founders one-on-one on the pitch itself: what lands with angels, what loses them, and how to handle the hard questions. Happy to talk for 15 minutes if it would help.' + (launchOn() ? ' Until the end of November I am at my launch prices, and paying by then keeps that price even if we meet in December.' : '') },
   { id: 'org', title: 'An accelerator or program', when: 'Program directors, SBDC advisors, university entrepreneurship centers.',
     text: 'Hi [first name], I founded Bay Angels in 1997 and have heard hundreds of pitches since. I run a two-hour pitch workshop for founder cohorts: my five rules for an angel pitch, three founders pitching live for feedback, and a workbook for every founder built from their own company. Would it help your [spring cohort or demo day]? I would be glad to send a one-page outline and find a date.' },
   { id: 'next', title: 'A current client, the next step', when: 'Right after a session goes well.',
@@ -396,6 +433,9 @@ var FIELDS = [
   { id: 'next', label: 'Their next pitch', ph: 'Demo day, 4 December' },
   { id: 'org', label: 'An organization (for workshops)', ph: 'East Bay SBDC' }
 ];
+
+var ARTICLE_PROMPT = 'Turn what I just said into an article for pitchanangel.com, in my voice.\n\nTitle: the question a founder would type into Google, under 60 characters. Answer it in the first paragraph. Use 4 to 6 headings, each a follow-up question. Keep my story; remove any founder or company names. 900 to 1,600 words.\n\nEnd with who this is for and an invitation to book at pitchanangel.com/contact. No promises of investment. No em dashes.\n\nThen give me: a 150-character search summary, three other titles, and a LinkedIn post that links to the article. When I approve it, make the publishing ZIP.';
+var CLIPS_PROMPT = 'Here is the transcript of six short answers I recorded. For each one, give me the best 60 seconds with start and end times, a caption under 150 characters, and a LinkedIn post in my voice. Then suggest a posting schedule for the month, one or two a week.\n\n[paste the transcript]';
 
 var PROMPTS = [
   { id: 'five', title: 'Draft today\'s five messages', when: 'Every morning. Takes five minutes.',
@@ -418,6 +458,14 @@ var PROMPTS = [
     body: '{founder} at {company} went quiet after [our call / my invitation / the report]. Write a short, friendly follow-up in my voice, under 60 words, that asks one simple question and makes it easy to say "not now". No pressure, no long dashes.' },
   { id: 'post', title: 'This week\'s LinkedIn post', when: 'Once a week.',
     body: 'TASK: LinkedIn post.\n\nTheme: [one idea, for example "you have 30 seconds before an investor decides to lean in"]\nA moment I saw: [a real moment from a pitch, with no names]\nThe point for founders: [what they should do this week]\n\nWrite it in my voice, 120 to 170 words, short paragraphs, no hashtags, no emojis, no link in the body, no long dashes. Give me two versions with different first lines, plus a one-line first comment with the link https://www.pitchanangel.com' },
+  { id: 'article', title: 'Turn my talk into an article', when: 'After you talk through one founder question for 10 to 15 minutes in voice mode. Guide, part 4.',
+    body: ARTICLE_PROMPT },
+  { id: 'clips', title: 'Find my clips in a recording', when: 'After your monthly batch hour. Guide, part 5.',
+    body: CLIPS_PROMPT },
+  { id: 'night', title: 'After a pitch night: a LinkedIn post', when: 'On the walk back. Use voice mode.',
+    body: 'I just watched [number] pitches at [event]. Here is what kept going wrong, and what I saw: [talk it through].\n\nTurn that into a LinkedIn post in my voice, under 200 words. No founder or company names, no hashtags, no long dashes. Then give me two other opening lines.' },
+  { id: 'findable', title: 'Am I findable? (once a month)', when: 'Ask in a plain chat, not your project, so it answers the way it would for a stranger. Guide, part 4.',
+    body: 'Who coaches startup founders on pitching in the Bay Area? Name specific people and where you found them.' },
   { id: 'record', title: 'Plan a recording', when: 'Before each course lesson. You talk, ChatGPT plans.',
     body: 'I am recording a ten-minute lesson for my Pitch an Angel course on: [topic, for example "the first 30 seconds"].\n\nPlan it the way "Recording a lesson" says in my offers file: the idea in one sentence, why it matters to an investor, one invented example clearly labeled as invented, the fix, and one exercise. Then list five slides with a title and one line each, and a two-sentence close pointing to pitchanangel.com. Write it as notes I can glance at while I talk, not a script to read.' }
 ];
@@ -431,7 +479,7 @@ var QUESTIONS = [
   { id: 'q5', t: 'Does it keep Pitch an Angel and Bay Angels clean? No fee for introducing investors, nothing that touches Bay Angels selection.', key: true },
   { id: 'q6', t: 'Does it fit in your hours this week without pushing out a paying founder?', key: false }
 ];
-var REDIRECT = 'Thank you for thinking of me. I don\'t take fees tied to fundraising or to introductions, and I don\'t take shares for advice. What I do is help founders get their pitch ready for investors. If that would help you, the place to start is a Single Session ($495), or the Full Program if you want your pitch, your deck and your numbers ready together. Happy to set up a short call.';
+var REDIRECT = 'Thank you for thinking of me. I don\'t take fees tied to fundraising or to introductions, and I don\'t take shares for advice. What I do is help founders get their pitch ready for investors. If that would help you, the place to start is a Single Session (' + pr('single') + (launchOn() ? ' at my launch price until the end of November' : '') + '), or the Full Program if you want your pitch, your deck and your numbers ready together. Happy to set up a short call.';
 
 /* ---------- kit ---------- */
 var KIT = [
@@ -450,9 +498,10 @@ var ICONS = {
   plan: '<svg viewBox="0 0 24 24"><path d="M3 17l5-5 4 4 8-8"/><path d="M14 8h6v6"/></svg>',
   offers: '<svg viewBox="0 0 24 24"><path d="M20.6 13.4l-7.2 7.2a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg>',
   ai: '<svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8M8 13h5"/></svg>',
+  guide: '<svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><path d="M9 7h7M9 11h5"/></svg>',
   build: '<svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M17.5 14v7M14 17.5h7"/></svg>'
 };
-var TABS = [['today', 'Today'], ['plan', 'Plan'], ['offers', 'Offers'], ['ai', 'ChatGPT'], ['build', 'Build']];
+var TABS = [['today', 'Today'], ['plan', 'Plan'], ['offers', 'Offers'], ['guide', 'Guide'], ['ai', 'ChatGPT'], ['build', 'Build']];
 
 /* ---------- state helpers ---------- */
 function payments() { return store.get('payments', []); }
@@ -509,8 +558,8 @@ function pageToday() {
   var doneWk = wk.items.filter(function (i) { return c[i.id]; }).length;
   var pays = payments().slice().reverse();
   var intro = store.get('introClosed', false) ? '' :
-    '<div class="card gold"><h3>What changed</h3><p>The first guide taught the tools. This one is your business desk for Pitch an Angel. Five tabs, one job each:</p>' +
-    '<ul class="dots"><li><strong>Today</strong>: your 30 minutes and this week\'s list.</li><li><strong>Plan</strong>: the three-week plan, who to ask, and what to say.</li><li><strong>Offers</strong>: everything we sell, the prices, and the words to use.</li><li><strong>ChatGPT</strong>: prompts to copy, filled in for each founder.</li><li><strong>Build</strong>: the products to make next, with samples.</li></ul>' +
+    '<div class="card gold"><h3>What changed</h3><p>The first guide taught the tools. This one is your business desk for Pitch an Angel. Six tabs, one job each:</p>' +
+    '<ul class="dots"><li><strong>Today</strong>: your 30 minutes and this week\'s list.</li><li><strong>Plan</strong>: the three-week plan, who to ask, and what to say.</li><li><strong>Offers</strong>: everything we sell, the prices, and the words to use.</li><li><strong>Guide</strong>: your field guide: the one rule, the call, ChatGPT, articles and clips.</li><li><strong>ChatGPT</strong>: prompts to copy, filled in for each founder.</li><li><strong>Build</strong>: the products to make next, with samples.</li></ul>' +
     '<p class="small">Your ticks and notes are saved on this device only. Nothing you type here leaves it.</p><button class="btn small ghost" data-act="close-intro" type="button">Got it</button></div>';
 
   return '' +
@@ -520,6 +569,7 @@ function pageToday() {
   '<div class="card"><p class="eyebrow">November target</p>' +
   '<div class="stat"><span class="big">' + money(total) + '</span><span class="muted">in so far. ' + nextTargetLine(total) + '</span></div>' +
   meter(total) +
+  (launchOn() ? '<p class="launch" style="margin:0 0 12px">Launch prices end 30 November, ' + launchDaysLeft() + ' days from now. Say it in every message: paying by the 30th keeps the launch price.</p>' : '') +
   '<details><summary>Log a payment</summary><div class="inner"><div class="fields two">' +
   '<div><label class="f" for="payAmt">Amount</label><input class="in" id="payAmt" inputmode="decimal" placeholder="For example: 495"></div>' +
   '<div><label class="f" for="payWho">From</label><input class="in" id="payWho" placeholder="Founder or company"></div></div>' +
@@ -537,6 +587,8 @@ function pageToday() {
   '<details style="margin-top:10px"><summary>The other weeks</summary><div class="inner">' +
   WEEKS.filter(function (w) { return w.id !== wk.id; }).map(function (w) { return '<p class="eyebrow" style="margin-top:12px">' + esc(w.title) + ', ' + esc(w.dates) + '</p><ul class="clean checks">' + w.items.map(function (i) { return checkItem(i.id, i.t, i.d, c[i.id]); }).join('') + '</ul>'; }).join('') +
   '</div></details></div>' +
+
+  '<div class="card soft"><p class="eyebrow">Your rhythm</p><p style="margin:0"><strong>Monday:</strong> one LinkedIn post, then 20 minutes with Philip. <strong>Friday:</strong> follow up with anyone who went quiet. <strong>Once a month:</strong> talk out one article and record one batch hour. The full week is in <a href="#guide/business">the Guide, part 2</a>.</p></div>' +
 
   '<div class="card warn"><h3>Someone offered you a deal?</h3><p>A fee for finding an investor, shares for advice, a big project with no money attached yet. Before you answer, take the 30-day test. It takes one minute.</p><a class="btn red" href="#check">Take the 30-day test</a></div>' +
 
@@ -565,7 +617,7 @@ function pagePlan() {
 
   return '' +
   '<p class="eyebrow">The plan</p><h1>Three weeks, one plan.</h1>' +
-  '<p class="lead">Pitch an Angel brings in about $1,500 a month from two or three clients. Your prices are right: they sit where coaches with real investor experience charge. What moves the number now is more conversations.</p>' +
+  '<p class="lead">Pitch an Angel brings in about $1,500 a month from two or three clients. Your prices are right: they sit where coaches with real investor experience charge. What moves the number now is more conversations.' + (launchOn() ? ' And launch prices end on 30 November, which gives every message a real reason to act now.' : '') + '</p>' +
 
   '<div class="card soft"><h3>Why messages, not new products, this month</h3><p>New products take weeks to build and sell. Messages to people who already know you work this week. So November is about asking, and December is about building the things on the Build tab, so January sells more without you in the room.</p></div>' +
 
@@ -579,7 +631,7 @@ function pagePlan() {
   '<p class="small">Honest read: the floor is very likely if the messages go out. The goal needs one organization or one Full Program to say yes in time. The stretch is a six-to-eight-week number, not a three-week one.</p>' +
 
   '<h2 class="section" id="calc">The calculator</h2>' +
-  '<div class="card"><p>Tap + for each sale. "Your take" is what reaches you after the team\'s share.</p>' +
+  '<div class="card"><p>Tap + for each sale. "Your take" is what reaches you after the team\'s share. These are launch prices, which apply to anything paid by 30 November.</p>' +
   CALC.map(function (it) {
     var n = cs[it.id] || 0, take = tk[it.id] != null ? tk[it.id] : it.take;
     return '<div class="calc-row"><div><div class="nm">' + esc(it.name) + '</div><div class="sub">' + money(it.price) + ' price, your take ' + money(take) + (it.sub ? '. ' + esc(it.sub) : '') + '</div></div>' +
@@ -619,7 +671,8 @@ function pagePlan() {
 
 function pageOffers() {
   var html = '<p class="eyebrow">What we sell</p><h1>The offers, and the words to use.</h1>' +
-    '<p class="lead">Everything Pitch an Angel sells, from free to the full team. Your prices sit where coaches with real investor experience charge. Lead with the conversation, not the price.</p>';
+    '<p class="lead">Everything Pitch an Angel sells, from free to the full team. Your prices sit where coaches with real investor experience charge. Lead with the conversation, not the price.</p>' +
+    (launchOn() ? '<div class="card warn"><p class="eyebrow" style="color:var(--red)">Launch prices, ' + launchDaysLeft() + ' days left</p><h3>Every price below is a launch price until 30 November.</h3><p>From 1 December they go up by about half. Anyone who pays by 30 November keeps the launch price, even if you meet in December. The date does not move.</p><p class="say" style="margin-bottom:12px">"' + esc(LAUNCH_SAY) + '"</p><p class="small" style="margin:0">Never call the higher price a "regular" price they are saving against. Say what is true: the launch price now, and the price from 1 December.</p></div>' : '');
 
   html += '<div class="card gold"><h3>Which offer fits?</h3><p class="small">Answer three questions about the person in front of you.</p>' + chooser() + '</div>';
 
@@ -629,6 +682,7 @@ function pageOffers() {
     list.forEach(function (o) {
       var st = STATUS[o.status];
       html += '<article class="card offer"><div class="top"><div><h3 style="margin:0">' + esc(o.name) + '</h3><span class="badge ' + st[0] + '">' + st[1] + '</span></div><span class="price">' + esc(o.price) + '</span></div>' +
+        (o.pk && launchLine(o.pk) ? '<p class="launch">' + esc(launchLine(o.pk)) + '</p>' : '') +
         '<p class="who">' + esc(o.who) + '</p><ul class="dots">' + o.inc.map(function (i) { return '<li>' + esc(i) + '</li>'; }).join('') + '</ul>' +
         '<p style="margin:0"><strong>Best for:</strong> ' + esc(o.best) + '</p><p class="say">"' + esc(o.say) + '"</p></article>';
     });
@@ -662,12 +716,12 @@ function chooser() {
     if (st.when && st.when !== 'none') out += '<p style="font-weight:600;margin:0">What needs work?</p>' + opts('what', [['pitch', 'The pitch'], ['deck', 'Pitch and deck'], ['all', 'Pitch, deck and numbers']]);
   }
   var rec = null;
-  if (st.who === 'org') rec = ['Cohort pitch workshop, from $2,500', 'I can get your whole cohort ready to pitch in one afternoon, and every founder leaves with their own workbook.'];
+  if (st.who === 'org') rec = ['Cohort pitch workshop, ' + pr('workshop').toLowerCase(), 'I can get your whole cohort ready to pitch in one afternoon, and every founder leaves with their own workbook.'];
   else if (st.who === 'founder' && st.when === 'none') rec = ['A kind note and an article link', 'Coaching pays off once you have a raise on the calendar and a pitch to work on. When that is true, come back. In the meantime, this article is a good start.'];
-  else if (st.who === 'founder' && st.what === 'all') rec = ['The Full Program, $4,500', 'Your pitch, your deck and your numbers, checked by four people before the first investor meeting.'];
-  else if (st.who === 'founder' && st.what === 'deck') rec = ['Comprehensive Review, $1,495', 'I work on how you pitch. Philip works on the deck. Then we look at it together.'];
-  else if (st.who === 'founder' && st.what === 'pitch' && st.when === 'soon') rec = ['Single Session, $495', 'I will tell you honestly what an investor will notice, and what to fix first.'];
-  else if (st.who === 'founder' && st.what === 'pitch' && st.when === 'later') rec = ['Three Sessions Sprint, $1,095', 'One pass finds the problems. The second and third make sure they are fixed before it counts.'];
+  else if (st.who === 'founder' && st.what === 'all') rec = ['The Full Program, ' + pr('full'), 'Your pitch, your deck and your numbers, checked by four people before the first investor meeting.'];
+  else if (st.who === 'founder' && st.what === 'deck') rec = ['Comprehensive Review, ' + pr('comp'), 'I work on how you pitch. Philip works on the deck. Then we look at it together.'];
+  else if (st.who === 'founder' && st.what === 'pitch' && st.when === 'soon') rec = ['Single Session, ' + pr('single'), 'I will tell you honestly what an investor will notice, and what to fix first.'];
+  else if (st.who === 'founder' && st.what === 'pitch' && st.when === 'later') rec = ['Three Sessions Sprint, ' + pr('sprint'), 'One pass finds the problems. The second and third make sure they are fixed before it counts.'];
   if (rec) out += '<div class="verdict go" style="margin:6px 0 0"><p class="eyebrow" style="color:var(--sage)">Offer</p><h3 style="margin:0 0 6px">' + rec[0] + '</h3><p class="say" style="margin:0">"' + rec[1] + '"</p></div>';
   if (st.who) out += '<p style="margin:10px 0 0"><button class="linkbtn" data-act="choose-reset" type="button">Start again</button></p>';
   return out;
@@ -762,12 +816,177 @@ function pageCheck() {
   '<p><button class="btn ghost small" data-act="check-reset" type="button">Start a new check</button></p>';
 }
 
-var PAGES = { today: pageToday, plan: pagePlan, offers: pageOffers, ai: pageAI, build: pageBuild, check: pageCheck };
-var TITLES = { today: 'Today', plan: 'Plan', offers: 'Offers', ai: 'ChatGPT', build: 'Build', check: 'The 30-day test' };
+/* ---------- the field guide (from the 36-slide deck, kept current here) ---------- */
+var DECK_URL = 'https://claude.ai/artifact/KduqsucwPyg1mzb3Knbudi';
+var CHAPTERS = [
+  { id: 'rule', n: '1', title: 'The one rule', what: 'The question that decides what you do and what ChatGPT does.' },
+  { id: 'business', n: '2', title: 'Your business', what: 'The founder journey, your week, the call, and the golden rules.' },
+  { id: 'chatgpt', n: '3', title: 'ChatGPT, used well', what: 'Projects, voice, good asks, and turning Zoom calls into reports.' },
+  { id: 'articles', n: '4', title: 'Articles and search', what: 'Articles only you could write, and how founders find you.' },
+  { id: 'video', n: '5', title: 'Recording clips', what: 'One hour a month of short clips for LinkedIn and social media.' },
+  { id: 'start', n: '', title: 'Your first 30 days', what: 'One small step a week.' },
+  { id: 'where', n: '', title: 'Where everything lives', what: 'The links to bookmark.' }
+];
+
+function tbl(head, rows) {
+  return '<div class="tbl-wrap"><table class="tbl"><thead><tr>' + head.map(function (h) { return '<th>' + h + '</th>'; }).join('') + '</tr></thead><tbody>' +
+    rows.map(function (r) { return '<tr>' + r.map(function (c, i) { return i === 0 ? '<th scope="row">' + c + '</th>' : '<td>' + c + '</td>'; }).join('') + '</tr>'; }).join('') + '</tbody></table></div>';
+}
+function steps(list) { return '<ol class="steps">' + list.map(function (s) { return '<li><strong>' + s[0] + '</strong>' + (s[1] ? '<span>' + s[1] + '</span>' : '') + '</li>'; }).join('') + '</ol>'; }
+function promptBlock(id, text) { return '<div class="prompt"><pre id="' + id + '">' + esc(text) + '</pre><div class="bar"><button class="btn small" data-act="copy" data-src="' + id + '" type="button">Copy prompt</button><a class="btn small ghost" href="https://chatgpt.com/" target="_blank" rel="noopener">Open ChatGPT</a></div></div>'; }
+
+
+var CHAPTER_HTML = {
+  rule: function () {
+    return '<p class="quote" style="font-size:1.7rem">"Does this need my body or my presence?"</p>' +
+    '<div class="grid2"><div class="card soft"><p class="eyebrow">No</p><h3>Hand it to ChatGPT first.</h3><p style="margin:0">Emails, prep, reports, articles, posts.</p></div>' +
+    '<div class="card ok"><p class="eyebrow" style="color:var(--sage)">Yes</p><h3>ChatGPT still takes part.</h3><p style="margin:0">Before the call, and after it.</p></div></div>' +
+    '<p>Philip\'s words, from his voice memo of 22 October: any work that does not require your physical body or your conscious presence "should be handed off, or at the very least partially augmented by his AI system." And he added: even, probably especially, the things that do need you. Ask this question whenever you are doing a task, or putting one off. You will pick up the tools over weeks and months. The habit of asking is what matters now.</p>' +
+    '<h2 class="section">The rule, in your week</h2>' +
+    tbl(['The task', 'Needs you?', 'ChatGPT\'s part'], [
+      ['A new founder request', 'No', 'Summarizes it and gives a fit read. You decide.'],
+      ['Invites and follow-ups', 'No', 'Drafts the email. You edit and send.'],
+      ['Prepping for a call', 'Partly', 'Builds the prep packet and your questions.'],
+      ['The coaching session', 'Yes', 'Turns the Zoom transcript into the report draft.'],
+      ['An article', 'Your ideas', 'You talk it through. It drafts and shapes it.'],
+      ['A pitch night', 'Yes', 'Turns your notes into a LinkedIn post after.']
+    ]) +
+    '<p class="small">Even the rows marked Yes have a ChatGPT part. You still run the session yourself. ChatGPT handles the writing before and after it.</p>';
+  },
+  business: function () {
+    return '<p>The map of the practice. Prices and what to say about each offer are on the <a href="#offers">Offers tab</a>.</p>' +
+    '<h2 class="section">The founder journey</h2>' +
+    steps([['Promote, every week', 'A post or a pitch night.'], ['Lead, as they come', 'A founder fills in the intake, or you meet them.'], ['Review, within a day', 'Read the request and decide fit.'], ['Invite, the same day', 'Send the invitation. Until the new booking link is in, it asks them to reply with times.'], ['Prep, the day before', 'The prep packet prompt on the ChatGPT tab.'], ['Session, you, live', 'On Zoom.'], ['Report, within 48 hours', 'As the website promises.'], ['Follow-up, at six weeks', 'A check-in, then a testimonial or referral ask.']]) +
+    '<p><strong>Only step 6 needs you in the room.</strong> ChatGPT drafts the writing in every other step, and you approve it.</p>' +
+    '<h2 class="section">Your rhythm</h2>' +
+    tbl(['When', 'What you do'], [
+      ['Monday', 'Post once on LinkedIn. Twenty minutes with Philip on the numbers.'],
+      ['Every day', 'Your 30 minutes on the Today tab. Answer new requests at pitchanangel.com/admin.'],
+      ['Day before a call', 'Prep packet, a short email to the founder, Zoom link ready.'],
+      ['Within 48 hours', 'The written report goes out.'],
+      ['Friday', 'Follow up with anyone who went quiet.'],
+      ['Once a month', 'Talk out one article. Record one hour of clips.']
+    ]) +
+    '<h2 class="section">Your desk</h2>' +
+    '<div class="card"><p><strong>pitchanangel.com/admin.</strong> Sign in with roger@bayangels.com. There is no password: it emails you a link. New founder requests arrive here, and you publish your articles from here.</p><p class="small" style="margin:0">The slide version describes a fuller desk (Today, Founders, Promote, ChatGPT kit, Playbook) and a 7:30 morning email. Those parts switch on once Philip finishes setting them up.</p></div>' +
+    '<h2 class="section">On the call: your five rules</h2>' +
+    steps([['Know the audience', 'Built for these investors, at this stage?'], ['Earn the follow-up', 'Did the first 30 seconds make you want more?'], ['Connect the basics', 'Market, problem, solution, opportunity, in order.'], ['Deliver with command', 'Pacing, composure, time. Lead the room.'], ['Deck as support', 'Does the deck back them up, or replace them?']]) +
+    '<p>Score each from 1 to 5. <strong>Close every session with the top three fixes.</strong> They become the spine of the written report. Graphic design is Philip\'s part, not yours.</p>' +
+    '<h2 class="section">What to ask</h2>' +
+    '<div class="grid2"><div class="card"><h3>Short intro call</h3><ul class="dots"><li>In a sentence or two, what are you building, and for whom?</li><li>What is the next moment you are pitching for?</li><li>Have you pitched investors yet? What happened?</li><li>What would make this a win for you?</li></ul></div>' +
+    '<div class="card"><h3>Paid session</h3><ul class="dots"><li>Give me your first 30 seconds, exactly as you would.</li><li>If I remember one sentence, which should it be?</li><li>What is the ask, and what does the money get you to?</li><li>Which investor question do you dread? Let\'s take it now.</li></ul></div></div>' +
+    '<p class="small">To pressure-test: Why you, and why now? What happens if a well-funded incumbent copies you? What do you know about this market that most people do not? Which slide are you hiding behind?</p>' +
+    '<h2 class="section">Golden rules</h2>' +
+    '<div class="card warn"><ol style="padding-left:1.2em;margin:0"><li>Never promise investment, introductions, or an edge in any selection.</li><li>Never describe a Bay Angels pipeline. Your history is credibility, not a door.</li><li>You read everything before a founder sees it. ChatGPT drafts; you decide.</li><li>The written report goes out within 48 hours. The website promises it.</li><li>You send the emails. Nothing goes out on its own.</li></ol>' +
+    '<p class="small" style="margin:12px 0 0">If a founder asks whether working with you helps them get into Bay Angels, the honest answer is no. You give honest feedback. Rarely, and only when there is a genuine fit, you might make an introduction from your own network, never as part of the paid service.</p></div>';
+  },
+  chatgpt: function () {
+    return '<p>It drafts. You decide. Talk to it the way you would talk to a sharp new assistant. The menus may look a little different on your account; the habits stay the same.</p>' +
+    '<h2 class="section">Pick the right place</h2>' +
+    '<div class="grid2"><div class="card"><h3>A plain chat</h3><p>Quick questions, short explanations, thinking out loud.</p><p class="say" style="margin:0">"What does a seed investor want to see on a traction slide?"</p></div>' +
+    '<div class="card"><h3>Your project, in Work</h3><p>Anything you want finished: a prep packet, a report, an article, a week of posts.</p><p class="say" style="margin:0">"Use these notes to write the report I can review."</p></div></div>' +
+    '<p><strong>Philip\'s rule of thumb:</strong> if you want it finished, open your project and use Work. One conversation per job. A long conversation that drifts gets worse, not better.</p>' +
+    '<h2 class="section">Your Pitch an Angel project</h2>' +
+    steps([['Instructions', 'Who you are, your voice, your golden rules.'], ['Files', 'Your articles file and your offers file today (the offers file is on the ChatGPT tab). Philip adds the rubric, prep, report and LinkedIn playbooks when he finishes the new desk.'], ['Every chat after', 'Starts already knowing your business. You just say the task.']]) +
+    '<h2 class="section">Talk. Don\'t type.</h2>' +
+    '<p class="quote">"It\'s the best way for someone who is not technical."</p><p class="cite" style="margin-top:-6px">Philip, on ChatGPT voice mode</p>' +
+    steps([['Open your Pitch an Angel project.', ''], ['Tap voice and talk as you would to Philip.', ''], ['Ask it to read back what it heard.', ''], ['Then say: "Now write it up as..."', '']]) +
+    '<p class="small">Try it on the walk back from a pitch night: "I just watched six pitches. Two things kept going wrong. Here is what I saw..." Then: "Turn that into a LinkedIn post in my voice, under 200 words."</p>' +
+    '<h2 class="section">How to ask</h2>' +
+    '<p>Ask for an outcome. Give it what it needs. Check what comes back.</p>' +
+    '<div class="msg" style="border-left-color:var(--red)">Vague: "Write something about pitching."<br><span class="small">You get generic advice anyone could write.</span></div>' +
+    '<div class="msg" style="border-left-color:var(--sage)">Clear: "Write a LinkedIn post in my voice, under 200 words, on why founders should reach the solution sooner. Use the story in my notes below. No hashtags. Then give me two other opening lines."</div>' +
+    '<p class="small">When the draft comes back, react the way you would to an assistant: "Shorter." "Less polished, more like me." "Lead with the story."</p>' +
+    '<h2 class="section">From Zoom call to written report</h2>' +
+    steps([['Record', 'Cloud recording with the audio transcript on. Philip sets it once.'], ['Copy', 'On zoom.us, open Recordings and copy the transcript.'], ['Draft', 'Use "Write my session report" on the ChatGPT tab. Paste the transcript under it.'], ['You finish', 'Read, fix, send within 48 hours.']]) +
+    '<p class="small">No transcript? Talk through your notes in voice mode for five minutes. That works too. Tell founders at the start that you record so you can write their report.</p>' +
+    '<h2 class="section">Trust, then check</h2>' +
+    '<div class="grid2"><div class="card"><h3>Check names, numbers, dates</h3><p style="margin:0">It can sound sure and still be wrong.</p></div><div class="card"><h3>Ask for the source</h3><p style="margin:0">"Which source did you use for that?"</p></div><div class="card"><h3>Say when it sounds off</h3><p style="margin:0">"Shorter. Plainer. More like me."</p></div><div class="card"><h3>Keep founders private</h3><p style="margin:0">Their decks and numbers never go public without written permission.</p></div></div>';
+  },
+  articles: function () {
+    return '<p>Founders search before they call. Give them something only you could have written.</p>' +
+    '<div class="card ok"><p class="eyebrow" style="color:var(--sage)">Already live, published by you</p><ul class="dots" style="margin:0"><li><a href="https://www.pitchanangel.com/resources/startup-pitch-timing" target="_blank" rel="noopener">How to pitch your startup to investors: get the timing right</a></li><li><a href="https://www.pitchanangel.com/resources/first-thirty-seconds-startup-pitch" target="_blank" rel="noopener">Help investors understand your startup in the first thirty seconds</a></li></ul></div>' +
+    '<h2 class="section">Why write at all</h2>' +
+    '<ul class="dots"><li><strong>Search rewards steady.</strong> Search engines and AI assistants favor a steady, named author with real credentials.</li><li><strong>One piece, many posts.</strong> Each article gives you weeks of LinkedIn posts and clips.</li><li><strong>Trust before the call.</strong> A founder who has read you already knows how you think.</li></ul>' +
+    '<p class="small">Be patient: a new article can take six to twelve months to rank. One a month, every month.</p>' +
+    '<h2 class="section">The method</h2>' +
+    steps([['Pick one question', 'One a founder actually asked you this month.'], ['Talk for 10 to 15 minutes', 'Your answer, a story from a pitch you watched, what to do instead. Voice mode is perfect for this.'], ['Say the article prompt', 'Below. ChatGPT drafts it.'], ['Edit, then publish it yourself', 'Fix it until it sounds like you. ChatGPT makes the ZIP; you upload it at pitchanangel.com/admin and press Publish.']]) +
+    '<p><strong>The test:</strong> could anyone else have written this? If yes, add a real story from the room. Never a founder\'s name: "a seed-stage founder in climate tech spent four minutes on the team slide."</p>' +
+    '<h2 class="section">The article prompt</h2>' + promptBlock('art-prompt', ARTICLE_PROMPT) +
+    '<h2 class="section">The recipe</h2>' +
+    tbl(['Part', 'What it does'], [['Title', 'The question a founder would type. Under 60 characters.'], ['First paragraph', 'Answers the question straight away.'], ['Headings', 'The follow-up questions, one per section.'], ['One real story', 'From a pitch you watched. No names.'], ['Search summary', 'About 150 characters. Shows under the title in Google.'], ['The close', 'Who this is for, and a link to book at pitchanangel.com/contact.']]) +
+    '<p class="small">Length: 900 to 1,600 words. Link each new article to an earlier one.</p>' +
+    '<h2 class="section">Your next topics</h2>' +
+    '<ol class="steps"><li><strong>You are pitching investors, not selling the product</strong><span>Next, for week 3.</span></li><li><strong>Traction: what actually counts</strong></li><li><strong>What the funding request buys</strong></li><li><strong>Handling investor questions</strong></li></ol>' +
+    '<p class="small">"The first 30 seconds" was the first on your list, and it is already live.</p>' +
+    '<h2 class="section">Showing up in searches</h2>' +
+    '<div class="grid2"><div class="card"><h3>Same words everywhere</h3><p style="margin:0">Name, title and one-line description identical on LinkedIn, the site and Bay Angels.</p></div><div class="card"><h3>A clear LinkedIn headline</h3><p style="margin:0">Say "pitch coach for founders" in plain words, with a link to pitchanangel.com.</p></div><div class="card"><h3>A link from Bay Angels</h3><p style="margin:0">One link from an established site beats any page tweak. Philip adds it, with the line that Pitch an Angel is separate.</p></div><div class="card"><h3>Tell Google</h3><p style="margin:0">Philip submits each new article in Google Search Console.</p></div><div class="card"><h3>Testimonials</h3><p style="margin:0">Ask happy founders for two or three sentences, with permission.</p></div><div class="card"><h3>Keep showing up</h3><p style="margin:0">One article a month. Share each one on LinkedIn.</p></div></div>' +
+    '<h2 class="section">Win the specific searches</h2>' +
+    '<p>Skip broad phrases like "pitch deck". Aim for a person, a place or a format:</p><ul class="dots"><li>pitch coach for startup founders</li><li>pitch feedback from an angel investor</li><li>practice my pitch with an investor</li><li>how to pitch to angel investors</li><li>pitch coaching, Bay Area</li></ul>' +
+    '<p class="small">Examples to test with Philip, not measured search volumes. Once a month, use "Am I findable?" on the ChatGPT tab. Are you named? That is your scorecard.</p>';
+  },
+  video: function () {
+    return '<p>You already own the camera. One hour a month gives you a month of clips. Founders hire a coach they have already heard.</p>' +
+    '<ul class="dots"><li><strong>Your delivery is the proof.</strong> You coach composure and pacing. A minute on camera shows you have both.</li><li><strong>Short clips travel.</strong> They reach people who do not follow you yet.</li><li><strong>LinkedIn first.</strong> That is where founders and investors are. Then reuse the clip elsewhere.</li></ul>' +
+    '<h2 class="section">The batch hour</h2>' +
+    '<div class="grid2"><div class="card"><h3>Set up once</h3><ul class="dots" style="margin:0"><li>Phone upright, at eye level, on a stand.</li><li>Face a window for soft light.</li><li>Quiet room. A small clip-on mic helps.</li><li>Look at the lens, not the screen.</li></ul></div>' +
+    '<div class="card"><h3>Then record</h3><ul class="dots" style="margin:0"><li>Write six founder questions on a card.</li><li>Answer each in about a minute.</li><li>Stumble? Pause and say it again.</li><li>Do not edit. That is the hand-off.</li></ul></div></div>' +
+    '<h2 class="section">The shape of a clip: sixty seconds, four beats</h2>' +
+    tbl(['When', 'What'], [['0 to 3 seconds', 'The hook. "Stop reading your slides."'], ['3 to 45 seconds', 'One point, one story: what you saw in the room, and why it cost the founder.'], ['45 to 55 seconds', 'Do this instead. One action.'], ['Last 5 seconds', 'Sign off. "More at pitchanangel.com."']]) +
+    '<p class="small">The hook is a question a founder asked you, or one blunt line. Never "Hi, I\'m Roger, and today..." It is what you teach founders: make the first 30 seconds count.</p>' +
+    '<h2 class="section">Hand it off</h2>' +
+    '<p>You talk once. The rest is not your job. Paste the transcript into your project with this:</p>' + promptBlock('clips-prompt', CLIPS_PROMPT) +
+    '<p class="small">You get back a caption, a title and a LinkedIn post for each clip, a section for next month\'s article, and a posting schedule. Philip, or an editing app, cuts the clips and adds captions. Many people watch with the sound off.</p>' +
+    '<div class="card soft"><p style="margin:0"><strong>Two for one:</strong> the same morning can record a course lesson. See the <a href="#build">Build tab</a>.</p></div>' +
+    '<h2 class="section">Before anything goes public</h2>' +
+    '<div class="card warn"><ol style="padding-left:1.2em;margin:0"><li>No founder, company or deck named without written permission.</li><li>Nothing that sounds like investment, introductions or Bay Angels access.</li><li>Would you say it to the founder\'s face?</li><li>Captions on, and a link to pitchanangel.com.</li><li>Note it down, to keep your streak.</li></ol></div>';
+  },
+  start: function () {
+    return '<p>You will not use every tool in month one, and you do not need to. The tools come with time. The habit of handing work off is what to build now.</p>' +
+    '<div class="tl">' +
+    '<div class="it"><p class="when">Week 1, to 3 November</p><p><strong>Get set up.</strong> Philip sets up your ChatGPT project files and Zoom transcripts. Try voice mode on one real email.</p></div>' +
+    '<div class="it"><p class="when">Week 2, 4 to 10 November</p><p><strong>One founder, end to end.</strong> Prep packet, session, and the report within 48 hours, with ChatGPT\'s help.</p></div>' +
+    '<div class="it"><p class="when">Week 3, 11 to 17 November</p><p><strong>Your third article.</strong> Talk out "You are pitching investors, not selling the product." Edit the draft and publish it yourself.</p></div>' +
+    '<div class="it"><p class="when">Week 4, 18 to 24 November</p><p><strong>First batch hour.</strong> Record six answers. Post one clip and one LinkedIn post.</p></div>' +
+    '</div><div class="card gold"><p style="margin:0"><strong>Every day:</strong> before any task, ask the one question. Does this need my body or my presence?</p></div>';
+  },
+  where: function () {
+    return tbl(['What', 'Where'], [
+      ['This guide', 'rogers-tech-guide.vercel.app, on your home screen'],
+      ['Your review desk', '<a href="https://www.pitchanangel.com/admin" target="_blank" rel="noopener">pitchanangel.com/admin</a>'],
+      ['Your articles', '<a href="https://www.pitchanangel.com/resources" target="_blank" rel="noopener">pitchanangel.com/resources</a>'],
+      ['Prompts for any founder', '<a href="#ai">The ChatGPT tab</a>'],
+      ['Your offers and prices', '<a href="#offers">The Offers tab</a>'],
+      ['The slide version of this guide', '<a href="' + DECK_URL + '" target="_blank" rel="noopener">On claude.ai</a> (Philip shares it with you)'],
+      ['Social media basics', '<a href="/classic.html">The original guide</a>'],
+      ['Any question', 'Ask your ChatGPT project first. Then Philip.']
+    ]);
+  }
+};
+
+function pageGuide() {
+  var sub = (location.hash.split('/')[1] || '').split('?')[0];
+  var i = -1;
+  CHAPTERS.forEach(function (c, k) { if (c.id === sub) i = k; });
+  if (i < 0) {
+    return '<p class="eyebrow">Your field guide</p><h1>Your business, your AI, and how founders find you.</h1>' +
+      '<p class="lead">The same five parts as the field guide Philip made for you, kept up to date here. Read one part a day. Nothing here is homework.</p>' +
+      CHAPTERS.map(function (c) { return '<a class="card chapter" href="#guide/' + c.id + '">' + (c.n ? '<span class="n">' + c.n + '</span>' : '<span class="n dot"></span>') + '<span><span class="ct">' + esc(c.title) + '</span><span class="cw">' + esc(c.what) + '</span></span></a>'; }).join('') +
+      '<div class="card soft" style="margin-top:24px"><p class="quote" style="margin:0 0 6px">Ask the question. Hand it off. Then do the part only you can do.</p><p style="margin:0">Be in the room with founders.</p></div>' +
+      '<p class="small">If you only have ten minutes, read part 1. It changes how you approach everything else.</p>';
+  }
+  var c = CHAPTERS[i], prev = CHAPTERS[i - 1], next = CHAPTERS[i + 1];
+  return '<p><a href="#guide" class="linkback">All parts</a></p><p class="eyebrow">' + (c.n ? 'Part ' + c.n : 'Getting started') + '</p><h1>' + esc(c.title) + '</h1>' +
+    CHAPTER_HTML[c.id]() +
+    '<div class="row pager">' + (prev ? '<a class="btn ghost small" href="#guide/' + prev.id + '">Back: ' + esc(prev.title) + '</a>' : '') + (next ? '<a class="btn small" href="#guide/' + next.id + '">Next: ' + esc(next.title) + '</a>' : '<a class="btn small" href="#guide">All parts</a>') + '</div>';
+}
+
+var PAGES = { today: pageToday, plan: pagePlan, offers: pageOffers, guide: pageGuide, ai: pageAI, build: pageBuild, check: pageCheck };
+var TITLES = { today: 'Today', plan: 'Plan', offers: 'Offers', guide: 'Field guide', ai: 'ChatGPT', build: 'Build', check: 'The 30-day test' };
 
 /* ---------- render ---------- */
 var main = document.getElementById('main');
-function route() { var h = (location.hash || '#today').slice(1).split('?')[0]; return PAGES[h] ? h : 'today'; }
+function route() { var h = (location.hash || '#today').slice(1).split(/[?\/]/)[0]; return PAGES[h] ? h : 'today'; }
 
 function renderNav(r) {
   var html = TABS.map(function (t) { return '<a class="tab" href="#' + t[0] + '"' + (r === t[0] ? ' aria-current="page"' : '') + '>' + ICONS[t[0]] + '<span>' + t[1] + '</span></a>'; }).join('');

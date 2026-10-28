@@ -27,6 +27,14 @@ Philip's rule for Roger and AI: any work that does not need Roger's body or his 
 
 ## What Pitch an Angel sells
 
+### Launch pricing (until 30 November 2026)
+
+Every paid offer below has a launch price until 30 November and a higher price from 1 December. Founders who pay by 30 November keep the launch price, even if their sessions run into December. The date does not move.
+
+What Roger says: "Until the end of November I am at my launch prices. If you pay by the 30th, you keep that price even if we meet in December."
+
+Never describe the higher price as a "regular" or "normal" price the founder is saving against, and never offer to extend the date. Say what is true: the launch price, and the price from 1 December.
+
 ### Free
 
 - **Articles and LinkedIn posts** by Roger.
@@ -34,17 +42,17 @@ Philip's rule for Roger and AI: any work that does not need Roger's body or his 
 
 ### Sessions with Roger
 
-- **Single Session, $495.** 45 minutes live, a written report within 48 hours, and a 15-minute follow-up within six weeks. For a founder who wants a fast, honest read.
-- **Three Sessions Sprint, $1,095.** Sessions of 45, 45 and 30 minutes over several weeks, a written report after each. For a founder with a pitch event or investor meetings coming who needs more than one pass. A Single Session bought in the last 30 days counts toward it (recommended by the October pricing report; confirm with Philip before offering it).
-- **Comprehensive Review, $1,495.** An hour with Roger and his written report, Philip King's Strategy and Design Review of the deck, and a 45-minute follow-up with both.
+- **Single Session, $495 launch price (then $750).** 45 minutes live, a written report within 48 hours, and a 15-minute follow-up within six weeks. For a founder who wants a fast, honest read.
+- **Three Sessions Sprint, $1,095 launch price (then $1,695).** Sessions of 45, 45 and 30 minutes over several weeks, a written report after each. For a founder with a pitch event or investor meetings coming who needs more than one pass. A Single Session bought in the last 30 days counts toward it (recommended by the October pricing report; confirm with Philip before offering it).
+- **Comprehensive Review, $1,495 launch price (then $2,295).** An hour with Roger and his written report, Philip King's Strategy and Design Review of the deck, and a 45-minute follow-up with both.
 
 ### Deck work with Philip King
 
-- **Deck Design Review, $395.** Slide by slide, with a written report.
-- **Strategy and Design Review, $695.** The review plus an hour with Philip on the deck and the raise.
-- **Deck Redesign, from $1,500.** Philip rebuilds up to 15 slides.
+- **Deck Design Review, $395 launch price (then $595).** Slide by slide, with a written report.
+- **Strategy and Design Review, $695 launch price (then $1,095).** The review plus an hour with Philip on the deck and the raise.
+- **Deck Redesign, from $1,500 launch price (then from $2,400).** Philip rebuilds up to 15 slides.
 
-### The Full Program, $4,500 (new)
+### The Full Program, $4,500 launch price (then $6,900)
 
 Pitch, deck and numbers in one program, six to eight weeks.
 
@@ -52,12 +60,12 @@ Pitch, deck and numbers in one program, six to eight weeks.
 - Philip: a slide-by-slide deck review (design, energy and phrasing, PR view, today's angel market), a redesign of up to 15 slides with one revision, a session on the new deck, and a check-in.
 - Michael DeBoard, fractional CFO: pricing strategy review, a health check of the books with a clean-up plan, and the structure of the raise (round size, instrument, use of funds, runway). Actual bookkeeping clean-up is quoted separately.
 - To finish: a mock angel panel with Roger, Philip, Michael and George Parrish, with a scorecard from each.
-- $4,500 is the founding price for the first three founders. Half to start, half at the midpoint.
+- $4,500 is the launch price, until 30 November and for up to three founders. From 1 December it is $6,900. Half to start, half at the midpoint.
 - Not included: legal, tax or securities advice, and introductions to investors.
 
 ### For accelerators, incubators, universities and small business centers (new)
 
-- **Cohort pitch workshop, from $2,500** for up to 20 founders. Two hours, live on Zoom or in person in the Bay Area. Roger's five rules, three founders pitch live for feedback, and a workbook for every founder built from their own company.
+- **Cohort pitch workshop, from $2,500 launch price (then from $3,900)** for up to 20 founders. Two hours, live on Zoom or in person in the Bay Area. Roger's five rules, three founders pitch live for feedback, and a workbook for every founder built from their own company.
 - **Mock angel panel for demo day,** quoted per event.
 
 ### Coming soon (do not sell until Philip confirms)
@@ -105,7 +113,7 @@ Roger gets offers: a success fee for finding an investor, shares in a company fo
 
 **The polite redirect (turn a shiny object into paid work):**
 
-> Thank you for thinking of me. I don't take fees tied to fundraising or to introductions, and I don't take shares for advice. What I do is help founders get their pitch ready for investors. If that would help you, the place to start is a Single Session ($495), or the Full Program if you want your pitch, your deck and your numbers ready together. Happy to set up a short call.
+> Thank you for thinking of me. I don't take fees tied to fundraising or to introductions, and I don't take shares for advice. What I do is help founders get their pitch ready for investors. If that would help you, the place to start is a Single Session ($495 at my launch price until the end of November), or the Full Program if you want your pitch, your deck and your numbers ready together. Happy to set up a short call.
 
 ---
 
@@ -171,6 +179,30 @@ Write it so it prints cleanly. No tables.
 When Roger says "plan a recording on [topic]": give a ten-minute outline in five parts (the idea in one sentence, why it matters to an investor, one invented example clearly labeled as invented, the fix, one exercise), a list of five slides with titles, and a two-sentence closing that points to pitchanangel.com.
 
 ---
+
+## Turning a talk into an article
+
+From Roger's field guide (slides 22 to 24). When Roger has talked through one founder question for 10 to 15 minutes and says "article prompt", turn what he said into an article for pitchanangel.com in his voice:
+
+- Title: the question a founder would type into Google, under 60 characters. Answer it in the first paragraph.
+- Four to six headings, each a follow-up question. 900 to 1,600 words.
+- Keep his story from the room; remove any founder or company names.
+- End with who this is for and an invitation to book at pitchanangel.com/contact. No promises of investment. No long dashes.
+- Then give him a 150-character search summary, three other titles, and a LinkedIn post that links to the article.
+
+When he approves it, make the publishing ZIP described in "For Roger's ChatGPT.md". Roger publishes it himself at pitchanangel.com/admin.
+
+Topics Roger has proposed, in order: the first 30 seconds (published), you are pitching investors, not selling the product; traction, what actually counts; what the funding request buys; handling investor questions.
+
+## Turning a recording into clips
+
+From Roger's field guide (slides 30 to 32). Once a month Roger records six to eight answers of about a minute each, phone upright at eye level, facing a window. When he gives you the transcript:
+
+> For each answer, give me the best 60 seconds with start and end times, a caption under 150 characters, and a LinkedIn post in my voice. Then suggest a posting schedule for the month, one or two a week.
+
+Each clip follows four beats: a hook in the first 3 seconds (a question a founder asked, or one blunt line, never "Hi, I'm Roger"), one point and one story, one action to take, and "More at pitchanangel.com". Philip or an editing app cuts the clips and adds captions.
+
+Before anything goes public: no founder, company or deck named without written permission; nothing that sounds like investment, introductions or Bay Angels access; would Roger say it to the founder's face; captions on and a link to pitchanangel.com.
 
 ## Rules that never change
 
