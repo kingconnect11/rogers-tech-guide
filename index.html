@@ -261,7 +261,8 @@ var WEEKS = [
     { id: 'w1b', t: 'Offer each current client their next step', d: 'A follow-up session, a Sprint, Philip\'s deck review, or the Full Program.' },
     { id: 'w1c', t: 'Ask George to open two doors for a workshop', d: 'The East Bay SBDC and Innovit. The pitch email is on the ChatGPT tab.' },
     { id: 'w1d', t: 'Agree the Full Program with Philip, Michael and George', d: 'Price, who does what, and how the money splits.' },
-    { id: 'w1e', t: 'Give your ChatGPT the new offers file', d: 'Download it from the ChatGPT tab and add it to your Pitch an Angel project.' }
+    { id: 'w1e', t: 'Give your ChatGPT the new offers file', d: 'Download it from the ChatGPT tab and add it to your Pitch an Angel project.' },
+    { id: 'w1f', t: 'Set up a free booking link with Philip', d: 'Calendly is gone from the website. Until the new link is in, your invite emails ask founders to reply with times.' }
   ]},
   { id: 'w2', title: 'Week 2', dates: '4 to 10 November', ends: '2026-11-11', items: [
     { id: 'w2a', t: 'Run the first Pitch Clinic', d: 'Pick the date with Philip. Six founders, five minutes each, your feedback.' },
@@ -708,7 +709,7 @@ function pageAI() {
   PROMPTS.map(function (p) {
     return '<details data-prompt="' + p.id + '"><summary>' + esc(fillTitle(p.title)) + '</summary><div class="inner"><p class="small">' + esc(p.when) + '</p><div class="prompt"><pre id="pr-' + p.id + '">' + esc(fillPrompt(p.body)) + '</pre><div class="bar"><button class="btn small" data-act="copy" data-src="pr-' + p.id + '" type="button">Copy prompt</button><a class="btn small ghost" href="https://chatgpt.com/" target="_blank" rel="noopener">Open ChatGPT</a></div></div></div></details>';
   }).join('') +
-  '<p class="small" style="margin-top:16px">Prompts that start with TASK: match the playbooks Philip wrote for your project, so they work the same way every time.</p>';
+  '<p class="small" style="margin-top:16px">Each prompt says exactly what to produce, so it works even before the offers file is in your project. With the file, the answers get sharper.</p>';
 }
 
 function pageBuild() {
