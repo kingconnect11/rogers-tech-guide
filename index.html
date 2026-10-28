@@ -2,928 +2,858 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#faf8f5">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Roger's Guide">
-<title>Roger's Guide — AI, Social Media & Technology</title>
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" href="/icon-192.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<title>Roger's Guide</title>
+<meta name="description" content="Roger's business desk for Pitch an Angel: this week's plan, the offers, ChatGPT prompts, and what to build next.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-body{font-family:'Source Sans 3',-apple-system,sans-serif;font-size:18px;line-height:1.7;color:#1a2744;background:#faf8f5;overflow-x:hidden;-webkit-font-smoothing:antialiased}
 :root{
---navy:#1a2744;--navy-light:#2a3d5e;--cream:#faf8f5;--ivory:#f5f0e8;
---gold:#c8956c;--gold-light:#dbb08a;--gold-dark:#a67c52;
---warm-blue:#4a6fa5;--sage:#7a9e7e;--sage-light:#a8c5ab;
---text:#1a2744;--text-light:#5a6a7e;--text-muted:#8a95a5;
---border:#e8e0d4;--shadow:rgba(26,39,68,0.08);--shadow-md:rgba(26,39,68,0.12);
---radius:12px;--radius-lg:20px;--radius-sm:8px;
---transition:0.3s cubic-bezier(0.4,0,0.2,1);
---nav-height:72px;--sidebar-width:260px;--content-max:760px;
+  --ink:#1a2744;--ink-2:#3c4a63;--muted:#5f6b7d;
+  --paper:#faf8f5;--card:#ffffff;--ivory:#f3eee5;--line:#e6ddcf;
+  --gold:#b5835a;--gold-ink:#8a5f39;--gold-soft:#f6ecdf;
+  --sage:#4f7d57;--sage-soft:#e6f0e6;
+  --red:#b3263a;--red-soft:#fbecee;
+  --blue:#3f6496;--blue-soft:#e9eff7;
+  --code:#1e2433;--code-ink:#eef1f6;
+  --radius:16px;--radius-sm:10px;
+  --shadow:0 1px 2px rgba(26,39,68,.06),0 6px 18px rgba(26,39,68,.06);
+  --nav-h:68px;--side-w:250px;--max:780px;
 }
-h1,h2,h3,h4,h5{font-family:'Playfair Display',Georgia,serif;font-weight:700;line-height:1.25;color:var(--navy)}
-h1{font-size:clamp(2rem,5vw,3.2rem);letter-spacing:-0.02em}
-h2{font-size:clamp(1.6rem,4vw,2.4rem);letter-spacing:-0.01em}
-h3{font-size:clamp(1.25rem,3vw,1.6rem)}
-h4{font-size:1.15rem;font-weight:600}
-p{margin-bottom:1em;color:var(--text)}
-a{color:var(--gold-dark);text-decoration:none;transition:color var(--transition)}
-a:hover{color:var(--gold)}
-strong{font-weight:600}
-img{max-width:100%;height:auto;display:block}
-#root{min-height:100vh;display:flex;flex-direction:column}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:'Source Sans 3',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:19px;line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:'Playfair Display',Georgia,serif;line-height:1.2;margin:0 0 .4em;color:var(--ink);font-variant-numeric:lining-nums}
+h1{font-size:clamp(2rem,6vw,2.8rem);letter-spacing:-.01em}
+h2{font-size:clamp(1.5rem,4.5vw,1.95rem);margin-top:0}
+h3{font-size:1.25rem}
+p{margin:0 0 1em}
+a{color:var(--blue)}
+strong{font-weight:700}
+small,.small{font-size:16px;color:var(--muted)}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px;border-radius:6px}
+img{max-width:100%;display:block}
+main:focus{outline:none}
 
-/* NAV MOBILE */
-.mobile-nav{position:fixed;bottom:0;left:0;right:0;z-index:1000;background:rgba(250,248,245,0.88);backdrop-filter:blur(20px) saturate(1.8);-webkit-backdrop-filter:blur(20px) saturate(1.8);border-top:1px solid var(--border);padding:6px 4px calc(6px + env(safe-area-inset-bottom));display:flex;justify-content:space-around;align-items:center}
-.mnb{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 2px;border:none;background:none;cursor:pointer;min-width:48px;min-height:44px;border-radius:var(--radius-sm);transition:all var(--transition);-webkit-tap-highlight-color:transparent}
-.mnb svg{width:22px;height:22px;stroke:var(--text-muted);transition:all var(--transition);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.mnb span{font-size:10px;font-weight:600;color:var(--text-muted);letter-spacing:0.02em;transition:color var(--transition)}
-.mnb.active svg{stroke:var(--gold)}.mnb.active span{color:var(--gold)}
-.mnb:active{transform:scale(0.92)}
+/* Shell */
+.topbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 20px;padding-top:calc(12px + env(safe-area-inset-top));background:rgba(250,248,245,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{font-family:'Playfair Display',serif;font-weight:700;font-size:1.2rem;text-decoration:none;color:var(--ink)}
+.topbar .btn{min-height:40px;padding:6px 14px;font-size:16px}
+main{max-width:var(--max);margin:0 auto;padding:20px 20px calc(var(--nav-h) + 40px + env(safe-area-inset-bottom))}
+.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:30;display:flex;justify-content:space-around;background:rgba(250,248,245,.96);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--line);padding:6px 4px calc(6px + env(safe-area-inset-bottom))}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;min-height:52px;justify-content:center;text-decoration:none;color:var(--muted);font-size:13px;font-weight:700;border-radius:12px}
+.tab svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.tab[aria-current="page"]{color:var(--ink);background:var(--ivory)}
+.side{display:none}
+@media (min-width:1000px){
+  .tabbar,.topbar{display:none}
+  .side{display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;width:var(--side-w);padding:28px 18px;border-right:1px solid var(--line);background:var(--paper);overflow-y:auto}
+  .side .brand{font-size:1.45rem;margin-bottom:4px}
+  .side .tab{flex:none;flex-direction:row;justify-content:flex-start;gap:12px;min-height:48px;padding:10px 14px;font-size:17px;margin-bottom:2px}
+  .side .sub{font-size:15px;color:var(--muted);margin:0 0 24px}
+  .side .foot{margin-top:auto;font-size:15px;color:var(--muted)}
+  .side .foot a{color:var(--muted)}
+  main{margin-left:calc(var(--side-w) + max(0px,(100vw - var(--side-w) - var(--max)) / 2 - 20px));margin-right:auto;padding:40px 32px 80px}
+}
 
-/* NAV SIDEBAR */
-.sidebar{position:fixed;top:0;left:0;width:var(--sidebar-width);height:100vh;background:var(--cream);border-right:1px solid var(--border);padding:32px 20px;display:none;flex-direction:column;overflow-y:auto;z-index:100}
-.sidebar-logo{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--navy);margin-bottom:8px;cursor:pointer;transition:color var(--transition)}
-.sidebar-logo:hover{color:var(--gold)}
-.sidebar-sub{font-size:13px;color:var(--text-muted);margin-bottom:32px;line-height:1.5}
-.slink{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:var(--radius-sm);font-size:15px;font-weight:500;color:var(--text-light);cursor:pointer;transition:all var(--transition);margin-bottom:2px;border:none;background:none;width:100%;text-align:left}
-.slink:hover{background:var(--ivory);color:var(--navy)}
-.slink.active{background:var(--ivory);color:var(--gold-dark);font-weight:600}
-.slink svg{width:20px;height:20px;flex-shrink:0;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.sdiv{height:1px;background:var(--border);margin:16px 0}
-.sfooter{margin-top:auto;padding-top:20px;font-size:13px;color:var(--text-muted);line-height:1.5}
+/* Blocks */
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow);margin:0 0 18px}
+.card.soft{background:var(--ivory);box-shadow:none}
+.card.gold{background:var(--gold-soft);border-color:#ecd9c2;box-shadow:none}
+.card.warn{background:var(--red-soft);border-color:#f0c9cf;box-shadow:none}
+.card.ok{background:var(--sage-soft);border-color:#cfe1cf;box-shadow:none}
+.card h2,.card h3{margin-top:0}
+.section{margin:34px 0 14px}
+.eyebrow{font-size:14px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-ink);margin:0 0 6px}
+.lead{font-size:21px;color:var(--ink-2)}
+.muted{color:var(--muted)}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.grid2{display:grid;gap:14px}
+@media (min-width:640px){.grid2{grid-template-columns:1fr 1fr}}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:10px 20px;border-radius:12px;border:2px solid var(--ink);background:var(--ink);color:#fff;font-weight:700;font-size:17px;text-decoration:none;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.btn:active{transform:scale(.98)}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.gold{background:var(--gold);border-color:var(--gold);color:#fff}
+.btn.red{background:var(--red);border-color:var(--red)}
+.btn.small{min-height:40px;padding:6px 14px;font-size:16px}
+.btn.done{background:var(--sage);border-color:var(--sage)}
+.badge{display:inline-block;font-size:14px;font-weight:700;padding:2px 10px;border-radius:999px;background:var(--ivory);color:var(--ink-2);vertical-align:middle}
+.badge.live{background:var(--sage-soft);color:var(--sage)}
+.badge.new{background:var(--gold-soft);color:var(--gold-ink)}
+.badge.soon{background:var(--blue-soft);color:var(--blue)}
+ul.clean{list-style:none;padding:0;margin:0}
+ul.dots{padding-left:1.2em;margin:0 0 1em}
+ul.dots li{margin:.25em 0}
+details{border:1px solid var(--line);border-radius:var(--radius-sm);background:var(--card);margin:0 0 12px}
+details>summary{cursor:pointer;list-style:none;padding:14px 18px;font-weight:700;min-height:48px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+details>summary::-webkit-details-marker{display:none}
+details>summary::after{content:'+';font-size:24px;color:var(--gold-ink);font-weight:400}
+details[open]>summary::after{content:'\2212'}
+details>.inner{padding:0 18px 16px}
 
-/* MAIN */
-.main-content{flex:1;padding-bottom:calc(var(--nav-height) + env(safe-area-inset-bottom) + 20px);min-height:100vh}
+/* Hero */
+.hero{display:grid;border-radius:var(--radius);overflow:hidden;margin:0 0 20px;background:var(--ink);color:#fff}
+.hero img{width:100%;height:240px;object-fit:cover;object-position:50% 18%}
+.hero .txt{padding:22px 22px 24px;align-self:center}
+.hero h1{color:#fff;margin:0 0 8px}
+.hero p{color:rgba(255,255,255,.9);margin:0;font-size:19px}
+@media (min-width:640px){.hero{grid-template-columns:240px 1fr}.hero img{height:100%;min-height:280px}.hero .txt{padding:28px 30px}}
 
-/* HERO */
-.hero{position:relative;min-height:85vh;display:flex;flex-direction:column;justify-content:center;padding:60px 24px 40px;overflow:hidden}
-.hero-bg{position:absolute;top:0;left:0;right:0;bottom:0;z-index:0}
-.hero-bg img{width:100%;height:100%;object-fit:cover}
-.hero-bg::after{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(to bottom,rgba(26,39,68,0.55) 0%,rgba(26,39,68,0.70) 50%,rgba(26,39,68,0.88) 100%)}
-.hero-content{position:relative;z-index:1;max-width:var(--content-max);margin:0 auto;text-align:center}
-.hero h1{color:#fff;font-size:clamp(2.2rem,6vw,3.6rem);margin-bottom:16px;font-weight:700;text-shadow:0 2px 12px rgba(0,0,0,0.2)}
-.hero-sub{color:rgba(255,255,255,0.85);font-size:clamp(1.05rem,2.5vw,1.3rem);font-weight:300;max-width:540px;margin:0 auto 12px;line-height:1.6}
-.hero-from{color:var(--gold-light);font-family:'Playfair Display',serif;font-style:italic;font-size:1.05rem;margin-top:8px}
-.hero-scroll{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);z-index:1;color:rgba(255,255,255,0.5);animation:bounce 2.5s ease-in-out infinite;cursor:pointer}
-.hero-scroll svg{width:28px;height:28px;stroke:currentColor;fill:none;stroke-width:2}
-@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
+/* Checklists */
+.checks li{border-top:1px solid var(--line)}
+.checks li:first-child{border-top:none}
+.check{display:flex;gap:14px;align-items:flex-start;width:100%;text-align:left;background:none;border:none;padding:14px 2px;cursor:pointer;min-height:56px}
+.box{flex:none;width:30px;height:30px;border-radius:9px;border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;margin-top:1px;background:#fff}
+.check[aria-pressed="true"] .box{background:var(--sage);border-color:var(--sage)}
+.check[aria-pressed="true"] .box::after{content:'';width:9px;height:15px;border:solid #fff;border-width:0 3px 3px 0;transform:rotate(45deg) translate(-1px,-2px)}
+.check .t{font-weight:600}
+.check[aria-pressed="true"] .t{color:var(--muted);text-decoration:line-through;text-decoration-color:rgba(95,107,125,.5)}
+.check .d{display:block;font-size:16px;color:var(--muted);font-weight:400;margin-top:2px}
 
-/* CARDS GRID */
-.cards-section{padding:48px 24px 60px;max-width:960px;margin:0 auto}
-.cards-title{text-align:center;font-size:1rem;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-muted);margin-bottom:32px}
-.cards-grid{display:grid;grid-template-columns:1fr;gap:16px}
-.scard{position:relative;background:#fff;border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px;cursor:pointer;transition:all var(--transition);display:flex;align-items:center;gap:20px;overflow:hidden;min-height:88px}
-.scard::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;border-radius:4px 0 0 4px;transition:width var(--transition)}
-.scard:hover{transform:translateY(-3px);box-shadow:0 8px 32px var(--shadow-md);border-color:transparent}
-.scard:hover::before{width:5px}
-.scard:active{transform:translateY(-1px)}
-.cicon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;transition:transform var(--transition)}
-.scard:hover .cicon{transform:scale(1.08)}
-.ctxt{flex:1}
-.clbl{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px}
-.cttl{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--navy);margin-bottom:4px}
-.cdsc{font-size:14px;color:var(--text-light);line-height:1.5;margin:0}
-.carr{color:var(--text-muted);transition:all var(--transition);flex-shrink:0}
-.carr svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2}
-.scard:hover .carr{color:var(--gold);transform:translateX(4px)}
-.cg::before{background:var(--gold)}.cg .cicon{background:rgba(200,149,108,0.12)}.cg .clbl{color:var(--gold-dark)}
-.cb::before{background:var(--warm-blue)}.cb .cicon{background:rgba(74,111,165,0.12)}.cb .clbl{color:var(--warm-blue)}
-.cn::before{background:var(--navy)}.cn .cicon{background:rgba(26,39,68,0.10)}.cn .clbl{color:var(--navy-light)}
-.cs::before{background:var(--sage)}.cs .cicon{background:rgba(122,158,126,0.12)}.cs .clbl{color:var(--sage)}
-.ca::before{background:#c0884a}.ca .cicon{background:rgba(192,136,74,0.12)}.ca .clbl{color:#b07a40}
-.ct::before{background:#5a8fa8}.ct .cicon{background:rgba(90,143,168,0.12)}.ct .clbl{color:#4a7f98}
-.ck::before{background:linear-gradient(135deg,var(--gold),var(--warm-blue))}.ck .cicon{background:linear-gradient(135deg,rgba(200,149,108,0.15),rgba(74,111,165,0.15))}.ck .clbl{color:var(--gold-dark)}
+/* Progress */
+.meter{position:relative;height:18px;border-radius:999px;background:var(--ivory);border:1px solid var(--line);overflow:hidden;margin:16px 0 8px}
+.meter .fill{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,var(--gold),#c99a6f);border-radius:999px;transition:width .5s ease}
+.marks{position:relative;height:44px;font-size:14px;color:var(--muted)}
+.marks span{position:absolute;transform:translateX(-50%);text-align:center;white-space:nowrap;line-height:1.25}
+.marks span b{display:block;color:var(--ink);font-size:15px}
+.marks span.hit b{color:var(--sage)}
+.big{font-family:'Playfair Display',serif;font-size:2.3rem;font-weight:700;line-height:1;font-variant-numeric:lining-nums}
+.stat{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
 
-/* SECTION PAGE */
-.section-page{padding:0 0 40px}
-.shero{position:relative;height:280px;overflow:hidden}
-.shero img{width:100%;height:100%;object-fit:cover}
-.shero-ov{position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(to bottom,rgba(26,39,68,0.3) 0%,rgba(26,39,68,0.75) 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:24px}
-.shero-lbl{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;color:var(--gold-light);margin-bottom:8px}
-.shero-ttl{color:#fff;font-size:clamp(1.8rem,4.5vw,2.6rem);text-shadow:0 2px 8px rgba(0,0,0,0.2)}
-.sbody{max-width:var(--content-max);margin:0 auto;padding:32px 24px}
-.sintro{font-size:1.1rem;line-height:1.8;color:var(--text);margin-bottom:36px;font-weight:300}
-.sintro strong{font-weight:600}
-.back-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 0;margin-bottom:8px;border:none;background:none;cursor:pointer;font-size:15px;font-weight:500;color:var(--text-muted);transition:color var(--transition);-webkit-tap-highlight-color:transparent}
-.back-btn:hover{color:var(--gold)}
-.back-btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2}
+/* Forms */
+label.f{display:block;font-weight:700;font-size:16px;margin:0 0 6px}
+input.in,select.in,textarea.in{width:100%;font:inherit;font-size:18px;padding:11px 14px;border:1.5px solid #d8ccb9;border-radius:10px;background:#fff;color:var(--ink);min-height:48px}
+textarea.in{min-height:110px;resize:vertical}
+.fields{display:grid;gap:14px}
+@media (min-width:640px){.fields.two{grid-template-columns:1fr 1fr}}
 
-/* ACCORDION */
-.acc{margin-bottom:16px;border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);background:#fff}
-.acc-h{display:flex;align-items:center;gap:14px;width:100%;padding:18px 20px;border:none;background:#fff;cursor:pointer;text-align:left;font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:600;color:var(--navy);transition:all var(--transition);-webkit-tap-highlight-color:transparent;min-height:56px}
-.acc-h:hover{background:var(--ivory)}
-.acc-chev{margin-left:auto;flex-shrink:0;transition:transform 0.35s cubic-bezier(0.4,0,0.2,1);color:var(--text-muted)}
-.acc-chev svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.5}
-.acc.open .acc-chev{transform:rotate(180deg);color:var(--gold)}
-.acc-body{max-height:0;overflow:hidden;transition:max-height 0.45s cubic-bezier(0.4,0,0.2,1)}
-.acc.open .acc-body{max-height:8000px}
-.acc-content{padding:4px 20px 24px;font-size:17px;line-height:1.75}
-.acc-content p{margin-bottom:14px}
-.acc-content ul,.acc-content ol{margin:12px 0 18px 20px}
-.acc-content li{margin-bottom:8px}
-.acc-content h4{margin:20px 0 10px;font-family:'Source Sans 3',sans-serif}
+/* Prompts */
+.prompt{background:var(--code);color:var(--code-ink);border-radius:var(--radius-sm);padding:16px 16px 12px;margin:10px 0 0}
+.prompt pre{margin:0;white-space:pre-wrap;word-wrap:break-word;font-family:'JetBrains Mono',ui-monospace,Menlo,monospace;font-size:15px;line-height:1.55;max-height:340px;overflow:auto}
+.prompt .bar{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.prompt .btn{background:#fff;color:var(--ink);border-color:#fff}
+.prompt .btn.ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.5)}
+.msg{background:var(--ivory);border-left:4px solid var(--gold);border-radius:8px;padding:14px 16px;white-space:pre-wrap;margin:8px 0 10px;font-size:18px}
 
-/* PROMPT BLOCK */
-.pb{position:relative;background:var(--navy);border-radius:var(--radius);padding:20px;margin:20px 0 24px;overflow:hidden}
-.pb::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--warm-blue))}
-.pb pre{font-family:'JetBrains Mono',monospace;font-size:14px;line-height:1.65;color:rgba(255,255,255,0.9);white-space:pre-wrap;word-break:break-word;margin:0;padding-right:40px}
-.pb-copy{position:absolute;top:14px;right:14px;padding:8px 16px;border:1px solid rgba(255,255,255,0.2);border-radius:var(--radius-sm);background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.7);font-size:13px;font-weight:600;cursor:pointer;transition:all var(--transition);display:flex;align-items:center;gap:6px;min-height:36px;-webkit-tap-highlight-color:transparent}
-.pb-copy:hover{background:rgba(255,255,255,0.15);color:#fff;border-color:rgba(255,255,255,0.3)}
-.pb-copy.copied{background:rgba(122,158,126,0.3);border-color:var(--sage);color:var(--sage-light)}
-.pb-copy svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
+/* Offers */
+.rung{margin:30px 0 10px;display:flex;align-items:center;gap:12px}
+.rung .n{flex:none;width:36px;height:36px;border-radius:50%;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px}
+.rung h2{margin:0;font-size:1.45rem}
+.offer .top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+.offer .price{font-variant-numeric:lining-nums;font-family:'Playfair Display',serif;font-size:1.7rem;font-weight:700;white-space:nowrap}
+.offer .who{font-size:16px;color:var(--muted);margin:2px 0 10px}
+.say{font-style:italic;color:var(--ink-2);border-left:3px solid var(--gold);padding-left:12px;margin:12px 0 0}
 
-/* STEPS */
-.steps{margin:20px 0}
-.step{display:flex;gap:16px;margin-bottom:24px;position:relative}
-.step-num{width:36px;height:36px;border-radius:50%;background:var(--gold);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;flex-shrink:0;margin-top:2px}
-.step-line{position:absolute;top:40px;left:18px;width:2px;bottom:-8px;background:var(--border)}
-.step:last-child .step-line{display:none}
-.step-content{flex:1}
-.step-title{font-weight:600;font-size:17px;margin-bottom:6px}
+/* Calculator */
+.calc-row{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:12px 0;border-top:1px solid var(--line)}
+.calc-row:first-child{border-top:none}
+.calc-row .nm{font-weight:600}
+.calc-row .sub{font-size:15px;color:var(--muted)}
+.stepper{display:flex;align-items:center;gap:6px}
+.stepper button{width:44px;height:44px;border-radius:12px;border:1.5px solid #d8ccb9;background:#fff;font-size:24px;line-height:1;cursor:pointer;color:var(--ink)}
+.stepper output{min-width:30px;text-align:center;font-weight:700;font-size:20px}
+.take-in{width:110px!important;min-height:40px!important;padding:6px 10px!important;font-size:16px!important}
 
-/* TABLE */
-.tw{overflow-x:auto;margin:20px 0;-webkit-overflow-scrolling:touch}
-.ctable{width:100%;border-collapse:collapse;font-size:15px;min-width:480px}
-.ctable th{text-align:left;padding:12px 14px;background:var(--navy);color:#fff;font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:0.05em}
-.ctable th:first-child{border-radius:var(--radius-sm) 0 0 0}.ctable th:last-child{border-radius:0 var(--radius-sm) 0 0}
-.ctable td{padding:12px 14px;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.5}
-.ctable tr:nth-child(even) td{background:var(--ivory)}
-.ctable td:first-child{font-weight:600;color:var(--navy);white-space:nowrap}
+/* People */
+.person{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;padding:12px 0;border-top:1px solid var(--line)}
+.person:first-child{border-top:none}
+.person .nm{font-weight:700}
+.person .nt{font-size:16px;color:var(--muted)}
+.status{min-height:40px;padding:4px 12px;border-radius:999px;border:1.5px solid var(--line);background:#fff;font-weight:700;font-size:15px;cursor:pointer}
+.status.s1{background:var(--blue-soft);border-color:#c9d6ea;color:var(--blue)}
+.status.s2{background:var(--gold-soft);border-color:#ecd9c2;color:var(--gold-ink)}
+.status.s3{background:var(--sage-soft);border-color:#cfe1cf;color:var(--sage)}
+.linkbtn{background:none;border:none;color:var(--muted);text-decoration:underline;cursor:pointer;font-size:15px;padding:6px}
 
-/* PROJECT CARDS */
-.pcards{display:grid;grid-template-columns:1fr;gap:12px;margin:20px 0}
-.pcard{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;transition:all var(--transition)}
-.pcard:hover{box-shadow:0 4px 16px var(--shadow);transform:translateY(-2px)}
-.pcard-t{font-family:'Playfair Display',serif;font-weight:600;font-size:1rem;margin-bottom:4px}
-.pcard-d{font-size:14px;color:var(--text-light);margin:0 0 8px;line-height:1.5}
-.ptag{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em}
-.tag-c{background:rgba(74,111,165,0.12);color:var(--warm-blue)}
-.tag-w{background:rgba(200,149,108,0.15);color:var(--gold-dark)}
-.tag-r{background:rgba(122,158,126,0.12);color:var(--sage)}
+/* Yes / no */
+.q{padding:14px 0;border-top:1px solid var(--line)}
+.q:first-child{border-top:none}
+.q .qt{font-weight:600;margin:0 0 10px}
+.yn{display:flex;gap:10px}
+.yn button{flex:1;min-height:48px;border-radius:12px;border:2px solid #d8ccb9;background:#fff;font-weight:700;cursor:pointer}
+.yn button[aria-pressed="true"].y{background:var(--sage);border-color:var(--sage);color:#fff}
+.yn button[aria-pressed="true"].n{background:var(--red);border-color:var(--red);color:#fff}
+.verdict{border-radius:var(--radius);padding:20px;margin:18px 0}
+.verdict.go{background:var(--sage-soft);border:1px solid #cfe1cf}
+.verdict.park{background:var(--red-soft);border:1px solid #f0c9cf}
+.verdict.later{background:var(--gold-soft);border:1px solid #ecd9c2}
+.verdict.wait{background:var(--ivory);border:1px solid var(--line)}
 
-/* PLATFORM CARD */
-.plat{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:22px;margin-bottom:16px}
-.plat-h{display:flex;align-items:center;gap:12px;margin-bottom:12px}
-.plat-icon{font-size:28px}
-.plat-name{font-family:'Playfair Display',serif;font-weight:700;font-size:1.2rem}
-.plat-purp{font-weight:600;color:var(--gold-dark);font-size:15px;margin-bottom:8px}
-.plat ul{margin:8px 0 8px 20px}
-.plat li{margin-bottom:6px;font-size:16px}
-.plat-bl{margin-top:12px;padding-top:12px;border-top:1px solid var(--border);font-weight:600;font-size:15px;color:var(--navy)}
+/* Timeline */
+.tl{border-left:3px solid var(--line);margin:10px 0 0 10px;padding-left:20px}
+.tl .it{position:relative;margin:0 0 22px}
+.tl .it::before{content:'';position:absolute;left:-29px;top:7px;width:15px;height:15px;border-radius:50%;background:var(--gold);border:3px solid var(--paper)}
+.tl .it.now::before{background:var(--red)}
+.tl .when{font-weight:700;color:var(--gold-ink);font-size:16px;text-transform:uppercase;letter-spacing:.08em}
 
-/* CALLOUT */
-.co{border-left:4px solid var(--gold);background:var(--ivory);padding:16px 20px;border-radius:0 var(--radius-sm) var(--radius-sm) 0;margin:16px 0 20px}
-.co.tip{border-left-color:var(--sage)}.co.info{border-left-color:var(--warm-blue)}
-.co-l{font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px}
-.co p:last-child{margin-bottom:0}
-
-/* CONTENT PHOTO */
-.cphoto{border-radius:var(--radius);overflow:hidden;margin:24px 0;box-shadow:0 4px 20px var(--shadow)}
-.cphoto img{width:100%;display:block}
-.cphoto-cap{padding:10px 16px;background:var(--ivory);font-size:13px;color:var(--text-muted);font-style:italic}
-
-/* PHOTO POST CARD */
-.post-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;margin:24px 0}
-.post-card-img{height:200px;overflow:hidden}
-.post-card-img img{width:100%;height:100%;object-fit:cover}
-.post-card-body{padding:20px}
-.post-card-body h4{margin-bottom:12px;font-family:'Playfair Display',serif}
-.post-platforms{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
-.post-plat-tag{padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;background:var(--ivory);color:var(--text-light)}
-.post-plat-tag.ig{background:rgba(193,53,132,0.1);color:#c13584}
-.post-plat-tag.tt{background:rgba(0,0,0,0.06);color:#333}
-.post-plat-tag.fb{background:rgba(24,119,242,0.1);color:#1877f2}
-.post-plat-tag.li{background:rgba(10,102,194,0.1);color:#0a66c2}
-.post-caption{font-size:15px;line-height:1.6;color:var(--text);margin:8px 0;padding:12px 14px;background:var(--ivory);border-radius:var(--radius-sm);cursor:pointer;transition:all var(--transition);border:1px solid transparent}
-.post-caption:hover{border-color:var(--gold)}
-.post-caption.copied-cap{border-color:var(--sage);background:rgba(122,158,126,0.06)}
-.post-caption-hint{font-size:11px;color:var(--text-muted);font-style:italic;text-align:right;margin-top:4px}
-.post-biz{margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
-.post-biz-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--gold-dark);margin-bottom:6px}
-.post-biz ul{margin:4px 0 0 16px;font-size:14px}
-.post-biz li{margin-bottom:4px;color:var(--text-light)}
-
-/* CAMERA DIVIDER */
-.cdiv{display:flex;align-items:center;justify-content:center;gap:16px;margin:40px 0;color:var(--border)}
-.cdiv::before,.cdiv::after{content:'';flex:1;height:1px;background:var(--border)}
-.cdiv svg{width:24px;height:24px;stroke:var(--gold-light);fill:none;stroke-width:1.5;flex-shrink:0}
-
-/* DECISION GUIDE */
-.dl{margin:16px 0}
-.di{display:flex;align-items:baseline;gap:12px;padding:8px 0;font-size:16px}
-.di .q{color:var(--text-light);flex-shrink:0}.di .ar{color:var(--gold);font-weight:700;flex-shrink:0}.di .a{font-weight:600;color:var(--navy)}
-
-/* FUN PROMPT TILE */
-.fpg{display:grid;grid-template-columns:1fr;gap:12px;margin:20px 0}
-.fpt{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;cursor:pointer;transition:all var(--transition);display:flex;align-items:flex-start;gap:12px}
-.fpt:hover{border-color:var(--gold);box-shadow:0 2px 12px var(--shadow)}
-.fpt.cop{border-color:var(--sage);background:rgba(122,158,126,0.05)}
-.fti{font-size:22px;flex-shrink:0;margin-top:2px}
-.ftt{font-size:15px;line-height:1.5;color:var(--text)}
-.fth{font-size:12px;color:var(--text-muted);margin-top:4px;font-style:italic}
-
-/* CLOSING MSG */
-.cmsg{background:linear-gradient(135deg,var(--ivory),rgba(200,149,108,0.08));border-radius:var(--radius-lg);padding:28px 24px;margin-top:32px;border:1px solid rgba(200,149,108,0.2)}
-.cmsg p{font-size:17px;line-height:1.75}
-.cmsg p:last-child{margin-bottom:0}
-
-/* PHILIP NOTE */
-.pnote{text-align:center;padding:40px 24px;margin:0 24px 20px;border:2px dashed var(--gold-light);border-radius:var(--radius-lg);background:rgba(200,149,108,0.04)}
-.pnote-l{font-family:'Playfair Display',serif;font-style:italic;color:var(--gold-dark);font-size:1.1rem;margin-bottom:8px}
-.pnote p{color:var(--text-muted);font-size:15px;margin:0}
-
-/* BEFORE/AFTER */
-.ba{margin:16px 0}
-.bai{padding:14px 16px;border-radius:var(--radius-sm);margin-bottom:8px}
-.ba-bad{background:rgba(200,80,80,0.08);border-left:3px solid #c85050}
-.ba-good{background:rgba(122,158,126,0.08);border-left:3px solid var(--sage)}
-.ba-l{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px}
-.ba-bad .ba-l{color:#c85050}.ba-good .ba-l{color:var(--sage)}
-.ba-t{font-size:15px;color:var(--text);margin:0;font-style:italic}
-
-/* PROGRESS */
-.pchk{display:flex;align-items:center;gap:10px;margin:-4px 0 16px}
-.pchk input[type="checkbox"]{width:20px;height:20px;accent-color:var(--sage);cursor:pointer}
-.pchk label{font-size:14px;color:var(--text-muted);cursor:pointer;user-select:none}
-
-/* AUTOMATION WORKFLOW */
-.workflow{display:flex;flex-direction:column;gap:0;margin:20px 0}
-.wf-step{display:flex;align-items:center;gap:14px;padding:14px 16px;background:#fff;border:1px solid var(--border);position:relative}
-.wf-step:first-child{border-radius:var(--radius) var(--radius) 0 0}
-.wf-step:last-child{border-radius:0 0 var(--radius) var(--radius)}
-.wf-step:not(:last-child){border-bottom:none}
-.wf-num{width:32px;height:32px;border-radius:50%;background:var(--gold);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0}
-.wf-txt{font-size:15px;line-height:1.4}
-.wf-time{margin-left:auto;font-size:13px;color:var(--text-muted);white-space:nowrap;font-weight:600}
-
-/* ANIM */
-@keyframes fadeInUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
-.s1{animation:fadeInUp .6s ease forwards;animation-delay:.1s;opacity:0}
-.s2{animation:fadeInUp .6s ease forwards;animation-delay:.2s;opacity:0}
-.s3{animation:fadeInUp .6s ease forwards;animation-delay:.3s;opacity:0}
-.s4{animation:fadeInUp .6s ease forwards;animation-delay:.4s;opacity:0}
-.s5{animation:fadeInUp .6s ease forwards;animation-delay:.5s;opacity:0}
-.s6{animation:fadeInUp .6s ease forwards;animation-delay:.6s;opacity:0}
-.s7{animation:fadeInUp .6s ease forwards;animation-delay:.7s;opacity:0}
-.s8{animation:fadeInUp .6s ease forwards;animation-delay:.8s;opacity:0}
-
-/* FOCAL POINT EDIT MODE */
-.fp-edit-banner{position:fixed;top:0;left:0;right:0;z-index:9999;background:var(--navy);color:#fff;text-align:center;padding:10px 20px;font-size:14px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:12px}
-.fp-edit-banner button{padding:6px 16px;border:1px solid rgba(255,255,255,0.3);border-radius:6px;background:rgba(255,255,255,0.1);color:#fff;font-size:13px;font-weight:600;cursor:pointer}
-.fp-edit-banner button:hover{background:rgba(255,255,255,0.2)}
-.fp-edit-banner .fp-done{background:var(--sage);border-color:var(--sage)}
-.fp-container{position:relative;cursor:crosshair!important}
-.fp-container img{cursor:crosshair!important}
-.fp-crosshair{position:absolute;width:28px;height:28px;border:2px solid #fff;border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;box-shadow:0 0 0 2px rgba(0,0,0,0.4),inset 0 0 0 1px rgba(0,0,0,0.2);z-index:10}
-.fp-crosshair::before,.fp-crosshair::after{content:'';position:absolute;background:#fff;box-shadow:0 0 2px rgba(0,0,0,0.4)}
-.fp-crosshair::before{width:2px;height:10px;top:50%;left:50%;transform:translate(-50%,-50%)}
-.fp-crosshair::after{width:10px;height:2px;top:50%;left:50%;transform:translate(-50%,-50%)}
-.fp-label{position:absolute;bottom:8px;left:8px;background:rgba(0,0,0,0.7);color:#fff;font-size:11px;padding:3px 8px;border-radius:4px;pointer-events:none;z-index:10;font-family:'JetBrains Mono',monospace}
-
-@media(min-width:640px){.cards-grid{grid-template-columns:1fr 1fr}.pcards{grid-template-columns:1fr 1fr}.fpg{grid-template-columns:1fr 1fr}}
-@media(min-width:1024px){.mobile-nav{display:none}.sidebar{display:flex}.main-content{margin-left:var(--sidebar-width);padding-bottom:60px}.hero{min-height:80vh}.shero{height:340px}.shero-ov{padding:40px}.sbody{padding:40px}.cards-section{padding:60px 40px 80px}.cards-grid{grid-template-columns:1fr 1fr;gap:20px}}
-@media(min-width:1200px){.cards-grid{grid-template-columns:1fr 1fr 1fr}}
+.toast{position:fixed;left:50%;bottom:calc(var(--nav-h) + 20px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:12px 20px;border-radius:999px;font-weight:700;opacity:0;pointer-events:none;transition:all .25s;z-index:50}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+@media (min-width:1000px){.toast{bottom:30px}}
+.quote{font-variant-numeric:lining-nums;font-family:'Playfair Display',serif;font-size:1.25rem;line-height:1.45;color:var(--ink)}
+.cite{font-size:15px;color:var(--muted);margin-top:8px}
+hr.s{border:none;border-top:1px solid var(--line);margin:28px 0}
+.foot-note{font-size:15px;color:var(--muted);margin-top:40px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+@media print{.tabbar,.topbar,.side,.toast{display:none!important}main{margin:0;padding:0}}
 </style>
 </head>
 <body>
-<div id="root"></div>
-<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
-<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-<script type="text/babel">
-const {useState,useEffect,useRef,useCallback} = React;
 
-/* ===== FOCAL POINT SYSTEM ===== */
-const EDIT_MODE = new URLSearchParams(window.location.search).has('edit');
+<header class="topbar">
+  <a class="brand" href="#today">Roger's Guide</a>
+  <a class="btn ghost" href="#check">30-day test</a>
+</header>
 
-// Default focal points (x%, y%) — edit these or use ?edit mode to set visually
-const DEFAULT_FOCAL = {
-  'images/roger-bay-angels.jpg': '50% 25%',
-  'images/roger-cool-glasses.jpg': '50% 30%',
-  'images/roger-julie-canoe.jpg': '50% 35%',
-  'images/roger-networking.jpg': '50% 35%',
-  'images/roger-with-camera.jpg': '60% 25%',
-  'images/roger-excited-panel.jpg': '50% 30%',
-  'images/roger-julie-car-show.jpg': '50% 30%',
-  'images/roger-gangster-suit.jpg': '50% 20%',
-  'images/roger-bay-angels-panel.jpg': '50% 30%',
-  'images/roger-with-family.jpg': '50% 35%',
-  'images/roger-family-toast.jpg': '50% 30%',
-  'images/roger-and-sons.jpg': '50% 25%',
-  'images/roger-and-mike.jpg': '50% 30%',
-  'images/family-property.jpg': '50% 40%',
-};
-
-function getSavedFocal() {
-  try { return JSON.parse(localStorage.getItem('rg-focal') || '{}'); } catch { return {}; }
-}
-
-function getFocal(src) {
-  const saved = getSavedFocal();
-  // Extract filename from src
-  const key = src.replace(/^\.?\/?/, '');
-  return saved[key] || DEFAULT_FOCAL[key] || '50% 50%';
-}
-
-function saveFocal(src, x, y) {
-  const saved = getSavedFocal();
-  const key = src.replace(/^\.?\/?/, '');
-  saved[key] = `${Math.round(x)}% ${Math.round(y)}%`;
-  localStorage.setItem('rg-focal', JSON.stringify(saved));
-  return saved[key];
-}
-
-// FocalImage — applies object-position from config, editable in ?edit mode
-function FocalImage({src, alt, className, style, loading}) {
-  const [pos, setPos] = useState(() => getFocal(src));
-  const [clicking, setClicking] = useState(false);
-  const containerRef = useRef(null);
-
-  const handleClick = (e) => {
-    if (!EDIT_MODE) return;
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
-    const newPos = saveFocal(src, x, y);
-    setPos(newPos);
-  };
-
-  const imgStyle = { ...style, objectFit: 'cover', objectPosition: pos, width: '100%', height: '100%' };
-  const [px, py] = pos.split(' ');
-
-  if (EDIT_MODE) {
-    return (
-      <div ref={containerRef} className="fp-container" style={{position:'relative',width:'100%',height:'100%',overflow:'hidden'}} onClick={handleClick}>
-        <img src={src} alt={alt} className={className} style={imgStyle} loading={loading || 'lazy'} />
-        <div className="fp-crosshair" style={{left: px, top: py}} />
-        <div className="fp-label">{pos}</div>
-      </div>
-    );
-  }
-
-  return <img src={src} alt={alt} className={className} style={imgStyle} loading={loading || 'lazy'} />;
-}
-
-// Edit mode banner
-function EditBanner() {
-  if (!EDIT_MODE) return null;
-  const exportConfig = () => {
-    const saved = getSavedFocal();
-    const text = JSON.stringify(saved, null, 2);
-    navigator.clipboard.writeText(text);
-    alert('Focal points copied to clipboard! Paste into DEFAULT_FOCAL in index.html to make permanent.');
-  };
-  const resetAll = () => {
-    localStorage.removeItem('rg-focal');
-    window.location.reload();
-  };
-  return (
-    <div className="fp-edit-banner">
-      <span>Focal Point Editor — click on any image where Roger's face is</span>
-      <button onClick={exportConfig}>Export Config</button>
-      <button onClick={resetAll}>Reset All</button>
-      <button className="fp-done" onClick={() => { window.location.search = ''; }}>Done</button>
-    </div>
-  );
-}
-
-/* ===== ICONS ===== */
-const I={
-home:<svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>,
-rocket:<svg viewBox="0 0 24 24"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/></svg>,
-chat:<svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>,
-camera:<svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>,
-sparkles:<svg viewBox="0 0 24 24"><path d="M12 2L9.5 9.5 2 12l7.5 2.5L12 22l2.5-7.5L22 12l-7.5-2.5z"/></svg>,
-plane:<svg viewBox="0 0 24 24"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>,
-chevD:<svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>,
-chevL:<svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>,
-chevR:<svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>,
-copy:<svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>,
-check:<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>,
-aperture:<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="14.31" y1="8" x2="20.05" y2="17.94"/><line x1="9.69" y1="8" x2="21.17" y2="8"/><line x1="7.38" y1="12" x2="13.12" y2="2.06"/><line x1="9.69" y1="16" x2="3.95" y2="6.06"/><line x1="14.31" y1="16" x2="2.83" y2="16"/><line x1="16.62" y1="12" x2="10.88" y2="21.94"/></svg>,
-};
-
-/* ===== DATA ===== */
-const SECTIONS=[
-{id:'getting-started',title:'Getting Started',sub:'Your first steps with AI',icon:'🚀',label:'Start Here',cc:'cg',img:'images/roger-cool-glasses.jpg',alt:'Roger smiling'},
-{id:'ai-personal',title:'AI for Everyday Life',sub:'Claude as your personal assistant',icon:'💬',label:'AI — Personal',cc:'cb',img:'images/roger-julie-canoe.jpg',alt:'Roger and Julie'},
-{id:'ai-professional',title:'AI for Business',sub:'Transform how you work',icon:'📊',label:'AI — Professional',cc:'cn',img:'images/roger-networking.jpg',alt:'Roger networking'},
-{id:'social-personal',title:'Social Media — Personal',sub:'Share what you love',icon:'📸',label:'Social — Personal',cc:'cs',img:'images/roger-with-camera.jpg',alt:'Roger with camera'},
-{id:'social-professional',title:'Social Media — Pro',sub:'Build your audience & automate',icon:'💼',label:'Social — Pro',cc:'ca',img:'images/roger-excited-panel.jpg',alt:'Roger on a panel'},
-{id:'travel',title:'Travel with AI',sub:'Plan trips like a pro',icon:'✈️',label:'Travel',cc:'ct',img:'images/roger-julie-car-show.jpg',alt:'Roger exploring'},
-{id:'cool-stuff',title:'Cool Stuff & Tips',sub:"Explore what's possible",icon:'✨',label:'Explore',cc:'ck',img:'images/roger-gangster-suit.jpg',alt:'Roger looking sharp'},
-];
-
-const NAV=[
-{id:'home',label:'Home',icon:I.home},
-{id:'getting-started',label:'Start',icon:I.rocket},
-{id:'ai-personal',label:'AI',icon:I.chat},
-{id:'social-personal',label:'Social',icon:I.camera},
-{id:'travel',label:'Travel',icon:I.plane},
-{id:'cool-stuff',label:'More',icon:I.sparkles},
-];
-
-/* ===== HOOKS ===== */
-function useProgress(){
-const [p,setP]=useState(()=>{try{return JSON.parse(localStorage.getItem('rg-prog')||'{}')}catch{return {}}});
-const toggle=useCallback(k=>{setP(prev=>{const n={...prev,[k]:!prev[k]};localStorage.setItem('rg-prog',JSON.stringify(n));return n})},[]);
-return [p,toggle];
-}
-
-/* ===== COMPONENTS ===== */
-function CamDiv(){return <div className="cdiv">{I.aperture}</div>}
-
-function Acc({title,id,children,prog,toggle}){
-const [open,setOpen]=useState(false);
-return(<div className={`acc ${open?'open':''}`}><button className="acc-h" onClick={()=>setOpen(!open)}><span>{title}</span><span className="acc-chev">{I.chevD}</span></button><div className="acc-body"><div className="acc-content">{prog&&id&&<div className="pchk"><input type="checkbox" id={`p-${id}`} checked={!!prog[id]} onChange={()=>toggle(id)}/><label htmlFor={`p-${id}`}>Mark as done</label></div>}{children}</div></div></div>);
-}
-
-function PB({text}){
-const [c,setC]=useState(false);
-const copy=async()=>{try{await navigator.clipboard.writeText(text);setC(true);setTimeout(()=>setC(false),2000)}catch{}};
-return(<div className="pb"><pre>{text}</pre><button className={`pb-copy ${c?'copied':''}`} onClick={copy}>{c?<>{I.check} Copied!</>:<>{I.copy} Copy</>}</button></div>);
-}
-
-function Steps({steps}){
-return(<div className="steps">{steps.map((s,i)=><div className="step" key={i}><div className="step-num">{i+1}</div><div className="step-line"/><div className="step-content"><div className="step-title">{s.title}</div><div>{s.content}</div></div></div>)}</div>);
-}
-
-function CTable({headers,rows}){
-return(<div className="tw"><table className="ctable"><thead><tr>{headers.map((h,i)=><th key={i}>{h}</th>)}</tr></thead><tbody>{rows.map((r,i)=><tr key={i}>{r.map((c,j)=><td key={j}>{c}</td>)}</tr>)}</tbody></table></div>);
-}
-
-function FPT({emoji,text}){
-const [c,setC]=useState(false);
-const copy=async()=>{try{await navigator.clipboard.writeText(text);setC(true);setTimeout(()=>setC(false),2000)}catch{}};
-return(<div className={`fpt ${c?'cop':''}`} onClick={copy}><span className="fti">{emoji}</span><div><div className="ftt">{text}</div><div className="fth">{c?'✓ Copied!':'Tap to copy'}</div></div></div>);
-}
-
-function CPhoto({src,alt,caption}){return(<div className="cphoto"><FocalImage src={src} alt={alt} loading="lazy" style={{height:'auto',objectFit:'contain'}}/>{caption&&<div className="cphoto-cap">{caption}</div>}</div>)}
-
-/* Post Card with copy-to-clipboard caption */
-function PostCard({img,alt,title,platforms,caption,hashtags,bizBenefits}){
-const [c,setC]=useState(false);
-const fullText=caption+(hashtags?'\n\n'+hashtags:'');
-const copy=async()=>{try{await navigator.clipboard.writeText(fullText);setC(true);setTimeout(()=>setC(false),2000)}catch{}};
-return(
-<div className="post-card">
-{img&&<div className="post-card-img"><FocalImage src={img} alt={alt} loading="lazy"/></div>}
-<div className="post-card-body">
-<h4>{title}</h4>
-<div className="post-platforms">{platforms.map((p,i)=><span key={i} className={`post-plat-tag ${p.toLowerCase().replace(/\s/g,'')}`}>{p}</span>)}</div>
-<div className={`post-caption ${c?'copied-cap':''}`} onClick={copy}>
-<div>{caption}</div>
-{hashtags&&<div style={{marginTop:'8px',color:'var(--warm-blue)',fontSize:'14px'}}>{hashtags}</div>}
-<div className="post-caption-hint">{c?'✓ Copied to clipboard!':'Tap to copy this caption'}</div>
-</div>
-{bizBenefits&&<div className="post-biz"><div className="post-biz-label">Business Benefits</div><ul>{bizBenefits.map((b,i)=><li key={i}>{b}</li>)}</ul></div>}
-</div>
-</div>
-);}
-
-function SPage({section,onBack,children}){
-useEffect(()=>{window.scrollTo({top:0,behavior:'smooth'})},[section.id]);
-return(<div className="section-page"><div className="shero"><FocalImage src={section.img} alt={section.alt} loading="eager"/><div className="shero-ov"><div className="shero-lbl">{section.label}</div><h1 className="shero-ttl">{section.title}</h1></div></div><div className="sbody"><button className="back-btn" onClick={onBack}>{I.chevL} All Sections</button>{children}</div></div>);
-}
-
-/* ===== SECTION 1: GETTING STARTED ===== */
-function S1({section,onBack,prog,toggle}){return(<SPage section={section} onBack={onBack}>
-<div className="sintro"><p>Welcome, Roger. This section gets you set up with <strong>Claude</strong> — the AI tool Philip uses every day to build documents, spreadsheets, business plans, and more.</p><p>This is the single most useful tool he's found, and he wants you to have it too. It'll take about 10 minutes.</p></div>
-<Acc title="Step 1: Download Claude" id="gs-dl" prog={prog} toggle={toggle}>
-<Steps steps={[
-{title:'On your iPhone or iPad',content:<p>Open the <strong>App Store</strong>, search for <strong>"Claude by Anthropic"</strong>, and tap <strong>Get</strong>. Look for the orange/brown Claude logo.</p>},
-{title:'On your Mac',content:<p>Visit <a href="https://claude.ai/download" target="_blank" rel="noopener">claude.ai/download</a> or search "Claude" in the Mac App Store.</p>},
-{title:'Or use any web browser',content:<p>Go to <a href="https://claude.ai" target="_blank" rel="noopener">claude.ai</a>. Works in Safari, Chrome, or any browser.</p>},
-]}/>
-</Acc>
-<Acc title="Step 2: Sign In" id="gs-si" prog={prog} toggle={toggle}>
-<p>Use your Chief People email: <strong>roger@chiefpeople.com</strong></p>
-<p>The easiest method is <strong>"Continue with Google"</strong> — just tap it and select your Google account.</p>
-<p>If that email isn't connected to Google, sign up with email and password. Claude will send a verification code.</p>
-</Acc>
-<Acc title="Step 3: Subscribe to Claude Pro ($20/month)" id="gs-pro" prog={prog} toggle={toggle}>
-<p><strong>Why Pro?</strong> The free tier has message limits. Pro removes them, gives you the best models, and unlocks extended thinking.</p>
-<Steps steps={[
-{title:'Open Settings',content:<p>Tap your profile icon, then <strong>Settings</strong>.</p>},
-{title:'Find Subscription',content:<p>Look for <strong>Upgrade to Pro</strong>.</p>},
-{title:'Enter payment',content:<p>Add a credit card. $20/month, cancel anytime.</p>},
-]}/>
-<div className="co"><div className="co-l">Philip's take</div><p>"Just do it. When you're learning, the last thing you want is to hit a wall mid-conversation."</p></div>
-</Acc>
-<Acc title="Step 4: Your First Conversation" id="gs-fc" prog={prog} toggle={toggle}>
-<p>Here's your icebreaker. Copy this, paste it into Claude, and hit send:</p>
-<PB text={`Hi Claude — my name is Roger King. I'm 77 years old, I'm the founder of Bay Angels (one of Silicon Valley's oldest angel investment networks), and I'm learning to use AI tools for the first time. My son Philip set me up with you.\n\nCan you introduce yourself, tell me what you're capable of, and suggest three things I could ask you about right now that would show me what you can do? Keep it simple and conversational — I'm just getting started.`}/>
-<p><strong>What happens next:</strong> Claude will respond conversationally and suggest things to explore. Just keep talking. There's no wrong move.</p>
-</Acc>
-<Acc title="Add to Your Home Screen" id="gs-hs" prog={prog} toggle={toggle}>
-<Steps steps={[
-{title:'Open this page in Safari',content:<p>If you're not in Safari, copy the URL and open it there.</p>},
-{title:'Tap the Share button',content:<p>The square with an arrow pointing up, at the bottom of the screen.</p>},
-{title:'Tap "Add to Home Screen"',content:<p>Give it a name like "Roger's Guide" and tap <strong>Add</strong>.</p>},
-{title:'Done!',content:<p>Now you have an app-like icon on your home screen.</p>},
-]}/>
-</Acc>
-</SPage>)}
-
-/* ===== SECTION 2: AI PERSONAL ===== */
-function S2({section,onBack,prog,toggle}){return(<SPage section={section} onBack={onBack}>
-<div className="sintro"><p>Claude isn't just for work. Think of it as a patient, knowledgeable friend who's available 24/7, never judges your questions, and never gets tired of explaining things.</p></div>
-<Acc title="What is Claude?" id="aip-w" prog={prog} toggle={toggle}>
-<p>Claude is <strong>not</strong> a search engine. It's a conversation.</p>
-<ul><li>It knows things from its training on millions of books and articles</li><li>It can read documents, analyze spreadsheets, write content, help you think</li><li>It remembers everything within a single conversation</li><li>Every new conversation starts fresh</li></ul>
-<div className="co"><div className="co-l">The simple way to think about it</div><p>Imagine you could call someone who's read every book, every manual, every article — and they're infinitely patient. That's Claude.</p></div>
-</Acc>
-<Acc title="Chat vs. Cowork vs. Voice Mode" id="aip-m" prog={prog} toggle={toggle}>
-<CTable headers={['Feature','Chat','Cowork','Voice']} rows={[
-['What it is','Text conversation','Claude works with files','Talk like a phone call'],
-['Best for','Questions, writing, ideas','Documents, spreadsheets, projects','Quick questions, hands-free'],
-['Power','Full','Full + file access','More limited'],
-['Find it','Main interface','Desktop app','Microphone icon'],
-]}/>
-<div className="co"><div className="co-l">Philip's recommendation</div><p>"Start with Chat. Try Voice when comfortable. Graduate to Cowork when you want Claude to actually <em>build</em> things."</p></div>
-</Acc>
-<Acc title="Voice Mode — Like Having a Conversation" id="aip-v" prog={prog} toggle={toggle}>
-<p><strong>How:</strong> Tap the microphone icon in the Claude app.</p>
-<p><strong>Great for:</strong></p>
-<ul><li>Asking questions while driving or cooking</li><li>Brainstorming out loud</li><li>Getting explanations read to you</li><li>Practicing a pitch or rehearsing what you want to say</li></ul>
-<div className="co"><div className="co-l">Think of it this way</div><p>Voice is like <strong>chatting</strong> with Claude. Chat is like <strong>emailing</strong> Claude. Both useful, different purposes.</p></div>
-</Acc>
-<Acc title="Better Questions, Better Answers — 6 Rules" id="aip-p" prog={prog} toggle={toggle}>
-<Steps steps={[
-{title:'Be specific',content:<><div className="ba"><div className="bai ba-bad"><div className="ba-l">Instead of</div><p className="ba-t">"Help me plan a trip"</p></div><div className="bai ba-good"><div className="ba-l">Try</div><p className="ba-t">"Help me plan a 5-day photography trip to Cuba in March, budget $3,000, focused on street photography in Havana"</p></div></div></>},
-{title:'Give context',content:<p>Tell Claude who you are, what you're working on, and why.</p>},
-{title:'Tell Claude what you want',content:<p>A list? A paragraph? A step-by-step guide? A spreadsheet? Say so.</p>},
-{title:'Ask follow-ups',content:<p>"Can you go deeper on point 3?" or "Make it simpler" or "Give me an example."</p>},
-{title:'New conversations for new topics',content:<p>Don't cram everything into one chat.</p>},
-{title:"Don't be afraid to experiment",content:<p>You can't break anything.</p>},
-]}/>
-</Acc>
-<Acc title="The House Manual Prompt — Your 'Aha' Moment" id="aip-h" prog={prog} toggle={toggle}>
-<p>A real prompt that produces a professional guest manual for your home in about 60 seconds.</p>
-<PB text={`I need you to create a comprehensive house manual for guests staying at my home. Warm and welcoming but thorough.\n\nInclude:\n1. Welcome & Overview\n2. Arrival & Access (lockbox code, parking, gate code)\n3. Wi-Fi & Technology (network, password, TV/streaming setup)\n4. Kitchen & Appliances\n5. Heating & Cooling\n6. Outdoor Spaces (pool/hot tub, grill, patio)\n7. House Rules\n8. Local Recommendations (restaurants, grocery, pharmacies, hidden gems)\n9. Emergency Information\n10. Checkout Procedures\n\nLeave [brackets] for specific details I need to fill in. Make it feel like a high-end Airbnb experience.`}/>
-<CPhoto src="images/family-property.jpg" alt="The family property" caption="Your beautiful property — imagine handing every guest a polished guide to enjoying it."/>
-</Acc>
-<Acc title="More Things to Try" id="aip-more" prog={prog} toggle={toggle}>
-<div className="fpg">
-<FPT emoji="🗺️" text="Plan a 7-day driving trip from San Francisco to the Grand Canyon with photography stops along the way"/>
-<FPT emoji="🍽️" text="I have salmon, asparagus, and lemons. What should I make for dinner? Give me two options — one simple, one impressive."/>
-<FPT emoji="✉️" text="Help me write a thank-you note to a founder whose pitch I judged at a competition. Personal, not generic."/>
-<FPT emoji="🧠" text="Explain blockchain to me like I'm a smart person who just hasn't been paying attention."/>
-<FPT emoji="📖" text="Recommend 5 books about photography for someone who's been shooting 30+ years but wants to see with fresh eyes."/>
-<FPT emoji="⚖️" text="I'm deciding between two investment opportunities. Help me think through the pros and cons systematically."/>
-</div>
-</Acc>
-</SPage>)}
-
-/* ===== SECTION 3: AI PROFESSIONAL ===== */
-function S3({section,onBack,prog,toggle}){return(<SPage section={section} onBack={onBack}>
-<div className="sintro"><p>This is where Claude goes from helpful to <strong>transformative</strong>. Philip has used Claude to build entire business plans, financial models, pitch coaching strategies, and marketing campaigns.</p></div>
-<Acc title="Understanding the Models — Sonnet vs. Opus" id="aib-m" prog={prog} toggle={toggle}>
-<h4>Sonnet 4.5 — The Fast Analyst</h4><p>Smart, fast, great for 90% of things.</p>
-<h4>Opus 4.5 — The Senior Partner</h4><p>Slower but significantly more powerful for complex reasoning and strategic thinking.</p>
-<h4>Extended Thinking</h4><p>Turn it on for either model. Claude "thinks before speaking" — step by step. Much better results.</p>
-<div className="co"><div className="co-l">Philip's recommendation</div><p>"Use Sonnet 4.5 with Extended Thinking for 9 out of 10 things. Switch to Opus for important work — pitch decks, business plans, critical emails."</p></div>
-<h4>Quick Decision Guide</h4>
-<div className="dl">
-<div className="di"><span className="q">Email?</span><span className="ar">→</span><span className="a">Sonnet</span></div>
-<div className="di"><span className="q">Trip planning?</span><span className="ar">→</span><span className="a">Sonnet</span></div>
-<div className="di"><span className="q">Business plan?</span><span className="ar">→</span><span className="a">Opus</span></div>
-<div className="di"><span className="q">Pitch deck?</span><span className="ar">→</span><span className="a">Opus</span></div>
-<div className="di"><span className="q">Not sure?</span><span className="ar">→</span><span className="a">Start with Sonnet, upgrade if needed</span></div>
-</div>
-</Acc>
-<Acc title="Chat vs. Cowork — The Deep Dive" id="aib-cw" prog={prog} toggle={toggle}>
-<p><strong>Cowork</strong> separates Claude from any other AI:</p>
-<ul><li><strong>Create actual files</strong> — Word docs, spreadsheets, PDFs</li><li><strong>Work with uploads</strong> — drop in a spreadsheet, pitch deck, contract</li><li><strong>Multi-step tasks</strong> — research → analyze → build → refine</li><li><strong>Build things on your desktop</strong>, not just in chat</li></ul>
-<div className="co"><div className="co-l">Philip on Cowork</div><p>"Perhaps the most impactful thing in AI in the past six months. It knocked dozens of startups out of the water."</p></div>
-</Acc>
-<Acc title="Advanced Prompting" id="aib-ap" prog={prog} toggle={toggle}>
-<Steps steps={[
-{title:'Give Claude a role',content:<p>"You are a financial analyst with 20 years of SaaS experience..." This focuses everything.</p>},
-{title:'Use structured requests',content:<p>"I need you to: 1) Analyze X, 2) Compare Y, 3) Recommend Z"</p>},
-{title:'Provide examples',content:<p>"Here's an example of what I want: [example]. Now do similar for my situation."</p>},
-{title:"Iterate, don't restart",content:<p>"This is good, but make the tone more conversational" or "Expand section 3."</p>},
-{title:'Set constraints',content:<p>"Under 500 words. Bullet points. No jargon."</p>},
-{title:'Think step by step',content:<p>"Walk me through your reasoning before recommending."</p>},
-{title:'Chain conversations',content:<p>Research → Application → Refinement. Layer by layer.</p>},
-]}/>
-</Acc>
-<Acc title="Commission Army Financial Model — Power Prompt" id="aib-ca" prog={prog} toggle={toggle}>
-<p>Open <strong>Cowork</strong>, paste this in, and watch Claude build a full investor-ready Excel model.</p>
-<PB text={`Build a comprehensive Excel financial model for Commission Army, a two-sided referral marketplace. Professional, investor-ready.\n\nTab 1: Revenue Model — 24 months, subscription fees ($10/mo individuals, $49.95/mo businesses) + 20% transaction fees. MRR/ARR tracking.\nTab 2: CAC Model — By channel, LTV:CAC ratio (target 3:1), payback period.\nTab 3: Growth Dashboard — S-curve modeling, active vs. registered, churn waterfall.\nTab 4: Hiring Plan — Monthly headcount, trigger thresholds, fully loaded costs at 1.3x.\nTab 5: Fundraising — $500K seed round, use of funds, runway, breakeven analysis.\nTab 6: Summary — Key metrics, Month 18 targets, traffic light KPIs.\n\nAll assumptions adjustable. Input cells in yellow. Charts in each tab. Professional formatting.`}/>
-</Acc>
-<Acc title="What Philip Has Built with Claude" id="aib-port" prog={prog} toggle={toggle}>
-<div className="pcards">
-<div className="pcard"><div className="pcard-t">Commission Army Business Plan</div><p className="pcard-d">Full 12-section business plan</p><span className="ptag tag-w">Cowork</span></div>
-<div className="pcard"><div className="pcard-t">Pitch Coaching Credentials Research</div><p className="pcard-d">Roger's qualifications dossier</p><span className="ptag tag-r">Research</span></div>
-<div className="pcard"><div className="pcard-t">Pitch to an Angel Launch Strategy</div><p className="pcard-d">Go-to-market for coaching service</p><span className="ptag tag-w">Cowork</span></div>
-<div className="pcard"><div className="pcard-t">Bay Angels Scoring Rubric</div><p className="pcard-d">10-criterion weighted system</p><span className="ptag tag-w">Cowork</span></div>
-<div className="pcard"><div className="pcard-t">Client Social Media Reach</div><p className="pcard-d">55 clients across 17 regions</p><span className="ptag tag-w">Cowork</span></div>
-<div className="pcard"><div className="pcard-t">Photography Retrospective</div><p className="pcard-d">Decades of fine art photography</p><span className="ptag tag-w">Cowork</span></div>
-</div>
-<div className="cmsg"><p><strong>Roger</strong> — every single item above was built with Claude. You won't get here overnight, and you don't need to. Start with the basics, try the prompts, and find the parts useful to <strong>you</strong>.</p></div>
-</Acc>
-</SPage>)}
-
-/* ===== SECTION 4: SOCIAL PERSONAL ===== */
-function S4({section,onBack,prog,toggle}){return(<SPage section={section} onBack={onBack}>
-<div className="sintro"><p>Social media isn't about becoming an influencer. For you, it's about sharing the things you love — your photography, your trips to Cuba, your car projects — with people who care. And every post you make quietly builds your brand across <strong>all</strong> your ventures.</p></div>
-<Acc title="Platform Breakdown" id="sp-pl" prog={prog} toggle={toggle}>
-<div className="plat"><div className="plat-h"><span className="plat-icon">📘</span><span className="plat-name">Facebook</span></div><div className="plat-purp">Sharing memories with friends and family</div><ul><li>Your audience is people you already know</li><li>Post: trip photos, family updates, car projects</li></ul><div className="plat-bl">Keep using it casually. It's your digital photo album.</div></div>
-<div className="plat"><div className="plat-h"><span className="plat-icon">📸</span><span className="plat-name">Instagram</span></div><div className="plat-purp">THE platform for your photography</div><ul><li>Strong audience for photography and travel</li><li>Posts (permanent), Stories (24h), Reels (short video = growth)</li><li>Your handle: <strong>@iamhavana</strong></li></ul><div className="plat-bl">Your primary personal platform. Your photography deserves to be seen.</div></div>
-<div className="plat"><div className="plat-h"><span className="plat-icon">🎵</span><span className="plat-name">TikTok</span></div><div className="plat-purp">Short-form video — the most viral platform</div><ul><li>Older creators with authentic content do extremely well</li><li><strong>AutoCut:</strong> TikTok auto-edits long videos into short clips</li><li>Authentic beats professional every time</li></ul><div className="plat-bl">Post 3-4x/week and your audience WILL grow.</div></div>
-</Acc>
-
-<Acc title="Your Photos = Ready-Made Content" id="sp-posts" prog={prog} toggle={toggle}>
-<p>Every photo you already have is content waiting to be posted. Here's exactly what to post, with captions ready to copy. <strong>One photo becomes 4 platform posts.</strong></p>
-
-<PostCard img="images/roger-with-camera.jpg" alt="Roger at Yosemite" title="The Photographer at Work" platforms={['ig','tt','fb']}
-caption={`Tunnel View, Yosemite. I've been coming here for 30 years and the light never looks the same twice. That's what keeps me coming back with my camera.\n\nPhotography isn't about the gear — it's about patience and showing up.`}
-hashtags="#YosemiteNationalPark #LandscapePhotography #FilmPhotography #NaturePhotography #PhotographyLife"
-bizBenefits={['Drives traffic to fine art print sales','Builds @iamhavana following','Establishes credibility for photography workshops','Humanizes your professional brand on LinkedIn']}/>
-
-<PostCard img="images/roger-julie-car-show.jpg" alt="Roger and Julie at car show" title="The Car Show with Julie" platforms={['ig','tt','fb','li']}
-caption={`There's nothing quite like spending a Saturday at a car show with your best girl. These machines aren't just metal and chrome — each one tells a story.\n\nJulie humors my obsession. That's love.`}
-hashtags="#ClassicCars #CarShow #VintageAuto #WeekendVibes #CoupleGoals"
-bizBenefits={['Relatable lifestyle content builds personal brand','Cross-posts to LinkedIn show personality behind the professional','TikTok walk-around videos of cars go viral with car community']}/>
-
-<PostCard img="images/roger-julie-canoe.jpg" alt="Roger and Julie canoeing" title="Adventure Doesn't Stop" platforms={['ig','tt','fb']}
-caption={`They say adventure is for the young. I respectfully disagree.\n\n77 and still paddling. The best views are earned, not googled.`}
-hashtags="#NeverTooOld #Adventure #CoupleGoals #OutdoorLife #LiveYourLife"
-bizBenefits={['Authentic lifestyle content is the highest-performing category on all platforms','At 77, adventure content breaks stereotypes — algorithms love the contrast','Builds personal brand that supports ALL business ventures']}/>
-
-<PostCard img="images/roger-bay-angels.jpg" alt="The Bay Angel" title="The Original Bay Angel" platforms={['ig','li','fb']}
-caption={`They asked me to pose as an angel for Bay Angels back in the day. The Golden Gate Bridge behind me, wings and all.\n\nNearly 30 years later, we're still backing founders who dare to dream big. Some things don't change.`}
-hashtags="#BayAngels #AngelInvesting #SiliconValley #StartupLife #GoldenGateBridge #Throwback"
-bizBenefits={['Iconic brand image for Bay Angels','Pitch coaching credibility — shows longevity and personality','Commission Army awareness — "the angel investor building a startup"','LinkedIn gold — this photo with a story gets massive engagement']}/>
-
-<PostCard img="images/roger-with-family.jpg" alt="Family gathering" title="The Whole Crew" platforms={['fb','ig']}
-caption={`This is why everything else matters. The deals, the pitches, the late nights building companies — it all comes back to these people.\n\nFamily first. Always.`}
-hashtags="#Family #FamilyFirst #Blessed #MakingMemories"
-bizBenefits={['Family content humanizes your professional brand','People do business with people they like — this makes you likeable','Cross-post to LinkedIn with a "what I learned from raising a family" angle']}/>
-
-<PostCard img="images/roger-gangster-suit.jpg" alt="Roger in a sharp suit" title="Suited Up" platforms={['ig','li','tt']}
-caption={`My son says I look like a mob boss. I prefer "distinguished angel investor."\n\nEither way, the suit stays.`}
-hashtags="#SuitUp #Style #SiliconValley #AngelInvestor #Distinguished"
-bizBenefits={['This kind of personality-driven content goes viral on TikTok','Professional headshot alternative for LinkedIn','Shows personality — the #1 factor in social media growth']}/>
-</Acc>
-
-<Acc title="Getting Started on Instagram" id="sp-ig" prog={prog} toggle={toggle}>
-<Steps steps={[
-{title:'Download Instagram',content:<p>App Store → search "Instagram" → download.</p>},
-{title:'Log in',content:<p>Tap "Log in" then "Continue with Facebook" to connect your existing account.</p>},
-{title:'Your handle is @iamhavana',content:<p>If something seems off, don't worry — we can recover it.</p>},
-{title:'Post your first photo',content:<p>Tap the + button → Post → choose a Cuba shot → write a caption → Share.</p>},
-{title:'Try your first Reel',content:<p>Tap + → Reel → select a video → trim to 30 seconds → add text → Share. Reels reach people who don't follow you yet.</p>},
-]}/>
-</Acc>
-
-<Acc title="Your Photography Deserves an Audience" id="sp-photo" prog={prog} toggle={toggle}>
-<p>You've been shooting for decades. Fine art photographers are building real audiences on Instagram, and driving significant <strong>print sales</strong> directly from their social presence.</p>
-<p>Your Cuba street photography, your landscapes, your behind-the-scenes stories — this builds a following not because of tricks, but because the work is <strong>genuinely good</strong>.</p>
-<div className="co"><div className="co-l">The opportunity</div><p>Every photo you post is a potential fine art print sale. Your Instagram bio can link directly to a print shop. Collectors find photographers on Instagram every day. Post consistently, use hashtags like #FineArtPhotography #CubaPhotography, and watch what happens.</p></div>
-</Acc>
-</SPage>)}
-
-/* ===== SECTION 5: SOCIAL PROFESSIONAL ===== */
-function S5({section,onBack,prog,toggle}){return(<SPage section={section} onBack={onBack}>
-<div className="sintro"><p>Here's where social media becomes a business tool. You've spent 30 years building an incredible reputation. LinkedIn turns that reputation into an audience — and an audience into clients.</p></div>
-
-<Acc title="LinkedIn: Your Professional Platform" id="spro-li" prog={prog} toggle={toggle}>
-<p>Why LinkedIn matters for <em>you</em>:</p>
-<ul><li>Founded one of Silicon Valley's oldest angel groups</li><li>Judged startups on three continents</li><li>Published in <strong>Forbes</strong> and <strong>Fortune</strong>, appeared on <strong>CNN</strong></li><li>Built ChiefPeople to 135 employees</li></ul>
-<p>All of this is <strong>gold</strong> — but only if people see it.</p>
-<CPhoto src="images/roger-bay-angels-panel.jpg" alt="Roger at Bay Angels panel" caption="Every panel and event is LinkedIn content waiting to happen."/>
-</Acc>
-
-<Acc title="Your Professional Photos = LinkedIn Content" id="spro-posts" prog={prog} toggle={toggle}>
-<PostCard img="images/roger-networking.jpg" alt="Roger networking" title="The Networking Event" platforms={['li']}
-caption={`After 30 years of angel investing, I've learned that the best deals don't start with a pitch deck.\n\nThey start with a conversation over a glass of wine. The deck comes later — after trust is built.\n\nFounders: stop leading with your slides. Start leading with your story.`}
-bizBenefits={['Positions Roger as pitch coaching authority','Drives inbound leads for Guiding Angels / Pitch to an Angel','Bay Angels brand visibility','Commission Army: "even the angel investor values relationships over transactions"']}/>
-
-<PostCard img="images/roger-excited-panel.jpg" alt="Roger on a panel" title="The Panel Discussion" platforms={['li','ig']}
-caption={`I've sat on hundreds of panels about startups and investing. Here's the one thing I wish every founder in the audience understood:\n\nInvestors aren't looking for the perfect business plan. We're looking for founders who know their numbers cold and can explain why they — specifically they — are the right person to build this.\n\nThat's it. Everything else is noise.`}
-bizBenefits={['Direct pitch coaching content — this IS the service, demonstrated','Establishes expertise that justifies $250/hour coaching rate','Algorithm loves opinionated takes with specific advice']}/>
-
-<PostCard img="images/roger-and-sons.jpg" alt="Roger with his sons" title="What I Learned from My Sons" platforms={['li','fb']}
-caption={`My sons taught me more about business than any MBA program could.\n\nFrom them I learned that the best ideas often come from the people closest to the problem. That persistence beats pedigree. And that the next generation sees opportunities we completely miss.\n\nIf you're a founder over 50: listen to the young people around you. If you're a founder under 30: listen to the people who've been through a market cycle.\n\nThe magic is in the middle.`}
-bizBenefits={['Humanizes Roger\'s professional brand','Cross-generational appeal expands LinkedIn reach','Shows wisdom without arrogance — the sweet spot for coaching credibility']}/>
-</Acc>
-
-<Acc title="Automating Your Social Media" id="spro-auto" prog={prog} toggle={toggle}>
-<p>Here's the secret: <strong>you don't need to post in real-time</strong>. You can create a week's worth of content in 30 minutes using Claude, then schedule it all to post automatically.</p>
-<h4>The Workflow</h4>
-<div className="workflow">
-<div className="wf-step"><div className="wf-num">1</div><div className="wf-txt"><strong>Shoot.</strong> Take photos/videos when the moment happens. Just capture it.</div><div className="wf-time">0 min</div></div>
-<div className="wf-step"><div className="wf-num">2</div><div className="wf-txt"><strong>Batch with Claude.</strong> Paste the prompt below with descriptions of 5-10 photos. Claude writes captions for every platform at once.</div><div className="wf-time">10 min</div></div>
-<div className="wf-step"><div className="wf-num">3</div><div className="wf-txt"><strong>Schedule.</strong> Use Buffer, Later, or Hootsuite to schedule posts for the whole week. Upload photo + paste caption + set time.</div><div className="wf-time">15 min</div></div>
-<div className="wf-step"><div className="wf-num">4</div><div className="wf-txt"><strong>Engage.</strong> When notifications come in, reply to comments. This is where relationships happen.</div><div className="wf-time">5 min/day</div></div>
-</div>
-<p style={{textAlign:'center',fontWeight:600,color:'var(--gold-dark)',margin:'16px 0'}}><strong>Total time: ~30 minutes per week for consistent presence on 4 platforms.</strong></p>
-
-<h4>The Batch Content Prompt</h4>
-<PB text={`I have 5 photos I want to turn into social media posts. For each photo, write optimized captions for: Instagram (with hashtags), LinkedIn (thought leadership angle), Facebook (casual/personal), and TikTok (hook + short caption).\n\nPhoto 1: [describe the photo — who's in it, where, what's happening]\nPhoto 2: [describe]\nPhoto 3: [describe]\nPhoto 4: [describe]\nPhoto 5: [describe]\n\nContext about me: I'm Roger King, 77. Founder of Bay Angels (angel investing since 1998). Pitch coach. Photographer. Building Commission Army (referral marketplace startup). Based in the Bay Area.\n\nMake each platform's voice different:\n- Instagram: visual storytelling, relevant hashtags\n- LinkedIn: professional insight, conversation-starting\n- Facebook: warm, personal, conversational\n- TikTok: hook in first line, casual and punchy`}/>
-
-<h4>Scheduling Tools</h4>
-<CTable headers={['Tool','Best For','Cost','Platforms']} rows={[
-['Buffer','Simplicity — easiest to learn','Free (3 channels)','All major platforms'],
-['Later','Visual planning — see your grid','Free (1 profile/platform)','Instagram-focused'],
-['Hootsuite','Power users — analytics','$99/mo','Everything'],
-['Meta Business Suite','Facebook + Instagram','Free','Facebook & Instagram only'],
-]}/>
-<div className="co tip"><div className="co-l">Philip's recommendation</div><p>Start with <strong>Buffer</strong>. It's free for 3 channels and dead simple. Connect Instagram, LinkedIn, and Facebook. That covers your bases. If you want to get more sophisticated later, upgrade — but Buffer is enough to start.</p></div>
-</Acc>
-
-<Acc title="Audience = Opportunity Pipeline" id="spro-pipe" prog={prog} toggle={toggle}>
-<p style={{fontSize:'1.1rem',textAlign:'center',margin:'20px 0',fontWeight:600}}>Followers → Credibility → Inbound Leads → Paying Clients</p>
-<ul><li><strong>Pitch coaching:</strong> LinkedIn followers see your content → some are founders → they need coaching → $250/hour through Pitch to an Angel</li>
-<li><strong>Commission Army:</strong> "I'm building a referral marketplace — here's why the timing is right"</li>
-<li><strong>Bay Angels:</strong> Every post reinforces 30 years of credibility</li>
-<li><strong>Photography:</strong> Instagram followers → print sales, workshop bookings</li></ul>
-<CTable headers={['Platform','Personal','Professional']} rows={[
-['Facebook','Memories with friends/family','Not useful professionally'],
-['Instagram','Photography, travel, cars','Bay Angels events, print sales'],
-['TikTok','Fun video, virality','Thought leadership clips'],
-['LinkedIn','Not primary','Pitch coaching pipeline, Bay Angels credibility'],
-]}/>
-</Acc>
-</SPage>)}
-
-/* ===== SECTION 6: TRAVEL WITH AI ===== */
-function S6({section,onBack,prog,toggle}){return(<SPage section={section} onBack={onBack}>
-<div className="sintro"><p>Did you know Claude can be your personal travel agent? Upload a flight itinerary, and it'll plan your entire trip — restaurants, activities, logistics, even find discounts. Here's how to make every trip easier, cheaper, and more memorable.</p></div>
-
-<Acc title="Claude as Your Personal Travel Agent" id="tr-agent" prog={prog} toggle={toggle}>
-<p>Think of Claude as a travel concierge who's been to every city, read every review, and never gets tired of your questions. Here's what it can do:</p>
-<ul>
-<li><strong>Build a complete itinerary</strong> — day by day, hour by hour if you want</li>
-<li><strong>Find the best restaurants</strong> — filtered by cuisine, price, walkability from your hotel</li>
-<li><strong>Optimize your route</strong> — minimize driving/walking, cluster nearby attractions</li>
-<li><strong>Research visa requirements</strong> — especially important for Cuba trips</li>
-<li><strong>Translate phrases</strong> — get a pocket phrasebook for any language</li>
-<li><strong>Pack smart</strong> — custom packing list based on weather, activities, and trip length</li>
-<li><strong>Analyze costs</strong> — estimate daily budget, compare hotels, find savings</li>
-</ul>
-<div className="co"><div className="co-l">The key insight</div><p>Claude doesn't just give generic travel advice. When you tell it your specific interests — photography, cars, food, history — it tailors every recommendation. No travel agent knows you better than an AI you've briefed properly.</p></div>
-</Acc>
-
-<Acc title="The Trip Planning Prompt" id="tr-plan" prog={prog} toggle={toggle}>
-<p>Copy this, fill in the brackets, and watch Claude build your entire trip.</p>
-<PB text={`I'm planning a trip and I want you to be my personal travel concierge. Here are the details:\n\nDestination: [city/country]\nDates: [arrival date] to [departure date]\nTraveling with: [solo / with Julie / family group]\nBudget: [budget level — moderate, comfortable, luxury]\nInterests: Photography, local cuisine, history, architecture, vintage cars, street markets\nAccommodation: [already booked at Hotel X / need recommendations]\nSpecial requirements: [dietary restrictions, mobility considerations, etc.]\n\nPlease create:\n1. A day-by-day itinerary with morning, afternoon, and evening activities\n2. Restaurant recommendations for each day (lunch and dinner) — include addresses, price range, and what to order\n3. Photography spots — best times of day for lighting, locations tourists miss\n4. Transportation plan — how to get between locations efficiently\n5. A packing list based on the weather forecast for those dates\n6. Estimated daily costs breakdown\n7. 3-5 hidden gems that most tourists completely miss\n8. Key phrases in the local language if applicable\n\nMake it detailed but flexible — I don't want to feel rushed.`}/>
-</Acc>
-
-<Acc title="Upload Your Itinerary for Analysis" id="tr-upload" prog={prog} toggle={toggle}>
-<p>Already have flights and hotels booked? Upload the confirmation emails or PDFs to Claude and let it work from there.</p>
-<PB text={`I've attached my travel itinerary. Please:\n\n1. Summarize my flights and hotel bookings in a clean table\n2. Flag any tight connections or potential issues (short layovers, early check-in times)\n3. Suggest activities to fill the gaps between booked events\n4. Find the best restaurants within walking distance of my hotel\n5. Create a Google Maps list of all recommended locations (give me the addresses so I can save them)\n6. Identify any days where I'm over-scheduled and suggest what to cut\n7. What's the weather forecast looking like? Should I adjust my plans?`}/>
-<div className="co tip"><div className="co-l">How to upload</div><p>In the Claude app, tap the paperclip icon (or drag and drop on desktop) to attach a PDF, screenshot, or email. Claude reads it instantly and can work with all the details.</p></div>
-</Acc>
-
-<Acc title="Finding Deals and Discounts" id="tr-deals" prog={prog} toggle={toggle}>
-<p>Claude can help you save money on almost every aspect of travel.</p>
-<PB text={`I'm flying from San Francisco to [destination] on [dates]. Help me find the best deal:\n\n1. Which airlines typically have the best prices for this route?\n2. What day of the week is cheapest to fly?\n3. Should I book a round trip or two one-ways?\n4. Are there any nearby alternative airports that might be cheaper?\n5. What credit card travel perks should I be using? (I have [list your cards])\n6. Any current promotions or loyalty programs I should sign up for before booking?\n7. Should I book now or wait — what does pricing history suggest?`}/>
-<h4>More Ways to Save</h4>
-<ul>
-<li><strong>Hotel comparison:</strong> "Compare the Marriott downtown vs. the boutique hotel on Calle Obispo. Factor in location, amenities, and total cost including meals nearby."</li>
-<li><strong>Senior discounts:</strong> "What senior discounts are available for museums, transit, and attractions in [city]?"</li>
-<li><strong>Off-peak timing:</strong> "When is the cheapest time to visit [destination] that still has good weather?"</li>
-<li><strong>Package deals:</strong> "Would a flight+hotel package save me money vs. booking separately?"</li>
-</ul>
-</Acc>
-
-<Acc title="Cuba Trip Planning — Specific to You" id="tr-cuba" prog={prog} toggle={toggle}>
-<p>Since Cuba is your specialty, here's a prompt tailored for your trips:</p>
-<PB text={`I'm planning my next photography trip to Havana, Cuba. I've been many times — this isn't my first visit. I want to go deeper than the tourist spots.\n\nDates: [dates]\nFocus: Street photography, vintage cars, local music scene, architecture\nGroup: [solo / with Julie / leading a photography group]\n\nPlease help me with:\n1. Neighborhoods I might not have explored yet — beyond Habana Vieja and Vedado\n2. Best times and locations for golden hour photography\n3. Paladares (private restaurants) that locals actually eat at, not just tourists\n4. Live music venues — where do Cubans go on weeknights?\n5. Current regulations — what's changed recently for US travelers?\n6. Cash and connectivity tips — what works for internet access and payments now?\n7. A photography-focused walking route for each day that covers diverse subjects\n8. Any car shows, vintage car gatherings, or restoration shops I could visit?`}/>
-<CPhoto src="images/roger-bay-angels.jpg" alt="Roger in Cuba" caption="From Bay Angels to Havana streets — your photography takes you everywhere."/>
-</Acc>
-
-<Acc title="The Future: AI-Powered Reservations" id="tr-future" prog={prog} toggle={toggle}>
-<p>Here's where it gets exciting. AI tools are rapidly evolving, and the next wave includes the ability to <strong>take action on your behalf</strong> — not just plan, but actually book.</p>
-<h4>What's Possible Today</h4>
-<ul>
-<li>Claude builds your complete itinerary with all details</li>
-<li>You click the links or call the numbers Claude provides to book</li>
-<li>Claude drafts booking emails you can send directly</li>
-<li>Upload confirmations back to Claude to keep your trip organized</li>
-</ul>
-<h4>What's Coming Soon</h4>
-<ul>
-<li><strong>Direct booking:</strong> Claude connects to travel platforms and makes reservations for you</li>
-<li><strong>Price monitoring:</strong> AI watches prices and alerts you when they drop</li>
-<li><strong>Auto-rebooking:</strong> If a flight gets cheaper after you book, AI catches it</li>
-<li><strong>Live concierge:</strong> During your trip, ask Claude to find a restaurant nearby, check availability, and send you a reservation link — all in one step</li>
-</ul>
-<div className="co"><div className="co-l">Philip's take</div><p>"The gap between 'AI plans your trip' and 'AI books your trip' is closing fast. Right now, Claude is the best trip planner alive. Soon, it'll be the best travel agent too. Get comfortable using it for planning now, and the booking automation will feel natural when it arrives."</p></div>
-</Acc>
-</SPage>)}
-
-/* ===== SECTION 7: COOL STUFF ===== */
-function S7({section,onBack,prog,toggle}){return(<SPage section={section} onBack={onBack}>
-<div className="sintro"><p>This section is just for fun. Things that might surprise you, delight you, or make you say <em>"wait, it can do THAT?"</em></p></div>
-<Acc title="Voice Mode Tricks" id="cs-v" prog={prog} toggle={toggle}>
-<div className="fpg">
-<FPT emoji="🚗" text="Ask Claude to explain quantum computing while you're driving — just tap the mic"/>
-<FPT emoji="🧪" text="Quiz me on angel investing terminology — test what you know"/>
-<FPT emoji="💭" text="Brainstorm Commission Army marketing ideas — talk through it out loud"/>
-<FPT emoji="🎭" text="Practice a pitch with Claude playing a skeptical investor"/>
-</div>
-</Acc>
-<Acc title="Things You Didn't Know Claude Could Do" id="cs-cap" prog={prog} toggle={toggle}>
-<ul><li><strong>Read PDFs</strong> — "Here's a pitch deck — strengths and weaknesses?"</li>
-<li><strong>Analyze spreadsheets</strong> — "Here's my expenses — where am I overspending?"</li>
-<li><strong>Write code</strong> — This is how Philip built the Commission Army MVP</li>
-<li><strong>Create presentations, docs, spreadsheets</strong></li>
-<li><strong>Write emails in any tone</strong> — formal, casual, diplomatic, firm</li>
-<li><strong>Translate languages</strong> — useful for Cuba trips</li>
-<li><strong>Explain medical test results</strong> — upload a PDF, ask what it means</li></ul>
-</Acc>
-<Acc title="Fun Prompts to Try" id="cs-fun" prog={prog} toggle={toggle}>
-<PB text={`I'm a photographer who leads trips to Cuba. Write me a 60-second elevator pitch for my photography workshops.`}/>
-<PB text={`I founded one of Silicon Valley's oldest angel investment groups. Write me a short LinkedIn bio that sounds credible but not stuffy.`}/>
-<PB text={`Explain cryptocurrency to me like I'm a smart person who just hasn't been paying attention.`}/>
-<PB text={`I'm 77 and want to start posting on Instagram. Give me 10 post ideas based on: photography, classic cars, Cuba travel, and angel investing.`}/>
-</Acc>
-<Acc title='The "Wow Moment"' id="cs-wow" prog={prog} toggle={toggle}>
-<p>This single prompt is designed to genuinely impress you.</p>
-<PB text={`Analyze my professional background and tell me what business opportunities I'm missing.\n\nI'm Roger King, 77. Founded Bay Angels in 1998 — one of Silicon Valley's oldest angel investment networks. Reviewed thousands of pitch decks over 30 years. Judged startup competitions on three continents (Beijing, Seoul, Tokyo, Prague, Athens, Havana). Published in Forbes and Fortune, appeared on CNN. Built ChiefPeople to 135 employees. Currently building Commission Army (referral marketplace) and offer pitch coaching through Pitch to an Angel.\n\nTop 5 opportunities I might not have considered? Think creatively — speaking, publishing, consulting, digital products, partnerships. Estimate revenue for each.`}/>
-</Acc>
-<Acc title="Photo Gallery — A Life Well Lived" id="cs-gal" prog={prog} toggle={toggle}>
-<div style={{display:'grid',gap:'16px',gridTemplateColumns:'1fr 1fr'}}>
-<CPhoto src="images/roger-bay-angels.jpg" alt="Bay Angel" caption="The original Bay Angel"/>
-<CPhoto src="images/roger-julie-canoe.jpg" alt="Adventures" caption="Adventures with Julie"/>
-<CPhoto src="images/roger-with-family.jpg" alt="Family" caption="The whole crew"/>
-<CPhoto src="images/roger-family-toast.jpg" alt="Toast" caption="Cheers to family"/>
-<CPhoto src="images/roger-and-mike.jpg" alt="Roger & Mike" caption="Roger & Mike"/>
-<CPhoto src="images/roger-gangster-suit.jpg" alt="Sharp" caption="Looking sharp"/>
-</div>
-</Acc>
-</SPage>)}
-
-/* ===== LANDING PAGE ===== */
-function Landing({onNav}){return(
-<div>
-<div className="hero">
-<div className="hero-bg"><FocalImage src="images/roger-bay-angels.jpg" alt="Roger King"/></div>
-<div className="hero-content">
-<h1 className="s1">Hey Roger.</h1>
-<p className="hero-sub s2">Welcome to your personal guide to AI, social media, and technology.</p>
-<p className="hero-sub s3" style={{fontSize:'clamp(0.95rem,2vw,1.1rem)',marginTop:'4px'}}>Take it at your own pace. There's no rush.</p>
-<p className="hero-from s4">Built for you by Philip</p>
-</div>
-<div className="hero-scroll s5" onClick={()=>document.querySelector('.cards-section')?.scrollIntoView({behavior:'smooth'})}>{I.chevD}</div>
-</div>
-<div className="cards-section">
-<div className="cards-title">Your Sections</div>
-<div className="cards-grid">{SECTIONS.map((s,i)=>(
-<div key={s.id} className={`scard ${s.cc} s${i+2}`} onClick={()=>onNav(s.id)}>
-<div className="cicon"><span>{s.icon}</span></div>
-<div className="ctxt"><div className="clbl">{s.label}</div><div className="cttl">{s.title}</div><p className="cdsc">{s.sub}</p></div>
-<div className="carr">{I.chevR}</div>
-</div>))}</div>
-</div>
-<div className="pnote"><div className="pnote-l">A note from Philip</div><p>[Philip's personal message will go here]</p></div>
-<CamDiv/>
-<footer style={{textAlign:'center',padding:'20px 24px 40px',color:'var(--text-muted)',fontSize:'14px'}}><p style={{marginBottom:'4px'}}>Made with love, 2026</p></footer>
-</div>
-)}
-
-/* ===== APP ===== */
-function App(){
-const [page,setPage]=useState(()=>{const h=window.location.hash.replace('#','');return h||'home'});
-const [prog,toggle]=useProgress();
-useEffect(()=>{const h=()=>{const hash=window.location.hash.replace('#','');if(hash)setPage(hash)};window.addEventListener('hashchange',h);return()=>window.removeEventListener('hashchange',h)},[]);
-const nav=useCallback(id=>{setPage(id);window.location.hash=id;window.scrollTo({top:0,behavior:'smooth'})},[]);
-const home=useCallback(()=>{setPage('home');window.location.hash='home';window.scrollTo({top:0,behavior:'smooth'})},[]);
-
-const MAP={'getting-started':S1,'ai-personal':S2,'ai-professional':S3,'social-personal':S4,'social-professional':S5,'travel':S6,'cool-stuff':S7};
-const sec=SECTIONS.find(s=>s.id===page);
-const Comp=MAP[page];
-const activeNav=page==='home'?'home':page==='getting-started'?'getting-started':page.startsWith('ai-')?'ai-personal':page.startsWith('social-')?'social-personal':page==='travel'?'travel':page==='cool-stuff'?'cool-stuff':'home';
-
-return(<>
-<EditBanner/>
-<nav className="sidebar" style={EDIT_MODE?{top:'44px'}:{}}>
-<div className="sidebar-logo" onClick={home}>Roger's Guide</div>
-<div className="sidebar-sub">AI, Social Media & Technology</div>
-<button className={`slink ${page==='home'?'active':''}`} onClick={home}>{I.home}<span>Home</span></button>
-<div className="sdiv"/>
-{SECTIONS.map(s=><button key={s.id} className={`slink ${page===s.id?'active':''}`} onClick={()=>nav(s.id)}><span style={{fontSize:'18px',width:'20px',textAlign:'center'}}>{s.icon}</span><span>{s.title}</span></button>)}
-<div className="sfooter"><p>Built with love by Philip.<br/>Powered by Claude.</p></div>
+<nav class="side" aria-label="Sections">
+  <a class="brand" href="#today">Roger's Guide</a>
+  <p class="sub">Pitch an Angel, run from one page.</p>
+  <div id="sideTabs"></div>
+  <div class="foot">
+    <p><a href="#check">The 30-day test</a></p>
+    <p><a href="/classic.html">The original guide (February)</a></p>
+    <p>Built for you by Philip.<br>Updated 28 October 2026.</p>
+  </div>
 </nav>
-<main className="main-content">
-{page==='home'&&<Landing onNav={nav}/>}
-{Comp&&sec&&<Comp section={sec} onBack={home} prog={prog} toggle={toggle}/>}
-</main>
-<nav className="mobile-nav">{NAV.map(item=>(
-<button key={item.id} className={`mnb ${activeNav===item.id?'active':''}`} onClick={()=>item.id==='home'?home():nav(item.id)}>{item.icon}<span>{item.label}</span></button>
-))}</nav>
-</>);
+
+<main id="main" tabindex="-1"></main>
+
+<nav class="tabbar" id="tabbar" aria-label="Sections"></nav>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function () {
+'use strict';
+
+/* ---------- storage (each device keeps its own copy) ---------- */
+var store = {
+  get: function (k, d) { try { var v = localStorage.getItem('rg2.' + k); return v === null ? d : JSON.parse(v); } catch (e) { return d; } },
+  set: function (k, v) { try { localStorage.setItem('rg2.' + k, JSON.stringify(v)); } catch (e) {} }
+};
+
+function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+function money(n) { return '$' + Math.round(n).toLocaleString('en-US'); }
+function todayKey() { var d = new Date(); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
+function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
+
+/* ---------- the plan's dates and targets ---------- */
+var TARGET_DATE = new Date('2026-11-18T23:59:00-08:00');
+var TARGETS = [
+  { key: 'floor', label: 'Floor', amount: 2500 },
+  { key: 'goal', label: 'Goal', amount: 5000 },
+  { key: 'stretch', label: 'Stretch', amount: 12500 }
+];
+
+var WEEKS = [
+  { id: 'w1', title: 'Week 1', dates: '28 October to 3 November', ends: '2026-11-04', items: [
+    { id: 'w1a', t: 'Send 25 personal messages, five a day', d: 'Who to ask and what to say are on the Plan tab.' },
+    { id: 'w1b', t: 'Offer each current client their next step', d: 'A follow-up session, a Sprint, Philip\'s deck review, or the Full Program.' },
+    { id: 'w1c', t: 'Ask George to open two doors for a workshop', d: 'The East Bay SBDC and Innovit. The pitch email is on the ChatGPT tab.' },
+    { id: 'w1d', t: 'Agree the Full Program with Philip, Michael and George', d: 'Price, who does what, and how the money splits.' },
+    { id: 'w1e', t: 'Give your ChatGPT the new offers file', d: 'Download it from the ChatGPT tab and add it to your Pitch an Angel project.' }
+  ]},
+  { id: 'w2', title: 'Week 2', dates: '4 to 10 November', ends: '2026-11-11', items: [
+    { id: 'w2a', t: 'Run the first Pitch Clinic', d: 'Pick the date with Philip. Six founders, five minutes each, your feedback.' },
+    { id: 'w2b', t: 'Reply to every answer within a day', d: 'ChatGPT drafts, you send.' },
+    { id: 'w2c', t: 'Send the workshop email to five organizations', d: 'Accelerators, incubators, university programs, small business centers.' },
+    { id: 'w2d', t: 'Close the first Full Program', d: 'Half is paid at the start.' }
+  ]},
+  { id: 'w3', title: 'Week 3', dates: '11 to 17 November', ends: '2026-11-18', items: [
+    { id: 'w3a', t: 'Send every written report within 48 hours', d: 'Paste the Zoom transcript into ChatGPT with the report prompt.' },
+    { id: 'w3b', t: 'Ask every happy founder for one sentence we can quote', d: 'With their permission, it goes on the website.' },
+    { id: 'w3c', t: 'Book December and January workshop dates', d: 'Programs plan their spring cohorts now.' },
+    { id: 'w3d', t: 'Monday 16 November: 20 minutes with Philip on the numbers', d: 'Bring the four numbers from the Plan tab.' }
+  ]}
+];
+
+var DAILY = [
+  { id: 'msgs', t: 'Send five messages', d: 'Use the counter below. Who and what are on the Plan tab.' },
+  { id: 'intake', t: 'Answer any new intake', d: 'Open your review desk at pitchanangel.com/admin.' },
+  { id: 'handoff', t: 'Hand one job to ChatGPT', d: 'A report, a follow-up, a post. If it does not need you in the room, ChatGPT goes first.' },
+  { id: 'log', t: 'Log any payment that came in', d: 'It moves your November number.' }
+];
+
+/* ---------- offers ---------- */
+var RUNGS = [
+  { n: 1, title: 'Free, to start the conversation' },
+  { n: 2, title: 'A small first yes' },
+  { n: 3, title: 'Sessions with you' },
+  { n: 4, title: 'The deck, with Philip' },
+  { n: 5, title: 'The whole team' },
+  { n: 6, title: 'For organizations' },
+  { n: 7, title: 'Every month' }
+];
+
+var OFFERS = [
+  { rung: 1, name: 'Your articles and LinkedIn posts', price: 'Free', status: 'live', who: 'You, with ChatGPT',
+    inc: ['Two articles published, more on the way', 'One LinkedIn post a week, three comments on founders\' posts'],
+    best: 'Being found by founders who are getting ready to raise.',
+    say: 'I wrote about exactly this. Here is the link.' },
+  { rung: 1, name: 'A 15-minute fit call', price: 'Free', status: 'new', who: 'You',
+    inc: ['Hear where their raise stands', 'Point them to the right package', 'Not a coaching session'],
+    best: 'Anyone unsure which package fits.',
+    say: 'Let\'s talk for 15 minutes and I will tell you honestly what would help most.' },
+  { rung: 2, name: 'Pitch Clinic seat', price: '$149', status: 'soon', who: 'You, plus one guest from the team',
+    inc: ['A monthly 90-minute Zoom', 'Six founders pitch for five minutes each and get your feedback', 'Up to 15 more can watch for $49'],
+    best: 'Founders who are not ready to spend $495 yet, and people who learn by watching.',
+    say: 'Once a month I hear six pitches live. You can take a seat or just watch and learn.' },
+  { rung: 2, name: 'Recorded course with a personal workbook', price: '$149', status: 'soon', who: 'You on video, once',
+    inc: ['Eight ten-minute lessons', 'A workbook built from their own company', 'Sells while you sleep'],
+    best: 'Founders anywhere in the world, and anyone who buys after a workshop.',
+    say: 'Everything I teach in a session, in eight short lessons, with a workbook made for your company.' },
+  { rung: 3, name: 'Single Session', price: '$495', status: 'live', who: 'You',
+    inc: ['45 minutes live', 'Written report within 48 hours', '15-minute follow-up within six weeks'],
+    best: 'A founder raising soon, with a deck, who wants an honest read.',
+    say: 'I will tell you honestly what an investor will notice, and what to fix first.' },
+  { rung: 3, name: 'Three Sessions Sprint', price: '$1,095', status: 'live', who: 'You',
+    inc: ['Sessions of 45, 45 and 30 minutes over several weeks', 'A written report after each'],
+    best: 'A pitch event or investor meetings in the next six weeks, with the pitch still changing.',
+    say: 'One pass finds the problems. The second and third make sure they are fixed before it counts.' },
+  { rung: 3, name: 'Comprehensive Review', price: '$1,495', status: 'live', who: 'You and Philip',
+    inc: ['An hour with you and your written report', 'Philip\'s Strategy and Design Review of the deck', 'A 45-minute follow-up with both of you'],
+    best: 'When the deck is as weak as the pitch.',
+    say: 'I work on how you pitch. Philip works on the deck. Then we look at it together.' },
+  { rung: 4, name: 'Philip\'s deck reviews and redesign', price: '$395 to $1,500+', status: 'live', who: 'Philip',
+    inc: ['Deck Design Review $395', 'Strategy and Design Review $695, with an hour together', 'Deck Redesign from $1,500, up to 15 slides'],
+    best: 'Founders whose story is fine but whose slides get in the way.',
+    say: 'Philip goes slide by slide. He has rebuilt founders\' decks and goes further on design than I do.' },
+  { rung: 5, name: 'The Full Program', price: '$4,500', status: 'new', who: 'You, Philip, Michael DeBoard and George Parrish',
+    inc: ['You: four one-hour pitch sessions, a report after each', 'Philip: three sessions on the deck, plus a redesign of up to 15 slides', 'Michael: pricing, a books health check, and the structure of the raise', 'To finish: a mock angel panel with all four of you', 'Six to eight weeks. Half to start, half at the midpoint', 'Founding price for the first three founders, then $5,900'],
+    best: 'A serious raise where the pitch, the deck and the numbers all need to be right.',
+    say: 'Your pitch, your deck and your numbers, checked by four people before the first investor meeting.' },
+  { rung: 5, name: 'Mock Angel Panel', price: '$750', status: 'new', who: 'You, Philip, Michael and George',
+    inc: ['The founder pitches for ten minutes', 'Twenty minutes of real questions, the way a screening committee asks them', 'A scorecard from each panelist within 48 hours'],
+    best: 'The week before a pitch event or a big investor meeting.',
+    say: 'Pitch to four of us the way a screening committee would hear you, before the day that counts.' },
+  { rung: 6, name: 'Cohort pitch workshop', price: 'From $2,500', status: 'new', who: 'You, with George or Michael as a guest',
+    inc: ['Two hours, Zoom or in person, up to 20 founders', 'Your five rules, three founders pitch live', 'A personal workbook for every founder'],
+    best: 'Accelerators, incubators, university programs and small business centers.',
+    say: 'I can get your whole cohort ready to pitch in one afternoon, and every founder leaves with their own workbook.' },
+  { rung: 7, name: 'Raise Support', price: '$750 a month', status: 'soon', who: 'You, with one money question a month to Michael',
+    inc: ['Two 30-minute calls a month', 'Investor emails and updates reviewed within two business days', 'For founders who are actively raising'],
+    best: 'Full Program graduates in the middle of their raise.',
+    say: 'While you are raising, I am on call to check what you send investors before you send it.' }
+];
+
+var STATUS = { live: ['live', 'Live now'], 'new': ['new', 'New, ready to sell'], soon: ['soon', 'Coming in January'] };
+
+/* ---------- calculator ---------- */
+var CALC = [
+  { id: 'single', name: 'Single Session', price: 495, take: 495 },
+  { id: 'sprint', name: 'Three Sessions Sprint', price: 1095, take: 1095 },
+  { id: 'comp', name: 'Comprehensive Review', price: 1495, take: 800, sub: 'Philip\'s part is his $695 review' },
+  { id: 'fullmine', name: 'Full Program, you brought them', price: 4500, take: 1867.5, sub: 'Proposed split, not agreed yet' },
+  { id: 'fullother', name: 'Full Program, someone else brought them', price: 4500, take: 1417.5, sub: 'Proposed split, not agreed yet' },
+  { id: 'workshop', name: 'Cohort workshop', price: 2500, take: 2500 },
+  { id: 'clinic', name: 'Pitch Clinic seat', price: 149, take: 149 },
+  { id: 'panel', name: 'Mock Angel Panel', price: 750, take: 262.5, sub: 'Shared four ways, proposed' }
+];
+var RECIPES = {
+  floor: { label: 'Floor', counts: { single: 3, sprint: 1 } },
+  goal: { label: 'Goal', counts: { single: 3, sprint: 1, workshop: 1 } },
+  stretch: { label: 'Stretch', counts: { single: 4, sprint: 2, workshop: 2, fullmine: 1, clinic: 6, comp: 1 } }
+};
+
+/* ---------- people ---------- */
+var GROUPS = ['Past client', 'Current client', 'My network', 'Founder I met', 'Organization'];
+var STATES = ['To ask', 'Asked', 'Replied', 'Booked'];
+
+/* ---------- messages ---------- */
+var MESSAGES = [
+  { id: 'past', title: 'A past client', when: 'Everyone you have coached. Best first message of all.',
+    text: 'Hi [first name], how is the raise going? I have been thinking about [company] since our session. If you are heading into more meetings, I am happy to do a follow-up run-through. And if you know another founder getting ready to raise in the next few months, I would be glad to give them an honest read.' },
+  { id: 'network', title: 'Someone in your network', when: 'Lawyers, accountants, bankers, other angels, old recruiting contacts.',
+    text: 'Hi [first name], I am taking on a few founders this month who are getting ready to pitch angel investors. If you know someone raising in the next 90 days, I would be glad to give them an honest read on their pitch before they go in. They can start at pitchanangel.com, or just reply and I will reach out. Thank you.' },
+  { id: 'met', title: 'A founder you met or judged', when: 'Anyone whose pitch you have heard at an event.',
+    text: 'Hi [first name], I enjoyed hearing about [company] at [event]. If you are raising soon, I now coach founders one-on-one on the pitch itself: what lands with angels, what loses them, and how to handle the hard questions. Happy to talk for 15 minutes if it would help.' },
+  { id: 'org', title: 'An accelerator or program', when: 'Program directors, SBDC advisors, university entrepreneurship centers.',
+    text: 'Hi [first name], I founded Bay Angels in 1997 and have heard hundreds of pitches since. I run a two-hour pitch workshop for founder cohorts: my five rules for an angel pitch, three founders pitching live for feedback, and a workbook for every founder built from their own company. Would it help your [spring cohort or demo day]? I would be glad to send a one-page outline and find a date.' },
+  { id: 'next', title: 'A current client, the next step', when: 'Right after a session goes well.',
+    text: 'Hi [first name], good work on [what they improved]. The next thing that would move this forward is [the deck, the numbers, another run-through]. [Philip\'s Strategy and Design Review / a Sprint / the Full Program] covers exactly that. Your session counts toward it if you start this month. Want me to set it up?' },
+  { id: 'quiet', title: 'Someone who went quiet', when: 'No reply after a week.',
+    text: 'Hi [first name], checking in on [company]. When is your next pitch? If timing has moved, no problem. When it is back on the calendar, I am here.' }
+];
+
+/* ---------- ChatGPT prompts ---------- */
+var FIELDS = [
+  { id: 'founder', label: 'Founder\'s first name', ph: 'Alex' },
+  { id: 'company', label: 'Company', ph: 'Harbor Health' },
+  { id: 'what', label: 'What they do, in a line', ph: 'Software that helps clinics fill empty appointments' },
+  { id: 'stage', label: 'Stage and round', ph: 'Seed, early revenue' },
+  { id: 'raise', label: 'How much they are raising', ph: '$1.5 million' },
+  { id: 'next', label: 'Their next pitch', ph: 'Demo day, 4 December' },
+  { id: 'org', label: 'An organization (for workshops)', ph: 'East Bay SBDC' }
+];
+
+var PROMPTS = [
+  { id: 'five', title: 'Draft today\'s five messages', when: 'Every morning. Takes five minutes.',
+    body: 'Help me write five short personal messages for Pitch an Angel today.\n\nHere are the five people, how I know them, and what I know about their situation:\n1. \n2. \n3. \n4. \n5. \n\nFor each person, pick the right template from my file "For Roger\'s ChatGPT - offers and outreach" (past client, network, founder I met, organization, current client, gone quiet) and write it in my voice: warm, direct, under 100 words, first names only. No long dashes. Do not invent anything about them. If you need something I did not tell you, put it in [brackets] for me to fill in.' },
+  { id: 'prep', title: 'Prep me for a call with {founder}', when: 'The day before any call.',
+    body: 'TASK: Prep packet for {company}.\n\nI have a call with {founder} from {company}.\nWhat they do: {what}\nStage and round: {stage}\nRaising: {raise}\nNext pitch: {next}\n\nGive me a three-minute read: 1. a snapshot, 2. how good a fit they are and why, 3. where their pitch probably breaks (two or three points I should confirm live), 4. what investors in this category ask at this stage, 5. five opening questions just for them, 6. which Pitch an Angel offer fits and how I should suggest it. Mark anything you guessed with [check].\n\nTheir intake or deck text:\n[paste it here]' },
+  { id: 'report', title: 'Write my session report for {founder}', when: 'Right after a session. Report goes out within 48 hours.',
+    body: 'TASK: Written report for {company} from my Zoom call.\n\nBelow are my notes and the transcript of my session with {founder}. Write the founder report in my voice, one to two pages: Where you are. What is working. The three fixes that matter most (the issue, why it costs you with investors, exactly what to do instead, with a rewritten line). Before you pitch again: a short checklist. Next step.\n\nThen, separately, a private note for me only: a score from 1 to 5 on each of my five rules, and which offer to suggest next.\n\nUse only what is in my notes and the transcript. Mark anything you inferred [check]. No long dashes.\n\nMy notes:\n[type or dictate them]\n\nTranscript:\n[paste the Zoom transcript]' },
+  { id: 'workbook', title: 'Make {founder}\'s personal workbook', when: 'For a workshop founder, a course buyer, or as a thank-you after a session.',
+    body: 'Make a personal pitch workbook for {founder} at {company}, following "Making a founder\'s personal workbook" in my file "For Roger\'s ChatGPT - offers and outreach".\n\nWhat they do: {what}\nStage and round: {stage}\nRaising: {raise}\nNext pitch: {next}\n\nUse only what they told me and mark anything you inferred [check]. When it is ready, give it to me as a Word document I can print or email, titled "{company} pitch workbook".\n\nTheir intake or deck text:\n[paste it here]' },
+  { id: 'yes', title: 'Should I say yes to this?', when: 'Any time someone offers you a deal, shares or a fee.',
+    body: 'Someone has offered me an opportunity. Run the 30-day test from my file "For Roger\'s ChatGPT - offers and outreach": ask me the six questions one at a time, then give me a verdict (go, park it, or not now) and a short reply I can send. If it involves a fee for raising money, introductions to investors, or shares, say so plainly and remind me to send it to Philip and Michael first.\n\nHere is the offer, as they put it:\n[paste their message or describe it]' },
+  { id: 'shiny', title: 'Reply to an offer of shares or a success fee', when: 'Turns a shiny object into a paying client.',
+    body: 'Someone has offered me [a success fee / shares / a percentage] for [what they want me to do]. Help me reply kindly and briefly. I do not take fees tied to fundraising or introductions, and I do not take shares for advice. Offer what I do instead: a Single Session ($495), or the Full Program if their pitch, deck and numbers all need work. Use "The polite redirect" in my offers file. Under 100 words, in my voice, no long dashes.\n\nTheir message:\n[paste it]' },
+  { id: 'org', title: 'Offer my workshop to {org}', when: 'Accelerators, incubators, universities, small business centers.',
+    body: 'Write a short email from me to {org} offering my two-hour cohort pitch workshop: from $2,500 for up to 20 founders, my five rules, three founders pitch live for feedback, and a personal workbook for every founder. Start from template 4 in my offers file.\n\nWhat I know about {org}: [what they do, who runs it, when their cohort or demo day is]\n\nUnder 120 words, warm and specific, with a plain subject line. Offer to send a one-page outline. No long dashes.' },
+  { id: 'full', title: 'Write a Full Program proposal for {company}', when: 'When a founder asks for the Full Program.',
+    body: 'Write a one-page proposal from me to {founder} at {company} for the Pitch an Angel Full Program ($4,500, founding price, half to start and half at the midpoint), using "The Full Program" in my offers file. Tailor the "what we will work on" part to what I know about them:\nWhat they do: {what}\nStage and round: {stage}\nRaising: {raise}\nNext pitch: {next}\n\nInclude a week-by-week plan over six to eight weeks, who does what (me, Philip, Michael DeBoard, and the closing panel with George Parrish), what is not included, and the next step. Plain words, no long dashes, as a Word document.' },
+  { id: 'quiet', title: 'Follow up with {founder}', when: 'When someone goes quiet for a week.',
+    body: '{founder} at {company} went quiet after [our call / my invitation / the report]. Write a short, friendly follow-up in my voice, under 60 words, that asks one simple question and makes it easy to say "not now". No pressure, no long dashes.' },
+  { id: 'post', title: 'This week\'s LinkedIn post', when: 'Once a week.',
+    body: 'TASK: LinkedIn post.\n\nTheme: [one idea, for example "you have 30 seconds before an investor decides to lean in"]\nA moment I saw: [a real moment from a pitch, with no names]\nThe point for founders: [what they should do this week]\n\nWrite it in my voice, 120 to 170 words, short paragraphs, no hashtags, no emojis, no link in the body, no long dashes. Give me two versions with different first lines, plus a one-line first comment with the link https://www.pitchanangel.com' },
+  { id: 'record', title: 'Plan a recording', when: 'Before each course lesson. You talk, ChatGPT plans.',
+    body: 'I am recording a ten-minute lesson for my Pitch an Angel course on: [topic, for example "the first 30 seconds"].\n\nPlan it the way "Recording a lesson" says in my offers file: the idea in one sentence, why it matters to an investor, one invented example clearly labeled as invented, the fix, and one exercise. Then list five slides with a title and one line each, and a two-sentence close pointing to pitchanangel.com. Write it as notes I can glance at while I talk, not a script to read.' }
+];
+
+/* ---------- the 30-day test ---------- */
+var QUESTIONS = [
+  { id: 'q1', t: 'Will it put cash in the bank within 30 days?', key: false },
+  { id: 'q2', t: 'Is the payment for work you control (a session, a review, a workshop), not for something you cannot control, like an investment closing?', key: true },
+  { id: 'q3', t: 'Is it paid in cash, not only in shares or a promise?', key: true },
+  { id: 'q4', t: 'Can you explain the company and your part in two sentences?', key: false },
+  { id: 'q5', t: 'Does it keep Pitch an Angel and Bay Angels clean? No fee for introducing investors, nothing that touches Bay Angels selection.', key: true },
+  { id: 'q6', t: 'Does it fit in your hours this week without pushing out a paying founder?', key: false }
+];
+var REDIRECT = 'Thank you for thinking of me. I don\'t take fees tied to fundraising or to introductions, and I don\'t take shares for advice. What I do is help founders get their pitch ready for investors. If that would help you, the place to start is a Single Session ($495), or the Full Program if you want your pitch, your deck and your numbers ready together. Happy to set up a short call.';
+
+/* ---------- kit ---------- */
+var KIT = [
+  { href: '/kit/workbook.html', title: 'The personal workbook', what: 'A sample made for a made-up founder, Alex at Harbor Health. Every workshop founder and course buyer gets one built from their own company.', when: 'Ready to use now, by hand with ChatGPT' },
+  { href: '/kit/workshop.html', title: 'The cohort workshop', what: 'The one-page outline to send a program director, the two-hour run of show, and the follow-up.', when: 'Ready to sell now' },
+  { href: '/kit/full-program.html', title: 'The Full Program overview', what: 'What a founder gets, week by week, who does what, and the payment terms. Send it after a fit call.', when: 'Ready once the four of you agree' },
+  { href: '/kit/clinic.html', title: 'The Pitch Clinic', what: 'The sign-up page, the 90-minute run of show, and the consent line for recording.', when: 'First one in week 2' },
+  { href: '/kit/course.html', title: 'The recorded course', what: 'Eight lessons, what each covers, and your recording-day checklist.', when: 'Record in December, sell in January' },
+  { href: '/kit/scorecard.html', title: 'The mock panel scorecard', what: 'The sheet each panelist fills in. Founders keep all four.', when: 'Ready now' }
+];
+
+/* ---------- icons ---------- */
+var ICONS = {
+  today: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>',
+  plan: '<svg viewBox="0 0 24 24"><path d="M3 17l5-5 4 4 8-8"/><path d="M14 8h6v6"/></svg>',
+  offers: '<svg viewBox="0 0 24 24"><path d="M20.6 13.4l-7.2 7.2a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg>',
+  ai: '<svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8M8 13h5"/></svg>',
+  build: '<svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M17.5 14v7M14 17.5h7"/></svg>'
+};
+var TABS = [['today', 'Today'], ['plan', 'Plan'], ['offers', 'Offers'], ['ai', 'ChatGPT'], ['build', 'Build']];
+
+/* ---------- state helpers ---------- */
+function payments() { return store.get('payments', []); }
+function paidTotal() { return payments().reduce(function (s, p) { return s + (Number(p.amount) || 0); }, 0); }
+function msgCounts() { return store.get('msgCounts', {}); }
+function msgsToday() { return msgCounts()[todayKey()] || 0; }
+function checks() { return store.get('checks', {}); }
+function isChecked(id) { return !!checks()[id]; }
+function daily() { var all = store.get('daily', {}); return all[todayKey()] || {}; }
+function fields() { return store.get('fields', {}); }
+function counts() { return store.get('calcCounts', {}); }
+function takes() { return store.get('calcTakes', {}); }
+function people() { return store.get('people', []); }
+
+function currentWeek() {
+  var now = new Date();
+  for (var i = 0; i < WEEKS.length; i++) { if (now < new Date(WEEKS[i].ends + 'T00:00:00-08:00')) return WEEKS[i]; }
+  return WEEKS[WEEKS.length - 1];
+}
+function daysLeft() { return Math.ceil((TARGET_DATE - new Date()) / 86400000); }
+function weekStart() { var d = new Date(); var day = (d.getDay() + 6) % 7; d.setDate(d.getDate() - day); d.setHours(0, 0, 0, 0); return d; }
+
+function greet() { var h = new Date().getHours(); return h < 12 ? 'Good morning, Roger.' : h < 18 ? 'Good afternoon, Roger.' : 'Good evening, Roger.'; }
+
+function checkItem(id, t, d, pressed, action) {
+  return '<li><button class="check" type="button" data-act="' + (action || 'check') + '" data-id="' + id + '" aria-pressed="' + (pressed ? 'true' : 'false') + '"><span class="box" aria-hidden="true"></span><span><span class="t">' + esc(t) + '</span>' + (d ? '<span class="d">' + esc(d) + '</span>' : '') + '</span></button></li>';
 }
 
-ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+function meter(total) {
+  var max = TARGETS[2].amount;
+  var pct = Math.min(100, total / max * 100);
+  var marks = TARGETS.map(function (t) {
+    var left = t.amount / max * 100;
+    var pos = left > 92 ? 'right:0;transform:none;text-align:right' : 'left:' + left + '%';
+    return '<span style="' + pos + '" class="' + (total >= t.amount ? 'hit' : '') + '"><b>' + money(t.amount) + '</b>' + t.label + '</span>';
+  }).join('');
+  return '<div class="meter" role="img" aria-label="' + money(total) + ' of ' + money(max) + '"><div class="fill" style="width:' + pct + '%"></div></div><div class="marks">' + marks + '</div>';
+}
+
+function nextTargetLine(total) {
+  for (var i = 0; i < TARGETS.length; i++) {
+    if (total < TARGETS[i].amount) return money(TARGETS[i].amount - total) + ' to the ' + TARGETS[i].label.toLowerCase() + '.';
+  }
+  return 'Every target reached. Tell Philip.';
+}
+
+/* ---------- pages ---------- */
+function pageToday() {
+  var wk = currentWeek();
+  var total = paidTotal();
+  var dl = daysLeft();
+  var d = daily();
+  var c = checks();
+  var doneWk = wk.items.filter(function (i) { return c[i.id]; }).length;
+  var pays = payments().slice().reverse();
+  var intro = store.get('introClosed', false) ? '' :
+    '<div class="card gold"><h3>What changed</h3><p>The first guide taught the tools. This one is your business desk for Pitch an Angel. Five tabs, one job each:</p>' +
+    '<ul class="dots"><li><strong>Today</strong>: your 30 minutes and this week\'s list.</li><li><strong>Plan</strong>: the three-week plan, who to ask, and what to say.</li><li><strong>Offers</strong>: everything we sell, the prices, and the words to use.</li><li><strong>ChatGPT</strong>: prompts to copy, filled in for each founder.</li><li><strong>Build</strong>: the products to make next, with samples.</li></ul>' +
+    '<p class="small">Your ticks and notes are saved on this device only. Nothing you type here leaves it.</p><button class="btn small ghost" data-act="close-intro" type="button">Got it</button></div>';
+
+  return '' +
+  '<section class="hero"><img src="/images/roger-hero.jpg" alt="Roger on stage with a microphone at a pitch event"><div class="txt"><h1>' + greet() + '</h1><p>' + (dl > 0 ? dl + ' days to 18 November.' : 'The three weeks are up. Time to review with Philip.') + ' Here is today.</p></div></section>' +
+  intro +
+
+  '<div class="card"><p class="eyebrow">November target</p>' +
+  '<div class="stat"><span class="big">' + money(total) + '</span><span class="muted">in so far. ' + nextTargetLine(total) + '</span></div>' +
+  meter(total) +
+  '<details><summary>Log a payment</summary><div class="inner"><div class="fields two">' +
+  '<div><label class="f" for="payAmt">Amount</label><input class="in" id="payAmt" inputmode="decimal" placeholder="For example: 495"></div>' +
+  '<div><label class="f" for="payWho">From</label><input class="in" id="payWho" placeholder="Founder or company"></div></div>' +
+  '<p style="margin-top:12px"><button class="btn" data-act="add-pay" type="button">Add payment</button></p>' +
+  (pays.length ? '<ul class="clean">' + pays.map(function (p) { return '<li class="person"><span><span class="nm">' + money(p.amount) + '</span> <span class="nt">' + esc(p.who || '') + ' &middot; ' + esc(p.date) + '</span></span><button class="linkbtn" data-act="del-pay" data-id="' + p.id + '" type="button">Remove</button></li>'; }).join('') + '</ul>' : '<p class="small">Payments you log show up here and fill the bar.</p>') +
+  '</div></details></div>' +
+
+  '<div class="card"><p class="eyebrow">Your 30 minutes today</p><ul class="clean checks">' +
+  DAILY.map(function (i) { return checkItem(i.id, i.t, i.d, d[i.id], 'daily'); }).join('') + '</ul>' +
+  '<div class="row" style="margin-top:8px"><span><strong>Messages sent today:</strong> <span style="font-size:22px;font-weight:700">' + msgsToday() + '</span> of 5</span>' +
+  '<button class="btn small" data-act="msg-plus" type="button">+1 sent</button>' + (msgsToday() ? '<button class="linkbtn" data-act="msg-minus" type="button">undo</button>' : '') + '</div></div>' +
+
+  '<div class="card"><p class="eyebrow">' + esc(wk.title) + ', ' + esc(wk.dates) + '</p><h3>' + doneWk + ' of ' + wk.items.length + ' done</h3><ul class="clean checks">' +
+  wk.items.map(function (i) { return checkItem(i.id, i.t, i.d, c[i.id]); }).join('') + '</ul>' +
+  '<details style="margin-top:10px"><summary>The other weeks</summary><div class="inner">' +
+  WEEKS.filter(function (w) { return w.id !== wk.id; }).map(function (w) { return '<p class="eyebrow" style="margin-top:12px">' + esc(w.title) + ', ' + esc(w.dates) + '</p><ul class="clean checks">' + w.items.map(function (i) { return checkItem(i.id, i.t, i.d, c[i.id]); }).join('') + '</ul>'; }).join('') +
+  '</div></details></div>' +
+
+  '<div class="card warn"><h3>Someone offered you a deal?</h3><p>A fee for finding an investor, shares for advice, a big project with no money attached yet. Before you answer, take the 30-day test. It takes one minute.</p><a class="btn red" href="#check">Take the 30-day test</a></div>' +
+
+  '<div class="card soft"><p class="eyebrow">Philip\'s rule for you and AI</p><p class="quote">"Any work that does not require your physical body or your actual conscious presence should be handed off, or at the very least partially augmented by your AI system."</p><p class="cite">Philip, voice memo, 22 October 2026 (lightly edited). The prompts are on the ChatGPT tab.</p></div>' +
+
+  '<div class="card"><p class="eyebrow">Quick links</p><div class="row">' +
+  '<a class="btn ghost small" href="https://www.pitchanangel.com/admin" target="_blank" rel="noopener">Review desk</a>' +
+  '<a class="btn ghost small" href="https://chatgpt.com/" target="_blank" rel="noopener">ChatGPT</a>' +
+  '<a class="btn ghost small" href="https://www.pitchanangel.com/services" target="_blank" rel="noopener">Your website</a>' +
+  '<a class="btn ghost small" href="https://www.linkedin.com/feed/" target="_blank" rel="noopener">LinkedIn</a></div></div>' +
+
+  '<details><summary>Put this guide on your home screen</summary><div class="inner"><p>On iPhone or iPad: open this page in Safari, tap the Share button (the square with the arrow), then <strong>Add to Home Screen</strong>. It opens like an app, with your photo as the icon.</p></div></details>' +
+  '<p class="foot-note"><a href="/classic.html">The original guide from February</a> is still here, with the photography, social media and travel sections.</p>';
+}
+
+function pagePlan() {
+  var cs = counts(), tk = takes();
+  var calcTotal = CALC.reduce(function (s, it) { return s + (cs[it.id] || 0) * (tk[it.id] != null ? tk[it.id] : it.take); }, 0);
+  var ppl = people();
+  var since = weekStart();
+  var mc = msgCounts();
+  var weekMsgs = Object.keys(mc).reduce(function (s, k) { return new Date(k + 'T12:00:00') >= since ? s + mc[k] : s; }, 0);
+  var weekPaid = payments().reduce(function (s, p) { return p.ts && new Date(p.ts) >= since ? s + Number(p.amount) : s; }, 0);
+  var replied = ppl.filter(function (p) { return p.s >= 2; }).length;
+  var booked = ppl.filter(function (p) { return p.s === 3; }).length;
+
+  return '' +
+  '<p class="eyebrow">The plan</p><h1>Three weeks, one plan.</h1>' +
+  '<p class="lead">Pitch an Angel brings in about $1,500 a month from two or three clients. Your prices are right: they match the best comparable coaches. What moves the number now is more conversations.</p>' +
+
+  '<div class="card soft"><h3>Why messages, not new products, this month</h3><p>New products take weeks to build and sell. Messages to people who already know you work this week. So November is about asking, and December is about building the things on the Build tab, so January sells more without you in the room.</p></div>' +
+
+  '<h2 class="section">The three targets</h2>' +
+  '<div class="grid2">' + ['floor', 'goal', 'stretch'].map(function (k) {
+    var r = RECIPES[k], t = TARGETS.filter(function (x) { return x.key === k; })[0];
+    var sum = CALC.reduce(function (s, it) { return s + (r.counts[it.id] || 0) * it.take; }, 0);
+    var lines = CALC.filter(function (it) { return r.counts[it.id]; }).map(function (it) { return '<li>' + r.counts[it.id] + ' x ' + esc(it.name) + '</li>'; }).join('');
+    return '<div class="card"><p class="eyebrow">' + t.label + '</p><p class="big" style="font-size:1.9rem">' + money(t.amount) + '</p><p class="small">One way to get there (' + money(sum) + '):</p><ul class="dots">' + lines + '</ul><button class="btn small ghost" data-act="recipe" data-id="' + k + '" type="button">Try it in the calculator</button></div>';
+  }).join('') + '</div>' +
+  '<p class="small">Honest read: the floor is very likely if the messages go out. The goal needs one organization or one Full Program to say yes in time. The stretch is a six-to-eight-week number, not a three-week one.</p>' +
+
+  '<h2 class="section" id="calc">The calculator</h2>' +
+  '<div class="card"><p>Tap + for each sale. "Your take" is what reaches you after the team\'s share.</p>' +
+  CALC.map(function (it) {
+    var n = cs[it.id] || 0, take = tk[it.id] != null ? tk[it.id] : it.take;
+    return '<div class="calc-row"><div><div class="nm">' + esc(it.name) + '</div><div class="sub">' + money(it.price) + ' price, your take ' + money(take) + (it.sub ? '. ' + esc(it.sub) : '') + '</div></div>' +
+      '<div class="stepper"><button type="button" data-act="calc" data-id="' + it.id + '" data-d="-1" aria-label="One fewer ' + esc(it.name) + '">&minus;</button><output aria-live="polite">' + n + '</output><button type="button" data-act="calc" data-id="' + it.id + '" data-d="1" aria-label="One more ' + esc(it.name) + '">+</button></div></div>';
+  }).join('') +
+  '<hr class="s" style="margin:16px 0"><div class="stat"><span class="big">' + money(calcTotal) + '</span><span class="muted">your take</span></div>' + meter(calcTotal) +
+  '<div class="row"><button class="btn small ghost" data-act="calc-reset" type="button">Clear</button></div>' +
+  '<details style="margin-top:14px"><summary>Change "your take" numbers</summary><div class="inner"><p class="small">The team split for shared offers is proposed, not agreed. Change these once you, Philip, Michael and George decide.</p>' +
+  CALC.map(function (it) { var take = tk[it.id] != null ? tk[it.id] : it.take; return '<div class="calc-row"><label class="nm" for="take-' + it.id + '">' + esc(it.name) + '</label><input class="in take-in" id="take-' + it.id + '" data-act="take" data-id="' + it.id + '" inputmode="decimal" value="' + Math.round(take) + '"></div>'; }).join('') +
+  '<p><button class="linkbtn" data-act="take-reset" type="button">Put the proposed numbers back</button></p></div></details></div>' +
+
+  '<h2 class="section" id="people">Who to ask</h2>' +
+  '<p>Start with the people who already trust you. In order of how fast they say yes:</p>' +
+  '<ol><li><strong>Past and current clients.</strong> A follow-up, the next step, or a referral.</li><li><strong>Your network.</strong> Startup lawyers, accountants, bankers, other angels, old recruiting contacts. They meet founders before the raise.</li><li><strong>Founders you have met or judged.</strong> Events, competitions, panels.</li><li><strong>Organizations.</strong> Accelerators, incubators, university programs, and small business centers. George is already an advisor at the East Bay SBDC and mentors international founders at Innovit.</li><li><strong>LinkedIn.</strong> One post a week and three thoughtful comments on founders\' posts.</li></ol>' +
+  '<div class="card soft"><p class="small" style="margin:0"><strong>Keep it clean:</strong> do not offer coaching to a company while it is applying to Bay Angels, and step back from any Bay Angels decision about a company you have coached.</p></div>' +
+
+  '<div class="card"><h3>Your list</h3><p class="small">Add people as they come to mind. Tap their status to move it along: To ask, Asked, Replied, Booked.</p>' +
+  '<div class="fields two"><div><label class="f" for="pName">Name</label><input class="in" id="pName" placeholder="Name"></div><div><label class="f" for="pGroup">Who they are</label><select class="in" id="pGroup">' + GROUPS.map(function (g) { return '<option>' + g + '</option>'; }).join('') + '</select></div></div>' +
+  '<div style="margin-top:12px"><label class="f" for="pNote">Note (optional)</label><input class="in" id="pNote" placeholder="For example: raising in spring"></div>' +
+  '<p style="margin-top:12px"><button class="btn" data-act="add-person" type="button">Add to my list</button></p>' +
+  (ppl.length ? '<p class="small">' + ppl.length + ' people. ' + ppl.filter(function (p) { return p.s >= 1; }).length + ' asked, ' + replied + ' replied, ' + booked + ' booked.</p><ul class="clean">' +
+    ppl.slice().sort(function (a, b) { return a.s - b.s; }).map(function (p) {
+      return '<li class="person"><span><span class="nm">' + esc(p.name) + '</span><br><span class="nt">' + esc(p.group) + (p.note ? ' &middot; ' + esc(p.note) : '') + '</span><br><button class="linkbtn" data-act="del-person" data-id="' + p.id + '" type="button">Remove</button></span><button class="status s' + p.s + '" data-act="cycle" data-id="' + p.id + '" type="button" aria-label="Status for ' + esc(p.name) + ': ' + STATES[p.s] + '. Tap to change.">' + STATES[p.s] + '</button></li>';
+    }).join('') + '</ul>' : '') + '</div>' +
+
+  '<h2 class="section" id="say">What to say</h2>' +
+  '<p>Six short messages in your voice. Copy one, change the words in [brackets], send. Or use the "Draft today\'s five messages" prompt on the ChatGPT tab and let ChatGPT personalize all five.</p>' +
+  MESSAGES.map(function (m) {
+    return '<details><summary>' + esc(m.title) + '</summary><div class="inner"><p class="small">' + esc(m.when) + '</p><div class="msg" id="msg-' + m.id + '">' + esc(m.text) + '</div><button class="btn small" data-act="copy" data-src="msg-' + m.id + '" type="button">Copy message</button></div></details>';
+  }).join('') +
+
+  '<h2 class="section">Monday check-in with Philip</h2>' +
+  '<div class="card"><p>Twenty minutes, four numbers. This guide counts them for you from Monday:</p>' +
+  '<div class="grid2"><div><span class="big" style="font-size:1.8rem">' + weekMsgs + '</span><br><span class="small">messages sent</span></div><div><span class="big" style="font-size:1.8rem">' + replied + '</span><br><span class="small">replied, from your list</span></div><div><span class="big" style="font-size:1.8rem">' + booked + '</span><br><span class="small">booked</span></div><div><span class="big" style="font-size:1.8rem">' + money(weekPaid) + '</span><br><span class="small">paid this week</span></div></div></div>' +
+  '<p class="foot-note">For Philip: the reasoning, the hours math and the split options are in <code>docs/2026-10-28-roger-business-plan.md</code> in the pitch-to-an-angel repository.</p>';
+}
+
+function pageOffers() {
+  var html = '<p class="eyebrow">What we sell</p><h1>The offers, and the words to use.</h1>' +
+    '<p class="lead">Everything Pitch an Angel sells, from free to the full team. Your prices are right where the best comparable coaches are. Lead with the conversation, not the price.</p>';
+
+  html += '<div class="card gold"><h3>Which offer fits?</h3><p class="small">Answer three questions about the person in front of you.</p>' + chooser() + '</div>';
+
+  RUNGS.forEach(function (r) {
+    var list = OFFERS.filter(function (o) { return o.rung === r.n; });
+    html += '<div class="rung"><span class="n">' + r.n + '</span><h2>' + esc(r.title) + '</h2></div>';
+    list.forEach(function (o) {
+      var st = STATUS[o.status];
+      html += '<article class="card offer"><div class="top"><div><h3 style="margin:0">' + esc(o.name) + '</h3><span class="badge ' + st[0] + '">' + st[1] + '</span></div><span class="price">' + esc(o.price) + '</span></div>' +
+        '<p class="who">' + esc(o.who) + '</p><ul class="dots">' + o.inc.map(function (i) { return '<li>' + esc(i) + '</li>'; }).join('') + '</ul>' +
+        '<p style="margin:0"><strong>Best for:</strong> ' + esc(o.best) + '</p><p class="say">"' + esc(o.say) + '"</p></article>';
+    });
+  });
+
+  html += '<h2 class="section">The team</h2><div class="grid2">' +
+    '<div class="card"><h3>Roger</h3><p>The pitch. How it sounds to an investor, what to fix first, the hard questions.</p></div>' +
+    '<div class="card"><h3>Philip</h3><p>The deck. Slide by slide, design and phrasing, the angel market today, and the redesign.</p></div>' +
+    '<div class="card"><h3>Michael DeBoard</h3><p>The numbers. A fractional CFO: pricing, the books, and how the raise is structured.</p></div>' +
+    '<div class="card"><h3>George Parrish</h3><p>The panel and the programs. Startup advisor, mentor to international founders, and the fourth seat on the mock panel.</p></div></div>';
+
+  html += '<div class="card warn"><h3>What we never sell</h3><ul class="dots">' +
+    '<li><strong>A fee or a percentage tied to money raised.</strong> Paying an unregistered person a success fee for raising capital usually breaks securities rules, for the company and for the person paid.</li>' +
+    '<li><strong>Introductions to investors as part of a package.</strong> Sometimes, when there is a real fit, you may introduce a founder. It is never what they pay for.</li>' +
+    '<li><strong>Work paid only in shares.</strong> Shares received for work are usually taxed as income when you receive them, even if they can never be sold. Most never turn into cash.</li>' +
+    '<li><strong>Anything that touches Bay Angels selection.</strong> Coaching never helps a company get chosen or pitch there.</li></ul>' +
+    '<p class="small">General information, not legal or tax advice. Send anything like this to Philip, and anything with shares or numbers to Michael, before you answer.</p></div>';
+  return html;
+}
+
+function chooser() {
+  var st = store.get('chooser', {});
+  function opts(q, list) {
+    return '<div class="yn" style="flex-wrap:wrap;margin:6px 0 14px">' + list.map(function (o) {
+      return '<button type="button" class="y" data-act="choose" data-q="' + q + '" data-v="' + o[0] + '" aria-pressed="' + (st[q] === o[0] ? 'true' : 'false') + '" style="flex:1 1 140px">' + o[1] + '</button>';
+    }).join('') + '</div>';
+  }
+  var out = '<p class="qt" style="font-weight:600;margin:0">Who is asking?</p>' + opts('who', [['founder', 'A founder'], ['org', 'An organization']]);
+  if (st.who === 'founder') {
+    out += '<p style="font-weight:600;margin:0">When is their next pitch?</p>' + opts('when', [['soon', 'Within a month'], ['later', '1 to 3 months'], ['none', 'Not planned']]);
+    if (st.when && st.when !== 'none') out += '<p style="font-weight:600;margin:0">What needs work?</p>' + opts('what', [['pitch', 'The pitch'], ['deck', 'Pitch and deck'], ['all', 'Pitch, deck and numbers']]);
+  }
+  var rec = null;
+  if (st.who === 'org') rec = ['Cohort pitch workshop, from $2,500', 'I can get your whole cohort ready to pitch in one afternoon, and every founder leaves with their own workbook.'];
+  else if (st.who === 'founder' && st.when === 'none') rec = ['A kind note and an article link', 'Coaching pays off once you have a raise on the calendar and a pitch to work on. When that is true, come back. In the meantime, this article is a good start.'];
+  else if (st.who === 'founder' && st.what === 'all') rec = ['The Full Program, $4,500', 'Your pitch, your deck and your numbers, checked by four people before the first investor meeting.'];
+  else if (st.who === 'founder' && st.what === 'deck') rec = ['Comprehensive Review, $1,495', 'I work on how you pitch. Philip works on the deck. Then we look at it together.'];
+  else if (st.who === 'founder' && st.what === 'pitch' && st.when === 'soon') rec = ['Single Session, $495', 'I will tell you honestly what an investor will notice, and what to fix first.'];
+  else if (st.who === 'founder' && st.what === 'pitch' && st.when === 'later') rec = ['Three Sessions Sprint, $1,095', 'One pass finds the problems. The second and third make sure they are fixed before it counts.'];
+  if (rec) out += '<div class="verdict go" style="margin:6px 0 0"><p class="eyebrow" style="color:var(--sage)">Offer</p><h3 style="margin:0 0 6px">' + rec[0] + '</h3><p class="say" style="margin:0">"' + rec[1] + '"</p></div>';
+  if (st.who) out += '<p style="margin:10px 0 0"><button class="linkbtn" data-act="choose-reset" type="button">Start again</button></p>';
+  return out;
+}
+
+function fillPrompt(body) {
+  var f = fields();
+  return body.replace(/\{(\w+)\}/g, function (m, k) {
+    var def = FIELDS.filter(function (x) { return x.id === k; })[0];
+    var v = (f[k] || '').trim();
+    return v || (def ? '[' + def.label.toLowerCase() + ']' : m);
+  });
+}
+function fillTitle(t) {
+  var f = fields();
+  return t.replace(/\{(\w+)\}/g, function (m, k) {
+    var v = (f[k] || '').trim();
+    if (v) return v;
+    return { founder: 'a founder', company: 'a company', org: 'an organization' }[k] || m;
+  });
+}
+
+function pageAI() {
+  var f = fields();
+  return '' +
+  '<p class="eyebrow">ChatGPT</p><h1>Hand it off.</h1>' +
+  '<p class="lead">One question decides it: does this need my body or my presence? If not, ChatGPT goes first. If it does (a session, a call, a pitch night), ChatGPT still prepares you before and writes it up after.</p>' +
+  '<div class="card soft"><p class="quote">"Work mode, especially when you have the right projects and context and environments and permissions and systems set up. It\'s wonderful."</p><p class="cite">Philip, on ChatGPT for you, 22 October 2026. Voice mode is the easiest way in: tap the voice button and talk.</p></div>' +
+
+  '<h2 class="section">Set up once</h2>' +
+  '<div class="card"><ol style="padding-left:1.2em;margin:0"><li style="margin-bottom:10px">Download your offers file: <a href="/kit/roger-chatgpt-offers-and-outreach.md" download="For Roger\'s ChatGPT - offers and outreach.md">For Roger\'s ChatGPT, offers and outreach</a>. It teaches ChatGPT the offers, the prices, the 30-day test, and the message templates.</li><li style="margin-bottom:10px">In ChatGPT, open your <strong>Pitch an Angel</strong> project, choose <strong>Add files</strong>, and add it. It sits next to your articles file.</li><li>In the project\'s instructions, add this line at the end, then save:<div class="prompt"><pre id="instr-line">When Roger asks about offers, prices, who to contact, what to say, an opportunity someone has offered him, a founder\'s workbook, a workshop or a recording, use the file "For Roger\'s ChatGPT - offers and outreach".</pre><div class="bar"><button class="btn small" data-act="copy" data-src="instr-line" type="button">Copy the line</button></div></div></li></ol>' +
+  '<p class="small" style="margin-top:12px">Stuck? Philip can do this with you in ten minutes.</p></div>' +
+
+  '<h2 class="section">Fill in once, use everywhere</h2>' +
+  '<div class="card"><p class="small">Type a founder\'s details here and every prompt below fills itself in. Leave a box empty and the prompt keeps a [blank] for you.</p><div class="fields two">' +
+  FIELDS.map(function (x) { return '<div><label class="f" for="fld-' + x.id + '">' + esc(x.label) + '</label><input class="in" id="fld-' + x.id + '" data-act="field" data-id="' + x.id + '" placeholder="For example: ' + esc(x.ph) + '" value="' + esc(f[x.id] || '') + '"></div>'; }).join('') +
+  '</div><p style="margin-top:12px"><button class="linkbtn" data-act="clear-fields" type="button">Clear for the next founder</button></p></div>' +
+
+  '<h2 class="section">The prompts</h2>' +
+  PROMPTS.map(function (p) {
+    return '<details data-prompt="' + p.id + '"><summary>' + esc(fillTitle(p.title)) + '</summary><div class="inner"><p class="small">' + esc(p.when) + '</p><div class="prompt"><pre id="pr-' + p.id + '">' + esc(fillPrompt(p.body)) + '</pre><div class="bar"><button class="btn small" data-act="copy" data-src="pr-' + p.id + '" type="button">Copy prompt</button><a class="btn small ghost" href="https://chatgpt.com/" target="_blank" rel="noopener">Open ChatGPT</a></div></div></div></details>';
+  }).join('') +
+  '<p class="small" style="margin-top:16px">Prompts that start with TASK: match the playbooks Philip wrote for your project, so they work the same way every time.</p>';
+}
+
+function pageBuild() {
+  return '' +
+  '<p class="eyebrow">Build next</p><h1>Turn your free hours into products.</h1>' +
+  '<p class="lead">You have time. These turn it into things that sell without you in the room: recorded once, sold many times. Build in November and December so they sell in January.</p>' +
+
+  '<h2 class="section">The order</h2>' +
+  '<div class="tl">' +
+  '<div class="it now"><p class="when">November</p><p><strong>Sell the workshop and run the first Pitch Clinic.</strong> Make workbooks by hand with ChatGPT for every workshop founder. Each one teaches us what the course needs.</p></div>' +
+  '<div class="it"><p class="when">December</p><p><strong>Record the eight lessons.</strong> Two mornings with Philip, four lessons each. Book January workshops with programs planning their spring cohorts.</p></div>' +
+  '<div class="it"><p class="when">January</p><p><strong>Open the course and Raise Support.</strong> Philip switches on the AI Pitch Review, which is already built, so founders can get a $49 read on their deck any time, and the workbook can make itself.</p></div>' +
+  '</div>' +
+
+  '<h2 class="section">The kit</h2><p>Samples of each product, ready to show, print or send.</p>' +
+  KIT.map(function (k) { return '<a class="card" href="' + k.href + '" style="display:block;text-decoration:none;color:inherit"><p class="eyebrow">' + esc(k.when) + '</p><h3 style="margin:0 0 6px">' + esc(k.title) + '</h3><p style="margin:0">' + esc(k.what) + '</p></a>'; }).join('') +
+
+  '<h2 class="section">Who does what</h2>' +
+  '<div class="grid2"><div class="card ok"><h3>Needs you</h3><ul class="dots"><li>Talking on the recordings</li><li>Giving feedback at clinics, workshops and panels</li><li>Sessions and fit calls</li><li>Saying yes or no to a founder</li></ul></div>' +
+  '<div class="card soft"><h3>Does not need you</h3><ul class="dots"><li>Planning each lesson (ChatGPT: "Plan a recording")</li><li>Workbooks and reports (ChatGPT drafts, you read)</li><li>Slides, editing, sign-up pages (Philip)</li><li>Payments and links (Philip)</li></ul></div></div>' +
+
+  '<div class="card gold"><h3>What a recording morning looks like</h3><ol style="padding-left:1.2em;margin:0"><li>Ask ChatGPT to plan the lesson the night before.</li><li>Zoom on your Mac, with Philip on the call sharing the slides.</li><li>Talk for ten minutes as if one founder were across the table. No script.</li><li>If you stumble, keep going. Philip cuts it afterward.</li><li>Four lessons, then lunch.</li></ol></div>';
+}
+
+function pageCheck() {
+  var a = store.get('checkAnswers', {});
+  var answered = QUESTIONS.filter(function (q) { return a[q.id]; }).length;
+  var keyNo = QUESTIONS.some(function (q) { return q.key && a[q.id] === 'n'; });
+  var anyNo = QUESTIONS.some(function (q) { return a[q.id] === 'n'; });
+  var v;
+  if (keyNo) v = ['park', 'Park it', 'This one fails a test that matters: a fee tied to raising money, payment only in shares, or something that touches Bay Angels. Send the polite reply below, and send the offer to Philip (and anything with shares or numbers to Michael) before you say anything more.'];
+  else if (answered < QUESTIONS.length) v = ['wait', 'Answer all six', 'Tap yes or no for each question.'];
+  else if (anyNo) v = ['later', 'Not now', 'Nothing dangerous, but it does not pay this month or does not fit. Write it down and look again after 18 November.'];
+  else v = ['go', 'Go ahead', 'Cash this month, for work you control, and clean. Say yes, and log the payment when it comes in.'];
+
+  var note = store.get('checkNote', '');
+  var mail = 'mailto:philip@bayangels.com?subject=' + encodeURIComponent('30-day test: an offer I received') + '&body=' + encodeURIComponent('Philip,\n\nSomeone offered me this:\n' + (note || '[describe it]') + '\n\nMy answers:\n' + QUESTIONS.map(function (q, i) { return (i + 1) + '. ' + q.t + ' ' + (a[q.id] === 'y' ? 'Yes' : a[q.id] === 'n' ? 'No' : '?'); }).join('\n') + '\n\nVerdict: ' + v[1] + '\n\nRoger');
+
+  return '' +
+  '<p class="eyebrow">Before you say yes</p><h1>The 30-day test.</h1>' +
+  '<p class="lead">For any new opportunity: a fee for finding an investor, shares for advice, a project with no money attached yet. Six questions, one minute.</p>' +
+  '<div class="card"><label class="f" for="checkNote">What is the offer? (optional, stays on this device)</label><textarea class="in" id="checkNote" data-act="check-note" placeholder="Someone wants me to introduce them to investors for 5% of what they raise">' + esc(note) + '</textarea></div>' +
+  '<div class="card">' + QUESTIONS.map(function (q, i) {
+    return '<div class="q"><p class="qt">' + (i + 1) + '. ' + esc(q.t) + '</p><div class="yn"><button type="button" class="y" data-act="answer" data-id="' + q.id + '" data-v="y" aria-pressed="' + (a[q.id] === 'y') + '">Yes</button><button type="button" class="n" data-act="answer" data-id="' + q.id + '" data-v="n" aria-pressed="' + (a[q.id] === 'n') + '">No</button></div></div>';
+  }).join('') + '</div>' +
+  '<div class="verdict ' + v[0] + '" aria-live="polite"><h2 style="margin:0 0 6px">' + v[1] + '</h2><p style="margin:0">' + v[2] + '</p></div>' +
+  (v[0] === 'park' || v[0] === 'later' ? '<div class="card"><h3>The polite reply</h3><p class="small">It turns the offer into paid work you control.</p><div class="msg" id="redirect">' + esc(REDIRECT) + '</div><div class="row"><button class="btn small" data-act="copy" data-src="redirect" type="button">Copy reply</button><a class="btn small ghost" href="' + mail + '">Email it to Philip</a></div></div>' : '') +
+  '<div class="card soft"><h3>Why these questions</h3><ul class="dots"><li><strong>Fees tied to raising money</strong> can make the person paid an unregistered broker under securities law. That is a problem for the company and for you.</li><li><strong>Shares for work</strong> are usually taxed as income when you get them, even though you cannot sell them, and most never become cash.</li><li><strong>Your attention</strong> is what Pitch an Angel runs on. An hour on a maybe is an hour not spent with a founder who pays this week.</li></ul><p class="small">General information, not legal or tax advice. Philip and Michael will help with the real answer.</p></div>' +
+  '<p><button class="btn ghost small" data-act="check-reset" type="button">Start a new check</button></p>';
+}
+
+var PAGES = { today: pageToday, plan: pagePlan, offers: pageOffers, ai: pageAI, build: pageBuild, check: pageCheck };
+var TITLES = { today: 'Today', plan: 'Plan', offers: 'Offers', ai: 'ChatGPT', build: 'Build', check: 'The 30-day test' };
+
+/* ---------- render ---------- */
+var main = document.getElementById('main');
+function route() { var h = (location.hash || '#today').slice(1).split('?')[0]; return PAGES[h] ? h : 'today'; }
+
+function renderNav(r) {
+  var html = TABS.map(function (t) { return '<a class="tab" href="#' + t[0] + '"' + (r === t[0] ? ' aria-current="page"' : '') + '>' + ICONS[t[0]] + '<span>' + t[1] + '</span></a>'; }).join('');
+  document.getElementById('tabbar').innerHTML = html;
+  document.getElementById('sideTabs').innerHTML = html;
+}
+
+function render(keepScroll) {
+  var r = route();
+  var y = window.scrollY;
+  var open = Array.prototype.map.call(main.querySelectorAll('details[open]'), function (d) { return d.querySelector('summary').textContent; });
+  main.innerHTML = PAGES[r]();
+  if (keepScroll) {
+    Array.prototype.forEach.call(main.querySelectorAll('details'), function (d) { if (open.indexOf(d.querySelector('summary').textContent) >= 0) d.open = true; });
+    window.scrollTo(0, y);
+  }
+  renderNav(r);
+  document.title = TITLES[r] + ' · Roger\'s Guide';
+}
+
+window.addEventListener('hashchange', function () {
+  render(false);
+  window.scrollTo(0, 0);
+  main.focus({ preventScroll: true });
+});
+
+function toast(msg) { var t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toast._t); toast._t = setTimeout(function () { t.classList.remove('show'); }, 1800); }
+
+function copyText(text) {
+  if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(text).then(function () { toast('Copied. Paste it into ChatGPT or your email.'); }, function () { fallback(); });
+  fallback();
+  function fallback() {
+    var ta = document.createElement('textarea'); ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); toast('Copied.'); } catch (e) { toast('Press and hold to copy.'); } document.body.removeChild(ta);
+  }
+}
+
+document.addEventListener('click', function (e) {
+  var b = e.target.closest('[data-act]'); if (!b) return;
+  var act = b.getAttribute('data-act'), id = b.getAttribute('data-id');
+  if (act === 'check') { var c = checks(); c[id] = !c[id]; store.set('checks', c); render(true); }
+  else if (act === 'daily') { var all = store.get('daily', {}); var k = todayKey(); all[k] = all[k] || {}; all[k][id] = !all[k][id]; store.set('daily', all); render(true); }
+  else if (act === 'close-intro') { store.set('introClosed', true); render(true); }
+  else if (act === 'msg-plus' || act === 'msg-minus') { var mc = msgCounts(); var tk2 = todayKey(); mc[tk2] = Math.max(0, (mc[tk2] || 0) + (act === 'msg-plus' ? 1 : -1)); store.set('msgCounts', mc); if (act === 'msg-plus' && mc[tk2] === 5) toast('Five sent. That is today done.'); render(true); }
+  else if (act === 'add-pay') {
+    var amt = parseFloat(String(document.getElementById('payAmt').value).replace(/[^0-9.]/g, ''));
+    if (!amt) { toast('Type an amount first.'); return; }
+    var ps = payments(); var now = new Date();
+    ps.push({ id: uid(), amount: amt, who: document.getElementById('payWho').value.trim(), date: now.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }), ts: now.toISOString() });
+    store.set('payments', ps); toast('Logged ' + money(amt) + '.'); render(true);
+  }
+  else if (act === 'del-pay') { store.set('payments', payments().filter(function (p) { return p.id !== id; })); render(true); }
+  else if (act === 'calc') { var cs = counts(); cs[id] = Math.max(0, (cs[id] || 0) + parseInt(b.getAttribute('data-d'), 10)); store.set('calcCounts', cs); render(true); }
+  else if (act === 'calc-reset') { store.set('calcCounts', {}); render(true); }
+  else if (act === 'take-reset') { store.set('calcTakes', {}); render(true); }
+  else if (act === 'recipe') { store.set('calcCounts', Object.assign({}, RECIPES[id].counts)); render(true); var el = document.getElementById('calc'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }
+  else if (act === 'add-person') {
+    var nm = document.getElementById('pName').value.trim(); if (!nm) { toast('Type a name first.'); return; }
+    var ppl = people(); ppl.push({ id: uid(), name: nm, group: document.getElementById('pGroup').value, note: document.getElementById('pNote').value.trim(), s: 0 });
+    store.set('people', ppl); render(true);
+  }
+  else if (act === 'cycle') { var pp = people().map(function (p) { if (p.id === id) p.s = (p.s + 1) % STATES.length; return p; }); store.set('people', pp); render(true); }
+  else if (act === 'del-person') { store.set('people', people().filter(function (p) { return p.id !== id; })); render(true); }
+  else if (act === 'copy') { var src = document.getElementById(b.getAttribute('data-src')); if (src) copyText(src.textContent); }
+  else if (act === 'clear-fields') { store.set('fields', {}); render(true); }
+  else if (act === 'answer') { var a = store.get('checkAnswers', {}); a[id] = b.getAttribute('data-v'); store.set('checkAnswers', a); render(true); }
+  else if (act === 'check-reset') { store.set('checkAnswers', {}); store.set('checkNote', ''); render(false); window.scrollTo(0, 0); }
+  else if (act === 'choose') { var st = store.get('chooser', {}); var q = b.getAttribute('data-q'); st[q] = b.getAttribute('data-v'); if (q === 'who') { delete st.when; delete st.what; } if (q === 'when') delete st.what; store.set('chooser', st); render(true); }
+  else if (act === 'choose-reset') { store.set('chooser', {}); render(true); }
+});
+
+document.addEventListener('input', function (e) {
+  var el = e.target, act = el.getAttribute && el.getAttribute('data-act'); if (!act) return;
+  var id = el.getAttribute('data-id');
+  if (act === 'field') {
+    var f = fields(); f[id] = el.value; store.set('fields', f);
+    PROMPTS.forEach(function (p) {
+      var pre = document.getElementById('pr-' + p.id); if (pre) pre.textContent = fillPrompt(p.body);
+      var d = main.querySelector('details[data-prompt="' + p.id + '"] > summary'); if (d) d.textContent = fillTitle(p.title);
+    });
+  }
+  else if (act === 'take') { var t = takes(); var v = parseFloat(String(el.value).replace(/[^0-9.]/g, '')); if (isNaN(v)) return; t[id] = v; store.set('calcTakes', t); }
+  else if (act === 'check-note') { store.set('checkNote', el.value); }
+});
+document.addEventListener('change', function (e) { if (e.target.getAttribute && e.target.getAttribute('data-act') === 'take') render(true); });
+
+render(false);
+})();
 </script>
 </body>
 </html>
