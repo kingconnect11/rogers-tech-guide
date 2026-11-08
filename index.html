@@ -9,25 +9,36 @@
 <title>Roger's Guide — AI, Social Media & Technology</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-body{font-family:'Source Sans 3',-apple-system,sans-serif;font-size:18px;line-height:1.7;color:#1a2744;background:#faf8f5;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body{font-family:'Source Sans 3',-apple-system,sans-serif;font-size:18px;line-height:1.7;color:#1a2232;background:#faf7f2;overflow-x:hidden;-webkit-font-smoothing:antialiased}
 :root{
---navy:#1a2744;--navy-light:#2a3d5e;--cream:#faf8f5;--ivory:#f5f0e8;
---gold:#c8956c;--gold-light:#dbb08a;--gold-dark:#a67c52;
---warm-blue:#4a6fa5;--sage:#7a9e7e;--sage-light:#a8c5ab;
---text:#1a2744;--text-light:#5a6a7e;--text-muted:#8a95a5;
---border:#e8e0d4;--shadow:rgba(26,39,68,0.08);--shadow-md:rgba(26,39,68,0.12);
+--navy:#0f1b2d;--navy-light:#1e3352;--cream:#faf7f2;--ivory:#f2ebe0;
+--gold:#c4894a;--gold-light:#d4a46a;--gold-dark:#a06b30;
+--warm-blue:#3d6898;--sage:#6b9e72;--sage-light:#a8c5ab;
+--rose:#c47a6c;
+--text:#1a2232;--text-light:#4a5568;--text-muted:#8a95a5;
+--border:#e8e0d4;--shadow:rgba(15,27,45,0.06);--shadow-md:rgba(15,27,45,0.10);
+--shadow-lg:0 1px 2px rgba(15,27,45,0.04),0 4px 12px rgba(15,27,45,0.06),0 16px 40px rgba(15,27,45,0.08);
 --radius:12px;--radius-lg:20px;--radius-sm:8px;
 --transition:0.3s cubic-bezier(0.4,0,0.2,1);
 --nav-height:72px;--sidebar-width:260px;--content-max:760px;
 }
+/* Paper grain overlay */
+body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9998;opacity:0.03;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E")}
+/* Script accent font */
+.script-accent{font-family:'Caveat',cursive;font-weight:500}
+/* Display typography */
+.display-lg{font-size:clamp(2rem,6vw,3.6rem);font-family:'Playfair Display',Georgia,serif;font-weight:700;line-height:1.15;letter-spacing:-0.02em}
+.display-sm{font-size:clamp(1rem,2vw,1.15rem);font-family:'Source Sans 3',sans-serif;font-weight:300;line-height:1.6}
+/* Pull quote style */
+.pull-quote{font-family:'Playfair Display',Georgia,serif;font-style:italic;font-size:clamp(1.4rem,3vw,1.8rem);line-height:1.5;color:var(--navy);padding:32px 0 32px 28px;border-left:3px solid var(--gold);margin:36px 0;position:relative}
 h1,h2,h3,h4,h5{font-family:'Playfair Display',Georgia,serif;font-weight:700;line-height:1.25;color:var(--navy)}
-h1{font-size:clamp(2rem,5vw,3.2rem);letter-spacing:-0.02em}
-h2{font-size:clamp(1.6rem,4vw,2.4rem);letter-spacing:-0.01em}
-h3{font-size:clamp(1.25rem,3vw,1.6rem)}
+h1{font-size:clamp(2.2rem,6vw,3.6rem);letter-spacing:-0.02em}
+h2{font-size:clamp(1.8rem,4.5vw,2.8rem);letter-spacing:-0.01em;position:relative;display:inline-block}
+h3{font-size:clamp(1.3rem,3vw,1.75rem)}
 h4{font-size:1.15rem;font-weight:600}
 p{margin-bottom:1em;color:var(--text)}
 a{color:var(--gold-dark);text-decoration:none;transition:color var(--transition)}
@@ -37,110 +48,150 @@ img{max-width:100%;height:auto;display:block}
 #root{min-height:100vh;display:flex;flex-direction:column}
 
 /* NAV MOBILE */
-.mobile-nav{position:fixed;bottom:0;left:0;right:0;z-index:1000;background:rgba(250,248,245,0.88);backdrop-filter:blur(20px) saturate(1.8);-webkit-backdrop-filter:blur(20px) saturate(1.8);border-top:1px solid var(--border);padding:6px 4px calc(6px + env(safe-area-inset-bottom));display:flex;justify-content:space-around;align-items:center}
-.mnb{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 2px;border:none;background:none;cursor:pointer;min-width:48px;min-height:44px;border-radius:var(--radius-sm);transition:all var(--transition);-webkit-tap-highlight-color:transparent}
-.mnb svg{width:22px;height:22px;stroke:var(--text-muted);transition:all var(--transition);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.mobile-nav{position:fixed;bottom:0;left:0;right:0;z-index:1000;background:rgba(250,247,242,0.82);backdrop-filter:blur(24px) saturate(1.9);-webkit-backdrop-filter:blur(24px) saturate(1.9);border-top:1px solid rgba(232,224,212,0.6);padding:6px 4px calc(6px + env(safe-area-inset-bottom));display:flex;justify-content:space-around;align-items:center;transition:transform 0.35s cubic-bezier(0.4,0,0.2,1)}
+.mobile-nav.nav-hidden{transform:translateY(0)}
+.mnb{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 2px;border:none;background:none;cursor:pointer;min-width:48px;min-height:44px;border-radius:var(--radius-sm);transition:all var(--transition);-webkit-tap-highlight-color:transparent;position:relative}
+.mnb svg{width:22px;height:22px;stroke:var(--text-muted);transition:all 0.3s cubic-bezier(0.4,0,0.2,1);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .mnb span{font-size:10px;font-weight:600;color:var(--text-muted);letter-spacing:0.02em;transition:color var(--transition)}
-.mnb.active svg{stroke:var(--gold)}.mnb.active span{color:var(--gold)}
-.mnb:active{transform:scale(0.92)}
+.mnb.active svg{stroke:var(--gold);transform:scale(1.1)}.mnb.active span{color:var(--gold);font-weight:700}
+.mnb.active::after{content:'';position:absolute;top:-6px;left:50%;transform:translateX(-50%);width:20px;height:3px;background:var(--gold);border-radius:3px;animation:pillFade 0.3s ease}
+@keyframes pillFade{from{opacity:0;width:8px}to{opacity:1;width:20px}}
+.mnb:active{transform:scale(0.88);transition:transform 0.1s ease}
 
 /* NAV SIDEBAR */
-.sidebar{position:fixed;top:0;left:0;width:var(--sidebar-width);height:100vh;background:var(--cream);border-right:1px solid var(--border);padding:32px 20px;display:none;flex-direction:column;overflow-y:auto;z-index:100}
+.sidebar{position:fixed;top:0;left:0;width:var(--sidebar-width);height:100vh;background:linear-gradient(180deg,var(--cream) 0%,var(--ivory) 100%);border-right:1px solid var(--border);padding:32px 20px;display:none;flex-direction:column;overflow-y:auto;z-index:100}
 .sidebar-logo{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--navy);margin-bottom:8px;cursor:pointer;transition:color var(--transition)}
 .sidebar-logo:hover{color:var(--gold)}
 .sidebar-sub{font-size:13px;color:var(--text-muted);margin-bottom:32px;line-height:1.5}
-.slink{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:var(--radius-sm);font-size:15px;font-weight:500;color:var(--text-light);cursor:pointer;transition:all var(--transition);margin-bottom:2px;border:none;background:none;width:100%;text-align:left}
-.slink:hover{background:var(--ivory);color:var(--navy)}
-.slink.active{background:var(--ivory);color:var(--gold-dark);font-weight:600}
+.slink{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:var(--radius-sm);font-size:15px;font-weight:500;color:var(--text-light);cursor:pointer;transition:all var(--transition);margin-bottom:2px;border:none;background:none;width:100%;text-align:left;position:relative}
+.slink:hover{background:rgba(242,235,224,0.7);color:var(--navy)}
+.slink.active{background:rgba(196,137,74,0.08);color:var(--gold-dark);font-weight:600}
+.slink.active::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:3px;height:20px;background:var(--gold);border-radius:0 3px 3px 0}
 .slink svg{width:20px;height:20px;flex-shrink:0;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .sdiv{height:1px;background:var(--border);margin:16px 0}
-.sfooter{margin-top:auto;padding-top:20px;font-size:13px;color:var(--text-muted);line-height:1.5}
+.sfooter{margin-top:auto;padding-top:20px;font-size:13px;color:var(--text-muted);line-height:1.5;font-family:'Caveat',cursive;font-size:15px}
 
 /* MAIN */
 .main-content{flex:1;padding-bottom:calc(var(--nav-height) + env(safe-area-inset-bottom) + 20px);min-height:100vh}
 
 /* HERO */
-.hero{position:relative;min-height:85vh;display:flex;flex-direction:column;justify-content:center;padding:60px 24px 40px;overflow:hidden}
+.hero{position:relative;min-height:90vh;display:flex;flex-direction:column;justify-content:center;padding:60px 24px 40px;overflow:hidden}
 .hero-bg{position:absolute;top:0;left:0;right:0;bottom:0;z-index:0}
-.hero-bg img{width:100%;height:100%;object-fit:cover}
-.hero-bg::after{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(to bottom,rgba(26,39,68,0.55) 0%,rgba(26,39,68,0.70) 50%,rgba(26,39,68,0.88) 100%)}
-.hero-content{position:relative;z-index:1;max-width:var(--content-max);margin:0 auto;text-align:center}
-.hero h1{color:#fff;font-size:clamp(2.2rem,6vw,3.6rem);margin-bottom:16px;font-weight:700;text-shadow:0 2px 12px rgba(0,0,0,0.2)}
-.hero-sub{color:rgba(255,255,255,0.85);font-size:clamp(1.05rem,2.5vw,1.3rem);font-weight:300;max-width:540px;margin:0 auto 12px;line-height:1.6}
-.hero-from{color:var(--gold-light);font-family:'Playfair Display',serif;font-style:italic;font-size:1.05rem;margin-top:8px}
-.hero-scroll{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);z-index:1;color:rgba(255,255,255,0.5);animation:bounce 2.5s ease-in-out infinite;cursor:pointer}
-.hero-scroll svg{width:28px;height:28px;stroke:currentColor;fill:none;stroke-width:2}
-@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
+.hero-bg img{width:100%;height:100%;object-fit:cover;animation:kenBurns 20s ease-in-out infinite alternate}
+@keyframes kenBurns{0%{transform:scale(1)}100%{transform:scale(1.08)}}
+.hero-bg::after{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(to bottom,rgba(15,27,45,0.35) 0%,rgba(30,20,15,0.50) 40%,rgba(15,27,45,0.80) 100%)}
+/* Ambient bokeh particles */
+.hero-bg::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;z-index:1;pointer-events:none;background:radial-gradient(2px 2px at 20% 30%,rgba(212,164,106,0.4),transparent),radial-gradient(3px 3px at 70% 20%,rgba(212,164,106,0.3),transparent),radial-gradient(2px 2px at 85% 60%,rgba(212,164,106,0.25),transparent),radial-gradient(3px 3px at 40% 70%,rgba(212,164,106,0.2),transparent);animation:bokehFloat 12s ease-in-out infinite alternate;filter:blur(1px)}
+@keyframes bokehFloat{0%{transform:translateY(0) scale(1)}100%{transform:translateY(-20px) scale(1.1)}}
+.hero-content{position:relative;z-index:2;max-width:var(--content-max);margin:0 auto;text-align:center}
+.hero h1{color:#fff;font-size:clamp(3.5rem,10vw,6rem);margin-bottom:16px;font-weight:700;text-shadow:0 2px 20px rgba(0,0,0,0.3);letter-spacing:-0.02em;animation:heroTitle 1s ease forwards;opacity:0}
+@keyframes heroTitle{0%{opacity:0;letter-spacing:0.05em}100%{opacity:1;letter-spacing:-0.02em}}
+.hero-sub{color:rgba(255,255,255,0.82);font-size:clamp(1.05rem,2.5vw,1.3rem);font-weight:300;max-width:540px;margin:0 auto 12px;line-height:1.6}
+.hero-from{color:var(--gold-light);font-family:'Caveat',cursive;font-size:1.4rem;margin-top:16px;text-shadow:0 0 30px rgba(196,137,74,0.3);letter-spacing:0.02em}
+/* Scroll line indicator */
+.hero-scroll{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);z-index:2;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:8px}
+.hero-scroll::after{content:'';width:1px;height:32px;background:linear-gradient(to bottom,rgba(255,255,255,0.5),transparent);animation:scrollPulse 2s ease-in-out infinite}
+.hero-scroll span{font-size:11px;text-transform:uppercase;letter-spacing:0.15em;color:rgba(255,255,255,0.4);font-weight:600}
+@keyframes scrollPulse{0%,100%{opacity:0.3;height:24px}50%{opacity:0.7;height:36px}}
 
 /* CARDS GRID */
-.cards-section{padding:48px 24px 60px;max-width:960px;margin:0 auto}
-.cards-title{text-align:center;font-size:1rem;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-muted);margin-bottom:32px}
-.cards-grid{display:grid;grid-template-columns:1fr;gap:16px}
-.scard{position:relative;background:#fff;border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px;cursor:pointer;transition:all var(--transition);display:flex;align-items:center;gap:20px;overflow:hidden;min-height:88px}
-.scard::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;border-radius:4px 0 0 4px;transition:width var(--transition)}
-.scard:hover{transform:translateY(-3px);box-shadow:0 8px 32px var(--shadow-md);border-color:transparent}
-.scard:hover::before{width:5px}
+.cards-section{padding:48px 24px 60px;max-width:1000px;margin:0 auto}
+.cards-title{text-align:center;font-size:0.85rem;font-weight:600;text-transform:uppercase;letter-spacing:0.18em;color:var(--text-muted);margin-bottom:36px}
+.cards-title::after{content:'';display:block;width:40px;height:2px;background:var(--gold);margin:12px auto 0}
+.cards-grid{display:grid;grid-template-columns:1fr;gap:20px}
+/* Story card with image */
+.scard{position:relative;background:#fff;border:1px solid rgba(232,224,212,0.6);border-radius:var(--radius-lg);cursor:pointer;transition:all 0.4s cubic-bezier(0.4,0,0.2,1);overflow:hidden;min-height:260px;display:flex;flex-direction:column}
+.scard-img{position:relative;height:140px;overflow:hidden}
+.scard-img img{width:100%;height:100%;object-fit:cover;transition:transform 0.6s cubic-bezier(0.4,0,0.2,1)}
+.scard:hover .scard-img img{transform:scale(1.06)}
+.scard-body{flex:1;padding:20px;display:flex;flex-direction:column;justify-content:center;position:relative}
+.scard::after{content:'';position:absolute;bottom:0;left:20px;width:0;height:2px;background:var(--gold);transition:width 0.4s cubic-bezier(0.4,0,0.2,1)}
+.scard:hover::after{width:calc(100% - 40px)}
+.scard:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);border-color:transparent}
 .scard:active{transform:translateY(-1px)}
-.cicon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;transition:transform var(--transition)}
-.scard:hover .cicon{transform:scale(1.08)}
+.cicon{display:none}
 .ctxt{flex:1}
-.clbl{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px}
-.cttl{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--navy);margin-bottom:4px}
+.clbl{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px}
+.cttl{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--navy);margin-bottom:6px}
 .cdsc{font-size:14px;color:var(--text-light);line-height:1.5;margin:0}
-.carr{color:var(--text-muted);transition:all var(--transition);flex-shrink:0}
-.carr svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2}
+.carr{position:absolute;top:20px;right:20px;color:var(--text-muted);transition:all var(--transition);flex-shrink:0}
+.carr svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2}
 .scard:hover .carr{color:var(--gold);transform:translateX(4px)}
-.cg::before{background:var(--gold)}.cg .cicon{background:rgba(200,149,108,0.12)}.cg .clbl{color:var(--gold-dark)}
-.cb::before{background:var(--warm-blue)}.cb .cicon{background:rgba(74,111,165,0.12)}.cb .clbl{color:var(--warm-blue)}
-.cn::before{background:var(--navy)}.cn .cicon{background:rgba(26,39,68,0.10)}.cn .clbl{color:var(--navy-light)}
-.cs::before{background:var(--sage)}.cs .cicon{background:rgba(122,158,126,0.12)}.cs .clbl{color:var(--sage)}
-.ca::before{background:#c0884a}.ca .cicon{background:rgba(192,136,74,0.12)}.ca .clbl{color:#b07a40}
-.ct::before{background:#5a8fa8}.ct .cicon{background:rgba(90,143,168,0.12)}.ct .clbl{color:#4a7f98}
-.ck::before{background:linear-gradient(135deg,var(--gold),var(--warm-blue))}.ck .cicon{background:linear-gradient(135deg,rgba(200,149,108,0.15),rgba(74,111,165,0.15))}.ck .clbl{color:var(--gold-dark)}
+/* Card color accents via label */
+.cg .clbl{color:var(--gold-dark)}
+.cb .clbl{color:var(--warm-blue)}
+.cn .clbl{color:var(--navy-light)}
+.cs .clbl{color:var(--sage)}
+.ca .clbl{color:#b07a40}
+.ct .clbl{color:#4a7f98}
+.ck .clbl{color:var(--gold-dark)}
+/* Reveal animation for cards */
+.scard{opacity:0;transform:translateY(30px);transition:opacity 0.6s ease,transform 0.6s ease,box-shadow 0.4s ease,border-color 0.4s ease}
+.scard.visible{opacity:1;transform:translateY(0)}
 
 /* SECTION PAGE */
 .section-page{padding:0 0 40px}
-.shero{position:relative;height:280px;overflow:hidden}
-.shero img{width:100%;height:100%;object-fit:cover}
-.shero-ov{position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(to bottom,rgba(26,39,68,0.3) 0%,rgba(26,39,68,0.75) 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:24px}
-.shero-lbl{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;color:var(--gold-light);margin-bottom:8px}
-.shero-ttl{color:#fff;font-size:clamp(1.8rem,4.5vw,2.6rem);text-shadow:0 2px 8px rgba(0,0,0,0.2)}
-.sbody{max-width:var(--content-max);margin:0 auto;padding:32px 24px}
-.sintro{font-size:1.1rem;line-height:1.8;color:var(--text);margin-bottom:36px;font-weight:300}
+.shero{position:relative;height:350px;overflow:hidden}
+.shero img{width:100%;height:100%;object-fit:cover;transition:transform 0.1s linear}
+.shero-ov{position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(to bottom,rgba(15,27,45,0.15) 0%,rgba(30,20,15,0.40) 40%,rgba(15,27,45,0.85) 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:32px 24px}
+.shero-lbl{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.15em;color:var(--gold-light);margin-bottom:10px}
+.shero-ttl{color:#fff;font-size:clamp(2rem,5vw,3rem);text-shadow:0 2px 12px rgba(0,0,0,0.3)}
+.sbody{max-width:var(--content-max);margin:0 auto;padding:36px 24px}
+.sintro{font-size:1.15rem;line-height:1.85;color:var(--text);margin-bottom:40px;font-weight:300}
 .sintro strong{font-weight:600}
+.sintro p:first-child::first-letter{font-family:'Playfair Display',serif;font-size:3.2rem;float:left;line-height:1;margin-right:10px;margin-top:4px;color:var(--gold-dark);font-weight:700}
+/* Floating progress pill */
+.float-progress{position:fixed;top:20px;right:20px;z-index:999;background:rgba(15,27,45,0.85);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);color:rgba(255,255,255,0.8);font-size:12px;font-weight:600;padding:6px 14px;border-radius:20px;opacity:0;transition:opacity 0.3s ease;pointer-events:none;letter-spacing:0.03em}
+.float-progress.visible{opacity:1}
 .back-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 0;margin-bottom:8px;border:none;background:none;cursor:pointer;font-size:15px;font-weight:500;color:var(--text-muted);transition:color var(--transition);-webkit-tap-highlight-color:transparent}
 .back-btn:hover{color:var(--gold)}
 .back-btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2}
 
 /* ACCORDION */
-.acc{margin-bottom:16px;border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);background:#fff}
-.acc-h{display:flex;align-items:center;gap:14px;width:100%;padding:18px 20px;border:none;background:#fff;cursor:pointer;text-align:left;font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:600;color:var(--navy);transition:all var(--transition);-webkit-tap-highlight-color:transparent;min-height:56px}
+.acc{margin-bottom:16px;border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);background:#fff;transition:border-color 0.3s ease,box-shadow 0.3s ease}
+.acc.open{border-color:rgba(196,137,74,0.2);box-shadow:0 2px 12px rgba(15,27,45,0.04)}
+.acc-h{display:flex;align-items:center;gap:14px;width:100%;padding:18px 20px;border:none;background:#fff;cursor:pointer;text-align:left;font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:600;color:var(--navy);transition:all var(--transition);-webkit-tap-highlight-color:transparent;min-height:56px;position:relative}
 .acc-h:hover{background:var(--ivory)}
+.acc.open .acc-h{border-left:3px solid var(--gold);padding-left:17px}
 .acc-chev{margin-left:auto;flex-shrink:0;transition:transform 0.35s cubic-bezier(0.4,0,0.2,1);color:var(--text-muted)}
 .acc-chev svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.5}
 .acc.open .acc-chev{transform:rotate(180deg);color:var(--gold)}
-.acc-body{max-height:0;overflow:hidden;transition:max-height 0.45s cubic-bezier(0.4,0,0.2,1)}
-.acc.open .acc-body{max-height:8000px}
+.acc-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows 0.45s cubic-bezier(0.4,0,0.2,1)}
+.acc.open .acc-body{grid-template-rows:1fr}
+.acc-inner{overflow:hidden}
 .acc-content{padding:4px 20px 24px;font-size:17px;line-height:1.75}
 .acc-content p{margin-bottom:14px}
 .acc-content ul,.acc-content ol{margin:12px 0 18px 20px}
 .acc-content li{margin-bottom:8px}
 .acc-content h4{margin:20px 0 10px;font-family:'Source Sans 3',sans-serif}
 
+/* SETUP BLOCK — Claude configuration before prompts */
+.setup-block{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:16px 0 6px;padding:14px 18px;background:linear-gradient(135deg,rgba(15,27,45,0.04),rgba(61,104,152,0.06));border:1px solid rgba(61,104,152,0.15);border-radius:var(--radius-sm) var(--radius-sm) 0 0;font-size:13px}
+.setup-block + .pb{margin-top:0;border-radius:0 0 var(--radius) var(--radius)}
+.setup-label{font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:var(--warm-blue);margin-right:4px;white-space:nowrap}
+.setup-tag{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600;background:#fff;border:1px solid var(--border);color:var(--text)}
+.setup-tag.model{background:rgba(15,27,45,0.06);color:var(--navy);border-color:rgba(15,27,45,0.15)}
+.setup-tag.mode{background:rgba(61,104,152,0.08);color:var(--warm-blue);border-color:rgba(61,104,152,0.15)}
+.setup-tag.feature{background:rgba(107,158,114,0.08);color:var(--sage);border-color:rgba(107,158,114,0.2)}
+.setup-tag.warn{background:rgba(196,122,108,0.08);color:var(--rose);border-color:rgba(196,122,108,0.2)}
+.setup-tip{width:100%;margin-top:6px;font-size:12px;color:var(--text-muted);font-style:italic;line-height:1.5;padding-top:8px;border-top:1px solid rgba(61,104,152,0.1)}
+
 /* PROMPT BLOCK */
-.pb{position:relative;background:var(--navy);border-radius:var(--radius);padding:20px;margin:20px 0 24px;overflow:hidden}
-.pb::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--warm-blue))}
-.pb pre{font-family:'JetBrains Mono',monospace;font-size:14px;line-height:1.65;color:rgba(255,255,255,0.9);white-space:pre-wrap;word-break:break-word;margin:0;padding-right:40px}
+.pb{position:relative;background:var(--navy);border-radius:var(--radius);padding:22px;margin:20px 0 24px;overflow:hidden;box-shadow:0 4px 20px rgba(15,27,45,0.15)}
+.pb::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--warm-blue),var(--gold));background-size:200% 100%;animation:shimmer 3s ease infinite}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.pb pre{font-family:'JetBrains Mono',monospace;font-size:14.5px;line-height:1.7;color:rgba(255,255,255,0.92);white-space:pre-wrap;word-break:break-word;margin:0;padding-right:40px}
 .pb-copy{position:absolute;top:14px;right:14px;padding:8px 16px;border:1px solid rgba(255,255,255,0.2);border-radius:var(--radius-sm);background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.7);font-size:13px;font-weight:600;cursor:pointer;transition:all var(--transition);display:flex;align-items:center;gap:6px;min-height:36px;-webkit-tap-highlight-color:transparent}
 .pb-copy:hover{background:rgba(255,255,255,0.15);color:#fff;border-color:rgba(255,255,255,0.3)}
-.pb-copy.copied{background:rgba(122,158,126,0.3);border-color:var(--sage);color:var(--sage-light)}
+.pb-copy.copied{background:rgba(107,158,114,0.3);border-color:var(--sage);color:var(--sage-light);animation:copyBounce 0.3s ease}
+@keyframes copyBounce{0%{transform:scale(1)}50%{transform:scale(1.08)}100%{transform:scale(1)}}
 .pb-copy svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
 
 /* STEPS */
 .steps{margin:20px 0}
 .step{display:flex;gap:16px;margin-bottom:24px;position:relative}
-.step-num{width:36px;height:36px;border-radius:50%;background:var(--gold);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;flex-shrink:0;margin-top:2px}
-.step-line{position:absolute;top:40px;left:18px;width:2px;bottom:-8px;background:var(--border)}
+.step-num{width:40px;height:40px;border-radius:50%;background:var(--gold);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;flex-shrink:0;margin-top:2px;box-shadow:0 0 0 4px rgba(196,137,74,0.15);transition:box-shadow 0.3s ease}
+.step-line{position:absolute;top:44px;left:20px;width:2px;bottom:-8px;background:linear-gradient(to bottom,var(--gold-light),var(--border))}
 .step:last-child .step-line{display:none}
 .step-content{flex:1}
 .step-title{font-weight:600;font-size:17px;margin-bottom:6px}
@@ -176,41 +227,45 @@ img{max-width:100%;height:auto;display:block}
 .plat-bl{margin-top:12px;padding-top:12px;border-top:1px solid var(--border);font-weight:600;font-size:15px;color:var(--navy)}
 
 /* CALLOUT */
-.co{border-left:4px solid var(--gold);background:var(--ivory);padding:16px 20px;border-radius:0 var(--radius-sm) var(--radius-sm) 0;margin:16px 0 20px}
-.co.tip{border-left-color:var(--sage)}.co.info{border-left-color:var(--warm-blue)}
-.co-l{font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px}
+.co{border-left:4px solid var(--gold);background:linear-gradient(135deg,var(--ivory),rgba(196,137,74,0.04));padding:18px 22px;border-radius:0 var(--radius-sm) var(--radius-sm) 0;margin:16px 0 20px;position:relative;box-shadow:0 1px 4px rgba(15,27,45,0.03)}
+.co.tip{border-left-color:var(--sage);background:linear-gradient(135deg,var(--ivory),rgba(107,158,114,0.06))}
+.co.info{border-left-color:var(--warm-blue);background:linear-gradient(135deg,var(--ivory),rgba(61,104,152,0.06))}
+.co-l{font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px}
 .co p:last-child{margin-bottom:0}
 
 /* CONTENT PHOTO */
-.cphoto{border-radius:var(--radius);overflow:hidden;margin:24px 0;box-shadow:0 4px 20px var(--shadow)}
+.cphoto{border-radius:var(--radius);overflow:hidden;margin:24px 0;box-shadow:var(--shadow-lg)}
 .cphoto img{width:100%;display:block}
-.cphoto-cap{padding:10px 16px;background:var(--ivory);font-size:13px;color:var(--text-muted);font-style:italic}
+.cphoto-cap{padding:12px 16px;background:var(--ivory);font-size:13px;color:var(--text-muted);font-style:italic;font-family:'Caveat',cursive;font-size:15px}
 
 /* PHOTO POST CARD */
-.post-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;margin:24px 0}
-.post-card-img{height:200px;overflow:hidden}
-.post-card-img img{width:100%;height:100%;object-fit:cover}
-.post-card-body{padding:20px}
-.post-card-body h4{margin-bottom:12px;font-family:'Playfair Display',serif}
+.post-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;margin:24px 0;box-shadow:0 1px 2px rgba(15,27,45,0.04),0 4px 12px rgba(15,27,45,0.04);transition:all 0.4s ease}
+.post-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px)}
+.post-card-img{height:220px;overflow:hidden}
+.post-card-img img{width:100%;height:100%;object-fit:cover;transition:transform 0.6s cubic-bezier(0.4,0,0.2,1)}
+.post-card:hover .post-card-img img{transform:scale(1.04)}
+.post-card-body{padding:22px}
+.post-card-body h4{margin-bottom:12px;font-family:'Playfair Display',serif;font-size:1.2rem}
 .post-platforms{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
-.post-plat-tag{padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;background:var(--ivory);color:var(--text-light)}
-.post-plat-tag.ig{background:rgba(193,53,132,0.1);color:#c13584}
-.post-plat-tag.tt{background:rgba(0,0,0,0.06);color:#333}
-.post-plat-tag.fb{background:rgba(24,119,242,0.1);color:#1877f2}
-.post-plat-tag.li{background:rgba(10,102,194,0.1);color:#0a66c2}
-.post-caption{font-size:15px;line-height:1.6;color:var(--text);margin:8px 0;padding:12px 14px;background:var(--ivory);border-radius:var(--radius-sm);cursor:pointer;transition:all var(--transition);border:1px solid transparent}
-.post-caption:hover{border-color:var(--gold)}
-.post-caption.copied-cap{border-color:var(--sage);background:rgba(122,158,126,0.06)}
+.post-plat-tag{padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;background:var(--ivory);color:var(--text-light);border-left:3px solid transparent}
+.post-plat-tag.ig{background:rgba(193,53,132,0.08);color:#c13584;border-left-color:#c13584}
+.post-plat-tag.tt{background:rgba(0,0,0,0.04);color:#333;border-left-color:#333}
+.post-plat-tag.fb{background:rgba(24,119,242,0.08);color:#1877f2;border-left-color:#1877f2}
+.post-plat-tag.li{background:rgba(10,102,194,0.08);color:#0a66c2;border-left-color:#0a66c2}
+.post-caption{font-size:15px;line-height:1.6;color:var(--text);margin:8px 0;padding:14px 16px;background:var(--ivory);border-radius:var(--radius-sm);cursor:pointer;transition:all var(--transition);border:1px solid transparent;border-left:3px solid var(--gold-light);font-style:italic}
+.post-caption:hover{border-color:var(--gold);border-left-color:var(--gold)}
+.post-caption.copied-cap{border-color:var(--sage);border-left-color:var(--sage);background:rgba(107,158,114,0.06)}
 .post-caption-hint{font-size:11px;color:var(--text-muted);font-style:italic;text-align:right;margin-top:4px}
 .post-biz{margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
 .post-biz-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--gold-dark);margin-bottom:6px}
 .post-biz ul{margin:4px 0 0 16px;font-size:14px}
 .post-biz li{margin-bottom:4px;color:var(--text-light)}
 
-/* CAMERA DIVIDER */
-.cdiv{display:flex;align-items:center;justify-content:center;gap:16px;margin:40px 0;color:var(--border)}
-.cdiv::before,.cdiv::after{content:'';flex:1;height:1px;background:var(--border)}
-.cdiv svg{width:24px;height:24px;stroke:var(--gold-light);fill:none;stroke-width:1.5;flex-shrink:0}
+/* EDITORIAL DIVIDER */
+.cdiv{display:flex;align-items:center;justify-content:center;gap:16px;margin:48px 0;color:var(--border)}
+.cdiv::before,.cdiv::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--gold-light),transparent)}
+.cdiv svg{display:none}
+.cdiv .diamond{width:8px;height:8px;background:var(--gold);transform:rotate(45deg);flex-shrink:0;opacity:0.6}
 
 /* DECISION GUIDE */
 .dl{margin:16px 0}
@@ -219,21 +274,22 @@ img{max-width:100%;height:auto;display:block}
 
 /* FUN PROMPT TILE */
 .fpg{display:grid;grid-template-columns:1fr;gap:12px;margin:20px 0}
-.fpt{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;cursor:pointer;transition:all var(--transition);display:flex;align-items:flex-start;gap:12px}
-.fpt:hover{border-color:var(--gold);box-shadow:0 2px 12px var(--shadow)}
-.fpt.cop{border-color:var(--sage);background:rgba(122,158,126,0.05)}
+.fpt{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;cursor:pointer;transition:all 0.3s cubic-bezier(0.4,0,0.2,1);display:flex;align-items:flex-start;gap:12px}
+.fpt:hover{border-color:var(--gold);box-shadow:0 4px 16px var(--shadow);transform:translateY(-2px) rotate(-0.5deg)}
+.fpt:active{transform:translateY(0) rotate(0)}
+.fpt.cop{border-color:var(--sage);background:rgba(107,158,114,0.06);box-shadow:0 0 0 3px rgba(107,158,114,0.15)}
 .fti{font-size:22px;flex-shrink:0;margin-top:2px}
 .ftt{font-size:15px;line-height:1.5;color:var(--text)}
 .fth{font-size:12px;color:var(--text-muted);margin-top:4px;font-style:italic}
 
 /* CLOSING MSG */
-.cmsg{background:linear-gradient(135deg,var(--ivory),rgba(200,149,108,0.08));border-radius:var(--radius-lg);padding:28px 24px;margin-top:32px;border:1px solid rgba(200,149,108,0.2)}
+.cmsg{background:linear-gradient(135deg,var(--ivory),rgba(196,137,74,0.06));border-radius:var(--radius-lg);padding:32px 28px;margin-top:36px;border:1px solid rgba(196,137,74,0.2);box-shadow:0 2px 12px rgba(15,27,45,0.03)}
 .cmsg p{font-size:17px;line-height:1.75}
 .cmsg p:last-child{margin-bottom:0}
 
 /* PHILIP NOTE */
-.pnote{text-align:center;padding:40px 24px;margin:0 24px 20px;border:2px dashed var(--gold-light);border-radius:var(--radius-lg);background:rgba(200,149,108,0.04)}
-.pnote-l{font-family:'Playfair Display',serif;font-style:italic;color:var(--gold-dark);font-size:1.1rem;margin-bottom:8px}
+.pnote{text-align:center;padding:48px 32px;margin:0 24px 20px;border:2px dashed rgba(196,137,74,0.3);border-radius:var(--radius-lg);background:linear-gradient(135deg,rgba(196,137,74,0.03),rgba(242,235,224,0.5))}
+.pnote-l{font-family:'Caveat',cursive;color:var(--gold-dark);font-size:1.5rem;margin-bottom:12px}
 .pnote p{color:var(--text-muted);font-size:15px;margin:0}
 
 /* BEFORE/AFTER */
@@ -260,16 +316,31 @@ img{max-width:100%;height:auto;display:block}
 .wf-txt{font-size:15px;line-height:1.4}
 .wf-time{margin-left:auto;font-size:13px;color:var(--text-muted);white-space:nowrap;font-weight:600}
 
-/* ANIM */
+/* ANIM — Hero stagger */
 @keyframes fadeInUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
-.s1{animation:fadeInUp .6s ease forwards;animation-delay:.1s;opacity:0}
-.s2{animation:fadeInUp .6s ease forwards;animation-delay:.2s;opacity:0}
-.s3{animation:fadeInUp .6s ease forwards;animation-delay:.3s;opacity:0}
-.s4{animation:fadeInUp .6s ease forwards;animation-delay:.4s;opacity:0}
-.s5{animation:fadeInUp .6s ease forwards;animation-delay:.5s;opacity:0}
+.s1{animation:fadeInUp .8s ease forwards;animation-delay:.2s;opacity:0}
+.s2{animation:fadeInUp .7s ease forwards;animation-delay:.6s;opacity:0}
+.s3{animation:fadeInUp .7s ease forwards;animation-delay:.9s;opacity:0}
+.s4{animation:fadeInUp .7s ease forwards;animation-delay:1.2s;opacity:0}
+.s5{animation:fadeInUp .7s ease forwards;animation-delay:1.5s;opacity:0}
 .s6{animation:fadeInUp .6s ease forwards;animation-delay:.6s;opacity:0}
 .s7{animation:fadeInUp .6s ease forwards;animation-delay:.7s;opacity:0}
 .s8{animation:fadeInUp .6s ease forwards;animation-delay:.8s;opacity:0}
+
+/* SCROLL REVEAL SYSTEM */
+.reveal-up,.reveal-fade,.reveal-scale,.reveal-left,.reveal-right{opacity:0;transition:opacity 0.6s ease,transform 0.6s ease}
+.reveal-up{transform:translateY(30px)}
+.reveal-fade{transform:none}
+.reveal-scale{transform:scale(0.95)}
+.reveal-left{transform:translateX(-30px)}
+.reveal-right{transform:translateX(30px)}
+.reveal-up.visible,.reveal-fade.visible,.reveal-scale.visible,.reveal-left.visible,.reveal-right.visible{opacity:1;transform:none}
+
+/* PAGE TRANSITIONS */
+.page-content{transition:opacity 0.25s ease,transform 0.25s ease}
+.page-exit{opacity:0;transform:translateY(10px)}
+.page-enter{animation:pageIn 0.35s ease forwards}
+@keyframes pageIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 
 /* FOCAL POINT EDIT MODE */
 .fp-edit-banner{position:fixed;top:0;left:0;right:0;z-index:9999;background:var(--navy);color:#fff;text-align:center;padding:10px 20px;font-size:14px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:12px}
@@ -285,8 +356,8 @@ img{max-width:100%;height:auto;display:block}
 .fp-label{position:absolute;bottom:8px;left:8px;background:rgba(0,0,0,0.7);color:#fff;font-size:11px;padding:3px 8px;border-radius:4px;pointer-events:none;z-index:10;font-family:'JetBrains Mono',monospace}
 
 @media(min-width:640px){.cards-grid{grid-template-columns:1fr 1fr}.pcards{grid-template-columns:1fr 1fr}.fpg{grid-template-columns:1fr 1fr}}
-@media(min-width:1024px){.mobile-nav{display:none}.sidebar{display:flex}.main-content{margin-left:var(--sidebar-width);padding-bottom:60px}.hero{min-height:80vh}.shero{height:340px}.shero-ov{padding:40px}.sbody{padding:40px}.cards-section{padding:60px 40px 80px}.cards-grid{grid-template-columns:1fr 1fr;gap:20px}}
-@media(min-width:1200px){.cards-grid{grid-template-columns:1fr 1fr 1fr}}
+@media(min-width:1024px){.mobile-nav{display:none}.sidebar{display:flex}.main-content{margin-left:var(--sidebar-width);padding-bottom:60px}.hero{min-height:85vh}.shero{height:440px}.shero-ov{padding:48px 40px}.sbody{padding:40px}.cards-section{padding:60px 40px 80px}.cards-grid{grid-template-columns:1fr 1fr;gap:24px}.scard{min-height:300px}.scard-img{height:170px}}
+@media(min-width:1200px){.cards-grid{grid-template-columns:1fr 1fr 1fr}.scard:nth-child(1),.scard:nth-child(4){grid-row:span 1}.cards-grid{grid-auto-rows:auto}}
 </style>
 </head>
 <body>
@@ -409,12 +480,14 @@ aperture:<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="14.3
 
 /* ===== DATA ===== */
 const SECTIONS=[
+{id:'how-to-use',title:'How to Use This Guide',sub:'A quick orientation before you dive in',icon:'📖',label:'Guide',cc:'cg',img:'images/roger-cool-glasses.jpg',alt:'Roger smiling'},
 {id:'getting-started',title:'Getting Started',sub:'Your first steps with AI',icon:'🚀',label:'Start Here',cc:'cg',img:'images/roger-cool-glasses.jpg',alt:'Roger smiling'},
 {id:'ai-personal',title:'AI for Everyday Life',sub:'Claude as your personal assistant',icon:'💬',label:'AI — Personal',cc:'cb',img:'images/roger-julie-canoe.jpg',alt:'Roger and Julie'},
 {id:'ai-professional',title:'AI for Business',sub:'Transform how you work',icon:'📊',label:'AI — Professional',cc:'cn',img:'images/roger-networking.jpg',alt:'Roger networking'},
 {id:'social-personal',title:'Social Media — Personal',sub:'Share what you love',icon:'📸',label:'Social — Personal',cc:'cs',img:'images/roger-with-camera.jpg',alt:'Roger with camera'},
 {id:'social-professional',title:'Social Media — Pro',sub:'Build your audience & automate',icon:'💼',label:'Social — Pro',cc:'ca',img:'images/roger-excited-panel.jpg',alt:'Roger on a panel'},
 {id:'travel',title:'Travel with AI',sub:'Plan trips like a pro',icon:'✈️',label:'Travel',cc:'ct',img:'images/roger-julie-car-show.jpg',alt:'Roger exploring'},
+{id:'philip-ai',title:'How Philip Uses AI',sub:'Real examples from building real things',icon:'🛠️',label:'Philip\'s AI',cc:'cn',img:'images/roger-and-sons.jpg',alt:'Roger with his sons'},
 {id:'cool-stuff',title:'Cool Stuff & Tips',sub:"Explore what's possible",icon:'✨',label:'Explore',cc:'ck',img:'images/roger-gangster-suit.jpg',alt:'Roger looking sharp'},
 ];
 
@@ -434,18 +507,101 @@ const toggle=useCallback(k=>{setP(prev=>{const n={...prev,[k]:!prev[k]};localSto
 return [p,toggle];
 }
 
+/* Scroll reveal — IntersectionObserver */
+function useReveal(ref, opts = {}) {
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    if (!ref.current) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) { setVisible(true); observer.unobserve(entry.target); }
+    }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px', ...opts });
+    observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+  return visible;
+}
+
+/* Staggered children reveal */
+function useStaggerReveal(containerRef, selector = '.scard') {
+  useEffect(() => {
+    if (!containerRef.current) return;
+    const children = containerRef.current.querySelectorAll(selector);
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const idx = Array.from(children).indexOf(entry.target);
+          entry.target.style.transitionDelay = `${idx * 80}ms`;
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    children.forEach(child => observer.observe(child));
+    return () => observer.disconnect();
+  }, []);
+}
+
+/* Scroll direction for nav hide/show */
+function useScrollDirection() {
+  const [hidden, setHidden] = useState(false);
+  const lastY = useRef(0);
+  useEffect(() => {
+    const onScroll = () => {
+      const y = window.scrollY;
+      if (y > 200 && y > lastY.current + 10) setHidden(true);
+      else if (y < lastY.current - 10) setHidden(false);
+      lastY.current = y;
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+  return hidden;
+}
+
+/* Parallax for section hero images */
+function useParallax(ref, speed = 0.3) {
+  useEffect(() => {
+    if (!ref.current) return;
+    const el = ref.current;
+    const img = el.querySelector('img');
+    if (!img) return;
+    const onScroll = () => {
+      const rect = el.getBoundingClientRect();
+      if (rect.bottom < 0 || rect.top > window.innerHeight) return;
+      const offset = rect.top * speed;
+      img.style.transform = `translateY(${offset}px) scale(1.1)`;
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+}
+
 /* ===== COMPONENTS ===== */
-function CamDiv(){return <div className="cdiv">{I.aperture}</div>}
+function CamDiv(){return <div className="cdiv"><span className="diamond"/></div>}
 
 function Acc({title,id,children,prog,toggle}){
 const [open,setOpen]=useState(false);
-return(<div className={`acc ${open?'open':''}`}><button className="acc-h" onClick={()=>setOpen(!open)}><span>{title}</span><span className="acc-chev">{I.chevD}</span></button><div className="acc-body"><div className="acc-content">{prog&&id&&<div className="pchk"><input type="checkbox" id={`p-${id}`} checked={!!prog[id]} onChange={()=>toggle(id)}/><label htmlFor={`p-${id}`}>Mark as done</label></div>}{children}</div></div></div>);
+const ref=useRef(null);
+const vis=useReveal(ref);
+return(<div ref={ref} className={`acc ${open?'open':''} reveal-up ${vis?'visible':''}`}><button className="acc-h" onClick={()=>setOpen(!open)}><span>{title}</span><span className="acc-chev">{I.chevD}</span></button><div className="acc-body"><div className="acc-inner"><div className="acc-content">{prog&&id&&<div className="pchk"><input type="checkbox" id={`p-${id}`} checked={!!prog[id]} onChange={()=>toggle(id)}/><label htmlFor={`p-${id}`}>Mark as done</label></div>}{children}</div></div></div></div>);
 }
 
 function PB({text}){
 const [c,setC]=useState(false);
 const copy=async()=>{try{await navigator.clipboard.writeText(text);setC(true);setTimeout(()=>setC(false),2000)}catch{}};
 return(<div className="pb"><pre>{text}</pre><button className={`pb-copy ${c?'copied':''}`} onClick={copy}>{c?<>{I.check} Copied!</>:<>{I.copy} Copy</>}</button></div>);
+}
+
+/* Setup Block — shows Claude configuration before a prompt */
+function Setup({model,mode,features,tip}){
+return(<div className="setup-block">
+<span className="setup-label">Setup:</span>
+{model&&<span className="setup-tag model">{model}</span>}
+{mode&&<span className="setup-tag mode">{mode}</span>}
+{features&&features.map((f,i)=><span key={i} className="setup-tag feature">{f}</span>)}
+{tip&&<div className="setup-tip">{tip}</div>}
+</div>);
 }
 
 function Steps({steps}){
@@ -485,10 +641,69 @@ return(
 </div>
 );}
 
-function SPage({section,onBack,children}){
-useEffect(()=>{window.scrollTo({top:0,behavior:'smooth'})},[section.id]);
-return(<div className="section-page"><div className="shero"><FocalImage src={section.img} alt={section.alt} loading="eager"/><div className="shero-ov"><div className="shero-lbl">{section.label}</div><h1 className="shero-ttl">{section.title}</h1></div></div><div className="sbody"><button className="back-btn" onClick={onBack}>{I.chevL} All Sections</button>{children}</div></div>);
+function FloatingProgress({sectionTitle,sectionIdx}){
+const [vis,setVis]=useState(false);
+useEffect(()=>{
+  const onScroll=()=>{setVis(window.scrollY>300)};
+  window.addEventListener('scroll',onScroll,{passive:true});
+  return()=>window.removeEventListener('scroll',onScroll);
+},[]);
+return <div className={`float-progress ${vis?'visible':''}`}>{sectionTitle} — Section {sectionIdx} of {SECTIONS.length}</div>;
 }
+
+function SPage({section,onBack,children}){
+const heroRef=useRef(null);
+const sectionIdx=SECTIONS.findIndex(s=>s.id===section.id)+1;
+useEffect(()=>{window.scrollTo({top:0,behavior:'smooth'})},[section.id]);
+useParallax(heroRef);
+return(<div className="section-page page-enter"><FloatingProgress sectionTitle={section.label} sectionIdx={sectionIdx}/><div className="shero" ref={heroRef}><FocalImage src={section.img} alt={section.alt} loading="eager"/><div className="shero-ov"><div className="shero-lbl">{section.label}</div><h1 className="shero-ttl">{section.title}</h1></div></div><div className="sbody"><button className="back-btn" onClick={onBack}>{I.chevL} All Sections</button>{children}</div></div>);
+}
+
+/* ===== HOW TO USE THIS GUIDE ===== */
+function SGuide({section,onBack}){return(<SPage section={section} onBack={onBack}>
+<div className="sintro"><p>This guide was built just for you, Roger. It's organized into sections you can explore at your own pace — there's no test, no deadline, and no wrong way to use it. Here's a quick orientation so you know what everything does.</p></div>
+
+<Acc title="How This Guide Is Organized">
+<p>Think of this guide like a magazine with different sections. Each one covers a different topic:</p>
+<ul>
+<li><strong>Getting Started</strong> — Download Claude, sign in, and send your first message. Start here if you haven't set up Claude yet.</li>
+<li><strong>AI for Everyday Life</strong> — Using Claude for personal things: trip planning, recipes, writing notes, explaining things.</li>
+<li><strong>AI for Business</strong> — Claude for professional work: business plans, pitch decks, financial models, emails.</li>
+<li><strong>Social Media (Personal)</strong> — Sharing your photography, travel, and family moments on Instagram, Facebook, and TikTok.</li>
+<li><strong>Social Media (Pro)</strong> — Using LinkedIn and social media to grow your professional brand and attract clients.</li>
+<li><strong>Travel with AI</strong> — Let Claude plan your trips, find deals, and build custom itineraries.</li>
+<li><strong>How Philip Uses AI</strong> — Real examples of what Philip has built using AI tools.</li>
+<li><strong>Cool Stuff & Tips</strong> — Fun prompts, hidden features, and things that'll surprise you.</li>
+</ul>
+</Acc>
+
+<Acc title="How to Navigate">
+<p>On your phone, you'll see a <strong>menu bar at the bottom</strong> of the screen — just like the icons at the bottom of your iPhone. Tap any icon to jump to that section.</p>
+<p>On a computer, you'll see a <strong>sidebar on the left</strong> with all the sections listed. Click any one to go there.</p>
+<p>To get back to the home screen from any section, tap the <strong>Home</strong> icon or the <strong>"All Sections"</strong> button at the top of any page.</p>
+</Acc>
+
+<Acc title="What Are Those Dark Boxes?">
+<p>Throughout this guide, you'll see dark navy-colored boxes with text inside. These are <strong>prompts</strong> — pre-written messages you can copy and paste directly into Claude.</p>
+<p>Just tap the <strong>"Copy"</strong> button on any prompt, switch to Claude, and paste it in. It's like having a cheat sheet for exactly what to say.</p>
+<p>Above some prompts, you'll see colored tags like <strong>"Sonnet 4.6"</strong> or <strong>"Cowork"</strong>. These tell you which settings to use in Claude for the best results. Don't worry about them yet — the Getting Started section explains everything.</p>
+</Acc>
+
+<Acc title="The Checkboxes">
+<p>Some sections have small checkboxes that say <strong>"Mark as done."</strong> These are just for you — a way to track your progress as you work through the guide. They save automatically on your device.</p>
+<p>Nobody else sees them. Use them or ignore them — totally up to you.</p>
+</Acc>
+
+<Acc title="Can I Break Anything?">
+<p><strong>No.</strong> You can't break this guide, you can't break Claude, and you can't break your phone by trying any of this. Tap around, try things, copy prompts, experiment. The worst that happens is you get an answer you don't love — and then you just ask again.</p>
+<div className="co"><div className="co-l">Philip's promise</div><p>"I built this so you could explore without worrying. Every prompt in here has been tested. Every button does what it says. If something doesn't work, it's my fault, not yours — just tell me and I'll fix it."</p></div>
+</Acc>
+
+<Acc title="Where to Start">
+<p>If you haven't used Claude before, go to <strong>Getting Started</strong> first. It takes about 10 minutes and walks you through everything step by step.</p>
+<p>If you've already got Claude set up, jump to whatever interests you most. The <strong>AI for Everyday Life</strong> section has the House Manual prompt — it's a great "aha moment" that shows you what Claude can really do.</p>
+</Acc>
+</SPage>)}
 
 /* ===== SECTION 1: GETTING STARTED ===== */
 function S1({section,onBack,prog,toggle}){return(<SPage section={section} onBack={onBack}>
@@ -516,6 +731,7 @@ function S1({section,onBack,prog,toggle}){return(<SPage section={section} onBack
 </Acc>
 <Acc title="Step 4: Your First Conversation" id="gs-fc" prog={prog} toggle={toggle}>
 <p>Here's your icebreaker. Copy this, paste it into Claude, and hit send:</p>
+<Setup model="Sonnet 4.6" mode="Chat" features={['Extended Thinking']}/>
 <PB text={`Hi Claude — my name is Roger King. I'm 77 years old, I'm the founder of Bay Angels (one of Silicon Valley's oldest angel investment networks), and I'm learning to use AI tools for the first time. My son Philip set me up with you.\n\nCan you introduce yourself, tell me what you're capable of, and suggest three things I could ask you about right now that would show me what you can do? Keep it simple and conversational — I'm just getting started.`}/>
 <p><strong>What happens next:</strong> Claude will respond conversationally and suggest things to explore. Just keep talking. There's no wrong move.</p>
 </Acc>
@@ -564,6 +780,7 @@ function S2({section,onBack,prog,toggle}){return(<SPage section={section} onBack
 </Acc>
 <Acc title="The House Manual Prompt — Your 'Aha' Moment" id="aip-h" prog={prog} toggle={toggle}>
 <p>A real prompt that produces a professional guest manual for your home in about 60 seconds.</p>
+<Setup model="Sonnet 4.6" mode="Cowork" features={['Extended Thinking']} tip="Cowork mode will create an actual document you can download. Open the Claude desktop app and switch to Cowork for this one."/>
 <PB text={`I need you to create a comprehensive house manual for guests staying at my home. Warm and welcoming but thorough.\n\nInclude:\n1. Welcome & Overview\n2. Arrival & Access (lockbox code, parking, gate code)\n3. Wi-Fi & Technology (network, password, TV/streaming setup)\n4. Kitchen & Appliances\n5. Heating & Cooling\n6. Outdoor Spaces (pool/hot tub, grill, patio)\n7. House Rules\n8. Local Recommendations (restaurants, grocery, pharmacies, hidden gems)\n9. Emergency Information\n10. Checkout Procedures\n\nLeave [brackets] for specific details I need to fill in. Make it feel like a high-end Airbnb experience.`}/>
 <CPhoto src="images/family-property.jpg" alt="The family property" caption="Your beautiful property — imagine handing every guest a polished guide to enjoying it."/>
 </Acc>
@@ -583,10 +800,10 @@ function S2({section,onBack,prog,toggle}){return(<SPage section={section} onBack
 function S3({section,onBack,prog,toggle}){return(<SPage section={section} onBack={onBack}>
 <div className="sintro"><p>This is where Claude goes from helpful to <strong>transformative</strong>. Philip has used Claude to build entire business plans, financial models, pitch coaching strategies, and marketing campaigns.</p></div>
 <Acc title="Understanding the Models — Sonnet vs. Opus" id="aib-m" prog={prog} toggle={toggle}>
-<h4>Sonnet 4.5 — The Fast Analyst</h4><p>Smart, fast, great for 90% of things.</p>
-<h4>Opus 4.5 — The Senior Partner</h4><p>Slower but significantly more powerful for complex reasoning and strategic thinking.</p>
+<h4>Sonnet 4.6 — The Fast Analyst</h4><p>Smart, fast, great for 90% of things.</p>
+<h4>Opus 4.6 — The Senior Partner</h4><p>Slower but significantly more powerful for complex reasoning and strategic thinking.</p>
 <h4>Extended Thinking</h4><p>Turn it on for either model. Claude "thinks before speaking" — step by step. Much better results.</p>
-<div className="co"><div className="co-l">Philip's recommendation</div><p>"Use Sonnet 4.5 with Extended Thinking for 9 out of 10 things. Switch to Opus for important work — pitch decks, business plans, critical emails."</p></div>
+<div className="co"><div className="co-l">Philip's recommendation</div><p>"Use Sonnet 4.6 with Extended Thinking for 9 out of 10 things. Switch to Opus for important work — pitch decks, business plans, critical emails."</p></div>
 <h4>Quick Decision Guide</h4>
 <div className="dl">
 <div className="di"><span className="q">Email?</span><span className="ar">→</span><span className="a">Sonnet</span></div>
@@ -596,10 +813,44 @@ function S3({section,onBack,prog,toggle}){return(<SPage section={section} onBack
 <div className="di"><span className="q">Not sure?</span><span className="ar">→</span><span className="a">Start with Sonnet, upgrade if needed</span></div>
 </div>
 </Acc>
-<Acc title="Chat vs. Cowork — The Deep Dive" id="aib-cw" prog={prog} toggle={toggle}>
-<p><strong>Cowork</strong> separates Claude from any other AI:</p>
-<ul><li><strong>Create actual files</strong> — Word docs, spreadsheets, PDFs</li><li><strong>Work with uploads</strong> — drop in a spreadsheet, pitch deck, contract</li><li><strong>Multi-step tasks</strong> — research → analyze → build → refine</li><li><strong>Build things on your desktop</strong>, not just in chat</li></ul>
-<div className="co"><div className="co-l">Philip on Cowork</div><p>"Perhaps the most impactful thing in AI in the past six months. It knocked dozens of startups out of the water."</p></div>
+<Acc title="All of Claude's Modes — The Complete Guide" id="aib-modes" prog={prog} toggle={toggle}>
+<p>Claude has several distinct modes. Understanding when to use each one is the difference between "nice answer" and "this just saved me 10 hours."</p>
+
+<h4>Chat — Your Everyday Companion</h4>
+<p>The default text conversation. You type, Claude responds. Simple and powerful.</p>
+<ul><li><strong>Best for:</strong> Questions, writing emails, brainstorming, explanations, quick tasks</li><li><strong>How to use:</strong> Just open Claude and start typing</li><li><strong>Available on:</strong> Web (claude.ai), iPhone/iPad app, Mac app</li></ul>
+
+<h4>Cowork — Claude Builds Things For You</h4>
+<p><strong>This is the game-changer.</strong> Instead of just chatting, Claude creates actual files — documents, spreadsheets, presentations, code — right on your desktop.</p>
+<ul><li><strong>Best for:</strong> Business plans, financial models, presentations, any document you need to download and use</li><li><strong>How to use:</strong> Open the Claude desktop app → switch to "Cowork" mode (toggle at the top)</li><li><strong>Available on:</strong> Desktop app only (Mac)</li><li><strong>Key difference:</strong> Claude works alongside you — it creates files, edits documents, and builds things you can actually save and share</li></ul>
+<div className="co"><div className="co-l">Philip on Cowork</div><p>"Perhaps the most impactful thing in AI in the past six months. It knocked dozens of startups out of the water. Every prompt in this guide marked 'Cowork' should be used in this mode."</p></div>
+
+<h4>Research — Deep Dive with Web Access</h4>
+<p><strong>The most powerful mode.</strong> Claude searches the internet, reads multiple sources, cross-references information, and delivers a comprehensive research report.</p>
+<ul><li><strong>Best for:</strong> Trip planning, competitive analysis, market research, fact-checking, finding current prices/deals, any question where you need up-to-date information</li><li><strong>How to use:</strong> In the Claude chat, look for the <strong>Research</strong> toggle or the <strong>/research</strong> slash command</li><li><strong>Available on:</strong> Web (claude.ai) and desktop app</li><li><strong>Web Search:</strong> When enabled, Claude can search the internet in real-time — essential for travel planning, price comparisons, and anything time-sensitive</li></ul>
+<div className="co" style={{borderLeftColor:'var(--rose)'}}><div className="co-l" style={{color:'var(--rose)'}}>Important — Research Mode Warning</div><p>Research requests are <strong>limited and token-intensive</strong>. Once you start a Research request, <strong>do not cancel or stop it</strong>. Your tokens won't be reimbursed if you stop the task early. Let it finish — the results are worth the wait.</p></div>
+
+<h4>Voice — Hands-Free Conversation</h4>
+<p>Talk to Claude like a phone call. Ask questions, get answers read back to you.</p>
+<ul><li><strong>Best for:</strong> Quick questions while driving/cooking, brainstorming out loud, getting explanations read to you</li><li><strong>How to use:</strong> Tap the microphone icon in the Claude app</li><li><strong>Available on:</strong> iPhone/iPad app, Mac app</li><li><strong>Limitation:</strong> Slightly less powerful than text modes — better for conversation than complex document creation</li></ul>
+
+<h4>Extended Thinking — Always Turn This On</h4>
+<p>Not a separate mode — it's a <strong>setting</strong> you can enable in any mode. When on, Claude "thinks step by step" before responding, producing significantly better results.</p>
+<ul><li><strong>How to enable:</strong> Look for the "Extended Thinking" toggle below the text input, or in settings</li><li><strong>When to use:</strong> Always. There's almost no reason to turn it off.</li><li><strong>What it does:</strong> Claude shows you its reasoning process, catches its own mistakes, and produces more thorough answers</li></ul>
+
+<h4>Quick Reference — Which Mode for What</h4>
+<CTable headers={['Task','Model','Mode','Settings']} rows={[
+['Quick question','Sonnet 4.6','Chat','Extended Thinking'],
+['Write an email','Sonnet 4.6','Chat','Extended Thinking'],
+['Business plan','Opus 4.6','Cowork','Extended Thinking'],
+['Financial model','Opus 4.6','Cowork','Extended Thinking'],
+['Trip planning','Opus 4.6','Research','Extended Thinking + Web Search'],
+['Find deals/prices','Opus 4.6','Research','Extended Thinking + Web Search'],
+['Social media captions','Sonnet 4.6','Chat','Extended Thinking'],
+['Analyze a document','Sonnet 4.6','Chat','Extended Thinking'],
+['Pitch deck','Opus 4.6','Cowork','Extended Thinking'],
+['Something important','Opus 4.6','Any','Extended Thinking'],
+]}/>
 </Acc>
 <Acc title="Advanced Prompting" id="aib-ap" prog={prog} toggle={toggle}>
 <Steps steps={[
@@ -614,6 +865,7 @@ function S3({section,onBack,prog,toggle}){return(<SPage section={section} onBack
 </Acc>
 <Acc title="Commission Army Financial Model — Power Prompt" id="aib-ca" prog={prog} toggle={toggle}>
 <p>Open <strong>Cowork</strong>, paste this in, and watch Claude build a full investor-ready Excel model.</p>
+<Setup model="Opus 4.6" mode="Cowork" features={['Extended Thinking']} tip="This is a complex financial model — use Opus for the best results. Cowork will generate a downloadable Excel file."/>
 <PB text={`Build a comprehensive Excel financial model for Commission Army, a two-sided referral marketplace. Professional, investor-ready.\n\nTab 1: Revenue Model — 24 months, subscription fees ($10/mo individuals, $49.95/mo businesses) + 20% transaction fees. MRR/ARR tracking.\nTab 2: CAC Model — By channel, LTV:CAC ratio (target 3:1), payback period.\nTab 3: Growth Dashboard — S-curve modeling, active vs. registered, churn waterfall.\nTab 4: Hiring Plan — Monthly headcount, trigger thresholds, fully loaded costs at 1.3x.\nTab 5: Fundraising — $500K seed round, use of funds, runway, breakeven analysis.\nTab 6: Summary — Key metrics, Month 18 targets, traffic light KPIs.\n\nAll assumptions adjustable. Input cells in yellow. Charts in each tab. Professional formatting.`}/>
 </Acc>
 <Acc title="What Philip Has Built with Claude" id="aib-port" prog={prog} toggle={toggle}>
@@ -726,6 +978,7 @@ bizBenefits={['Humanizes Roger\'s professional brand','Cross-generational appeal
 <p style={{textAlign:'center',fontWeight:600,color:'var(--gold-dark)',margin:'16px 0'}}><strong>Total time: ~30 minutes per week for consistent presence on 4 platforms.</strong></p>
 
 <h4>The Batch Content Prompt</h4>
+<Setup model="Sonnet 4.6" mode="Chat" features={['Extended Thinking']} tip="Sonnet handles this well — it's fast enough to write dozens of captions without slowing down."/>
 <PB text={`I have 5 photos I want to turn into social media posts. For each photo, write optimized captions for: Instagram (with hashtags), LinkedIn (thought leadership angle), Facebook (casual/personal), and TikTok (hook + short caption).\n\nPhoto 1: [describe the photo — who's in it, where, what's happening]\nPhoto 2: [describe]\nPhoto 3: [describe]\nPhoto 4: [describe]\nPhoto 5: [describe]\n\nContext about me: I'm Roger King, 77. Founder of Bay Angels (angel investing since 1998). Pitch coach. Photographer. Building Commission Army (referral marketplace startup). Based in the Bay Area.\n\nMake each platform's voice different:\n- Instagram: visual storytelling, relevant hashtags\n- LinkedIn: professional insight, conversation-starting\n- Facebook: warm, personal, conversational\n- TikTok: hook in first line, casual and punchy`}/>
 
 <h4>Scheduling Tools</h4>
@@ -773,17 +1026,20 @@ function S6({section,onBack,prog,toggle}){return(<SPage section={section} onBack
 
 <Acc title="The Trip Planning Prompt" id="tr-plan" prog={prog} toggle={toggle}>
 <p>Copy this, fill in the brackets, and watch Claude build your entire trip.</p>
+<Setup model="Opus 4.6" mode="Research" features={['Extended Thinking','Web Search']} tip="Use Research mode for this one — Claude will search the web for real-time info on restaurants, prices, and local events. Do not cancel or stop this request once it begins. Research requests are limited and token-intensive — your tokens won't be reimbursed if you stop the task early."/>
 <PB text={`I'm planning a trip and I want you to be my personal travel concierge. Here are the details:\n\nDestination: [city/country]\nDates: [arrival date] to [departure date]\nTraveling with: [solo / with Julie / family group]\nBudget: [budget level — moderate, comfortable, luxury]\nInterests: Photography, local cuisine, history, architecture, vintage cars, street markets\nAccommodation: [already booked at Hotel X / need recommendations]\nSpecial requirements: [dietary restrictions, mobility considerations, etc.]\n\nPlease create:\n1. A day-by-day itinerary with morning, afternoon, and evening activities\n2. Restaurant recommendations for each day (lunch and dinner) — include addresses, price range, and what to order\n3. Photography spots — best times of day for lighting, locations tourists miss\n4. Transportation plan — how to get between locations efficiently\n5. A packing list based on the weather forecast for those dates\n6. Estimated daily costs breakdown\n7. 3-5 hidden gems that most tourists completely miss\n8. Key phrases in the local language if applicable\n\nMake it detailed but flexible — I don't want to feel rushed.`}/>
 </Acc>
 
 <Acc title="Upload Your Itinerary for Analysis" id="tr-upload" prog={prog} toggle={toggle}>
 <p>Already have flights and hotels booked? Upload the confirmation emails or PDFs to Claude and let it work from there.</p>
+<Setup model="Sonnet 4.6" mode="Chat" features={['Extended Thinking']} tip="Upload your PDF or screenshot using the paperclip icon. Sonnet handles document analysis quickly."/>
 <PB text={`I've attached my travel itinerary. Please:\n\n1. Summarize my flights and hotel bookings in a clean table\n2. Flag any tight connections or potential issues (short layovers, early check-in times)\n3. Suggest activities to fill the gaps between booked events\n4. Find the best restaurants within walking distance of my hotel\n5. Create a Google Maps list of all recommended locations (give me the addresses so I can save them)\n6. Identify any days where I'm over-scheduled and suggest what to cut\n7. What's the weather forecast looking like? Should I adjust my plans?`}/>
 <div className="co tip"><div className="co-l">How to upload</div><p>In the Claude app, tap the paperclip icon (or drag and drop on desktop) to attach a PDF, screenshot, or email. Claude reads it instantly and can work with all the details.</p></div>
 </Acc>
 
 <Acc title="Finding Deals and Discounts" id="tr-deals" prog={prog} toggle={toggle}>
 <p>Claude can help you save money on almost every aspect of travel.</p>
+<Setup model="Opus 4.6" mode="Research" features={['Extended Thinking','Web Search']} tip="Research mode with Web Search lets Claude check real-time flight prices and deals. Do not cancel or stop this request once it begins — Research requests are limited and token-intensive, and your tokens won't be reimbursed if you stop early."/>
 <PB text={`I'm flying from San Francisco to [destination] on [dates]. Help me find the best deal:\n\n1. Which airlines typically have the best prices for this route?\n2. What day of the week is cheapest to fly?\n3. Should I book a round trip or two one-ways?\n4. Are there any nearby alternative airports that might be cheaper?\n5. What credit card travel perks should I be using? (I have [list your cards])\n6. Any current promotions or loyalty programs I should sign up for before booking?\n7. Should I book now or wait — what does pricing history suggest?`}/>
 <h4>More Ways to Save</h4>
 <ul>
@@ -796,6 +1052,7 @@ function S6({section,onBack,prog,toggle}){return(<SPage section={section} onBack
 
 <Acc title="Cuba Trip Planning — Specific to You" id="tr-cuba" prog={prog} toggle={toggle}>
 <p>Since Cuba is your specialty, here's a prompt tailored for your trips:</p>
+<Setup model="Opus 4.6" mode="Research" features={['Extended Thinking','Web Search']} tip="Research mode is essential here — Cuba regulations, connectivity, and restaurant scenes change frequently. Claude will search for the latest info. Do not cancel this request once started — Research tasks are token-intensive and won't be reimbursed if stopped."/>
 <PB text={`I'm planning my next photography trip to Havana, Cuba. I've been many times — this isn't my first visit. I want to go deeper than the tourist spots.\n\nDates: [dates]\nFocus: Street photography, vintage cars, local music scene, architecture\nGroup: [solo / with Julie / leading a photography group]\n\nPlease help me with:\n1. Neighborhoods I might not have explored yet — beyond Habana Vieja and Vedado\n2. Best times and locations for golden hour photography\n3. Paladares (private restaurants) that locals actually eat at, not just tourists\n4. Live music venues — where do Cubans go on weeknights?\n5. Current regulations — what's changed recently for US travelers?\n6. Cash and connectivity tips — what works for internet access and payments now?\n7. A photography-focused walking route for each day that covers diverse subjects\n8. Any car shows, vintage car gatherings, or restoration shops I could visit?`}/>
 <CPhoto src="images/roger-bay-angels.jpg" alt="Roger in Cuba" caption="From Bay Angels to Havana streets — your photography takes you everywhere."/>
 </Acc>
@@ -841,6 +1098,7 @@ function S7({section,onBack,prog,toggle}){return(<SPage section={section} onBack
 <li><strong>Explain medical test results</strong> — upload a PDF, ask what it means</li></ul>
 </Acc>
 <Acc title="Fun Prompts to Try" id="cs-fun" prog={prog} toggle={toggle}>
+<Setup model="Sonnet 4.6" mode="Chat" features={['Extended Thinking']} tip="These are quick, fun prompts — Sonnet with Extended Thinking is perfect."/>
 <PB text={`I'm a photographer who leads trips to Cuba. Write me a 60-second elevator pitch for my photography workshops.`}/>
 <PB text={`I founded one of Silicon Valley's oldest angel investment groups. Write me a short LinkedIn bio that sounds credible but not stuffy.`}/>
 <PB text={`Explain cryptocurrency to me like I'm a smart person who just hasn't been paying attention.`}/>
@@ -848,6 +1106,7 @@ function S7({section,onBack,prog,toggle}){return(<SPage section={section} onBack
 </Acc>
 <Acc title='The "Wow Moment"' id="cs-wow" prog={prog} toggle={toggle}>
 <p>This single prompt is designed to genuinely impress you.</p>
+<Setup model="Opus 4.6" mode="Research" features={['Extended Thinking','Web Search']} tip="Use Opus in Research mode for this one — it will search for real market data and revenue estimates. Do not cancel this request once started. Research tasks are token-intensive and your tokens won't be reimbursed if stopped early."/>
 <PB text={`Analyze my professional background and tell me what business opportunities I'm missing.\n\nI'm Roger King, 77. Founded Bay Angels in 1998 — one of Silicon Valley's oldest angel investment networks. Reviewed thousands of pitch decks over 30 years. Judged startup competitions on three continents (Beijing, Seoul, Tokyo, Prague, Athens, Havana). Published in Forbes and Fortune, appeared on CNN. Built ChiefPeople to 135 employees. Currently building Commission Army (referral marketplace) and offer pitch coaching through Pitch to an Angel.\n\nTop 5 opportunities I might not have considered? Think creatively — speaking, publishing, consulting, digital products, partnerships. Estimate revenue for each.`}/>
 </Acc>
 <Acc title="Photo Gallery — A Life Well Lived" id="cs-gal" prog={prog} toggle={toggle}>
@@ -862,31 +1121,108 @@ function S7({section,onBack,prog,toggle}){return(<SPage section={section} onBack
 </Acc>
 </SPage>)}
 
+/* ===== HOW PHILIP USES AI ===== */
+function SPhilipAI({section,onBack}){return(<SPage section={section} onBack={onBack}>
+<div className="sintro"><p>One of the best ways to understand what AI can do is to see real examples. Here's how Philip actually uses Claude and other AI tools in his daily life — not hypotheticals, but things he's built and shipped.</p></div>
+
+<Acc title="Building Software from Scratch — In Hours, Not Months">
+<p>Philip has built multiple working software products using Claude, with zero traditional coding background before AI. Here's what that actually looks like:</p>
+<h4>Commission Army — A Full Startup MVP</h4>
+<p>Commission Army is a two-sided referral marketplace. Philip built the entire first version — frontend, backend, database, user authentication, payment flow — by working with Claude in extended conversations.</p>
+<ul>
+<li><strong>Time:</strong> Built the working MVP in days, not the months a traditional dev team would take</li>
+<li><strong>Cost:</strong> $20/month Claude Pro subscription vs. $50,000-$150,000 to hire developers</li>
+<li><strong>How:</strong> Described what he wanted in plain English. Claude wrote the code. Philip tested it, gave feedback, and iterated. Back and forth until it worked.</li>
+</ul>
+<h4>Investor Foreclosure Dashboard</h4>
+<p>A real estate data tool that scrapes county foreclosure records, processes them, and presents a clean dashboard for investors. Built entirely with Claude — Python scraper, Next.js frontend, automated email reports.</p>
+<div className="co"><div className="co-l">The key insight</div><p>"You don't need to know how to code. You need to know what you want to build and be able to describe it clearly. Claude does the rest. I describe the feature, Claude writes it, I test it, and we iterate. That's the whole process."</p></div>
+</Acc>
+
+<Acc title="Building Websites">
+<p>This guide you're reading right now? Built with Claude. Philip described the design, the content, the features — and Claude wrote every line of code.</p>
+<h4>Other sites Philip has built with AI:</h4>
+<div className="pcards">
+<div className="pcard"><div className="pcard-t">Roger's Tech Guide</div><p className="pcard-d">This site — a full interactive guide with sections, animations, copy-to-clipboard prompts, and a responsive design. Built in a single session.</p><span className="ptag tag-c">Claude Code</span></div>
+<div className="pcard"><div className="pcard-t">Marin Healthcare Navigation</div><p className="pcard-d">A professional healthcare practice website with Next.js, Tailwind, and Sanity CMS. Full SEO, contact forms, and service pages.</p><span className="ptag tag-c">Claude Code</span></div>
+<div className="pcard"><div className="pcard-t">Commission Army Marketing Site</div><p className="pcard-d">Landing page, waitlist signup, and investor pitch materials — all built with AI assistance.</p><span className="ptag tag-w">Claude + Cowork</span></div>
+</div>
+<p>The pattern is always the same: describe what you want, let Claude build it, review and refine. No Photoshop, no Figma mockups, no web development agency. Just conversation.</p>
+</Acc>
+
+<Acc title="Trip Research and Planning">
+<p>Philip used Claude to plan a detailed Italy trip — but went beyond basic itineraries. He used Claude's Research mode to:</p>
+<ul>
+<li><strong>Find restaurants</strong> that locals actually eat at, filtered by neighborhood, cuisine, and price</li>
+<li><strong>Research wine regions</strong> with specific vineyard recommendations, tasting room hours, and booking tips</li>
+<li><strong>Build a day-by-day itinerary</strong> that accounted for travel time between cities, opening hours, and reservation requirements</li>
+<li><strong>Create a packing list</strong> based on actual weather forecasts for those specific dates</li>
+<li><strong>Translate key phrases</strong> into Italian with pronunciation guides</li>
+</ul>
+<p>Then he took it a step further and built a custom app for the trip (see below).</p>
+<div className="co"><div className="co-l">The difference</div><p>"A travel agent gives you a generic PDF. Claude gives you a living document you can keep refining. 'Actually, move dinner on Day 3 to somewhere closer to the hotel.' Done in seconds."</p></div>
+</Acc>
+
+<Acc title="Custom Apps for Specific Use Cases">
+<h4>The Italy Trip App</h4>
+<p>This is the perfect example of what's possible. Philip built a custom app specifically for his Italy trip that:</p>
+<ul>
+<li><strong>Saved all pre-vetted locations</strong> in one place — restaurants, attractions, viewpoints, hotels</li>
+<li><strong>No more Google Reviews</strong> — every place was already researched and approved. Just open the app and pick where to go</li>
+<li><strong>Organized by city and day</strong> — tap Rome, see Day 1, Day 2, etc.</li>
+<li><strong>Included notes and tips</strong> for each location — "ask for the table in the back garden" or "go at sunset for the best light"</li>
+<li><strong>Worked offline</strong> — no WiFi needed, everything saved locally on the phone</li>
+</ul>
+<p>This isn't an app you can download from the App Store. It's a <strong>personal tool built for one trip, for one family</strong>. That's the power of AI — custom solutions that would never be worth building the traditional way, but are trivial when you have Claude.</p>
+<h4>Other Custom Tools Philip Has Built</h4>
+<div className="pcards">
+<div className="pcard"><div className="pcard-t">Foreclosure Data Dashboard</div><p className="pcard-d">Automated scraping of county records, investor-specific filtering, weekly email reports</p><span className="ptag tag-c">Python + Next.js</span></div>
+<div className="pcard"><div className="pcard-t">Content Batch Generator</div><p className="pcard-d">Upload photos, get captions for Instagram, LinkedIn, Facebook, and TikTok — all at once</p><span className="ptag tag-w">Claude Prompt</span></div>
+<div className="pcard"><div className="pcard-t">Client Research Compiler</div><p className="pcard-d">Paste a company name, get a full dossier — leadership, funding, competitors, news</p><span className="ptag tag-r">Claude Research</span></div>
+</div>
+<div className="co"><div className="co-l">Why this matters for you</div><p>"Dad, if there's anything in your life that feels repetitive, disorganized, or like it should be easier — tell me. I can probably build a tool for it in an afternoon. That's not an exaggeration. That's what AI makes possible now."</p></div>
+</Acc>
+
+<Acc title="The Bigger Picture">
+<p>Philip isn't a programmer. He didn't study computer science. He learned to work with AI tools, and now he can build things that used to require teams of engineers.</p>
+<p>The point isn't that you need to build software. The point is that <strong>the barrier between "I have an idea" and "I have a working thing" has basically disappeared.</strong></p>
+<ul>
+<li>Need a spreadsheet that calculates something specific? Claude builds it.</li>
+<li>Want a presentation for your next Bay Angels meeting? Claude builds it.</li>
+<li>Need a professional document with specific formatting? Claude builds it.</li>
+<li>Want a personal tool that only makes sense for your life? Claude builds it.</li>
+</ul>
+<p>Start with the prompts in this guide. Once you're comfortable, start describing your own ideas. You'll be amazed at what comes back.</p>
+</Acc>
+</SPage>)}
+
 /* ===== LANDING PAGE ===== */
-function Landing({onNav}){return(
-<div>
+function Landing({onNav}){
+const cardsRef=useRef(null);
+useStaggerReveal(cardsRef, '.scard');
+return(
+<div className="page-enter">
 <div className="hero">
-<div className="hero-bg"><FocalImage src="images/roger-bay-angels.jpg" alt="Roger King"/></div>
+<div className="hero-bg"><FocalImage src="images/roger-bay-angels.jpg" alt="Roger King" loading="eager"/></div>
 <div className="hero-content">
 <h1 className="s1">Hey Roger.</h1>
 <p className="hero-sub s2">Welcome to your personal guide to AI, social media, and technology.</p>
 <p className="hero-sub s3" style={{fontSize:'clamp(0.95rem,2vw,1.1rem)',marginTop:'4px'}}>Take it at your own pace. There's no rush.</p>
-<p className="hero-from s4">Built for you by Philip</p>
+<p className="hero-from s4 script-accent">Built for you by Philip</p>
 </div>
-<div className="hero-scroll s5" onClick={()=>document.querySelector('.cards-section')?.scrollIntoView({behavior:'smooth'})}>{I.chevD}</div>
+<div className="hero-scroll s5" onClick={()=>document.querySelector('.cards-section')?.scrollIntoView({behavior:'smooth'})}><span>Scroll</span></div>
 </div>
 <div className="cards-section">
 <div className="cards-title">Your Sections</div>
-<div className="cards-grid">{SECTIONS.map((s,i)=>(
-<div key={s.id} className={`scard ${s.cc} s${i+2}`} onClick={()=>onNav(s.id)}>
-<div className="cicon"><span>{s.icon}</span></div>
-<div className="ctxt"><div className="clbl">{s.label}</div><div className="cttl">{s.title}</div><p className="cdsc">{s.sub}</p></div>
-<div className="carr">{I.chevR}</div>
+<div className="cards-grid" ref={cardsRef}>{SECTIONS.map((s,i)=>(
+<div key={s.id} className={`scard ${s.cc}`} onClick={()=>onNav(s.id)}>
+<div className="scard-img"><FocalImage src={s.img} alt={s.alt}/></div>
+<div className="scard-body"><div className="ctxt"><div className="clbl">{s.label}</div><div className="cttl">{s.title}</div><p className="cdsc">{s.sub}</p></div><div className="carr">{I.chevR}</div></div>
 </div>))}</div>
 </div>
 <div className="pnote"><div className="pnote-l">A note from Philip</div><p>[Philip's personal message will go here]</p></div>
 <CamDiv/>
-<footer style={{textAlign:'center',padding:'20px 24px 40px',color:'var(--text-muted)',fontSize:'14px'}}><p style={{marginBottom:'4px'}}>Made with love, 2026</p></footer>
+<footer style={{textAlign:'center',padding:'20px 24px 40px',color:'var(--text-muted)',fontSize:'14px',fontFamily:'Caveat, cursive',fontSize:'16px'}}><p style={{marginBottom:'4px'}}>Made with love, 2026</p></footer>
 </div>
 )}
 
@@ -894,14 +1230,28 @@ function Landing({onNav}){return(
 function App(){
 const [page,setPage]=useState(()=>{const h=window.location.hash.replace('#','');return h||'home'});
 const [prog,toggle]=useProgress();
-useEffect(()=>{const h=()=>{const hash=window.location.hash.replace('#','');if(hash)setPage(hash)};window.addEventListener('hashchange',h);return()=>window.removeEventListener('hashchange',h)},[]);
-const nav=useCallback(id=>{setPage(id);window.location.hash=id;window.scrollTo({top:0,behavior:'smooth'})},[]);
-const home=useCallback(()=>{setPage('home');window.location.hash='home';window.scrollTo({top:0,behavior:'smooth'})},[]);
+const navHidden=useScrollDirection();
+const [transitioning,setTransitioning]=useState(false);
 
-const MAP={'getting-started':S1,'ai-personal':S2,'ai-professional':S3,'social-personal':S4,'social-professional':S5,'travel':S6,'cool-stuff':S7};
+useEffect(()=>{const h=()=>{const hash=window.location.hash.replace('#','');if(hash)setPage(hash)};window.addEventListener('hashchange',h);return()=>window.removeEventListener('hashchange',h)},[]);
+
+const doNav=useCallback((id)=>{
+  setTransitioning(true);
+  setTimeout(()=>{
+    setPage(id);
+    window.location.hash=id;
+    window.scrollTo({top:0});
+    setTransitioning(false);
+  },200);
+},[]);
+
+const nav=useCallback(id=>{doNav(id)},[doNav]);
+const home=useCallback(()=>{doNav('home')},[doNav]);
+
+const MAP={'how-to-use':SGuide,'getting-started':S1,'ai-personal':S2,'ai-professional':S3,'social-personal':S4,'social-professional':S5,'travel':S6,'philip-ai':SPhilipAI,'cool-stuff':S7};
 const sec=SECTIONS.find(s=>s.id===page);
 const Comp=MAP[page];
-const activeNav=page==='home'?'home':page==='getting-started'?'getting-started':page.startsWith('ai-')?'ai-personal':page.startsWith('social-')?'social-personal':page==='travel'?'travel':page==='cool-stuff'?'cool-stuff':'home';
+const activeNav=page==='home'?'home':page==='how-to-use'?'how-to-use':page==='getting-started'?'getting-started':page.startsWith('ai-')?'ai-personal':page.startsWith('social-')?'social-personal':page==='travel'?'travel':page==='philip-ai'?'philip-ai':page==='cool-stuff'?'cool-stuff':'home';
 
 return(<>
 <EditBanner/>
@@ -911,13 +1261,13 @@ return(<>
 <button className={`slink ${page==='home'?'active':''}`} onClick={home}>{I.home}<span>Home</span></button>
 <div className="sdiv"/>
 {SECTIONS.map(s=><button key={s.id} className={`slink ${page===s.id?'active':''}`} onClick={()=>nav(s.id)}><span style={{fontSize:'18px',width:'20px',textAlign:'center'}}>{s.icon}</span><span>{s.title}</span></button>)}
-<div className="sfooter"><p>Built with love by Philip.<br/>Powered by Claude.</p></div>
+<div className="sfooter"><p className="script-accent" style={{fontSize:'16px'}}>Built with love by Philip.<br/>Powered by Claude.</p></div>
 </nav>
-<main className="main-content">
+<main className={`main-content ${transitioning?'page-exit':'page-content'}`}>
 {page==='home'&&<Landing onNav={nav}/>}
 {Comp&&sec&&<Comp section={sec} onBack={home} prog={prog} toggle={toggle}/>}
 </main>
-<nav className="mobile-nav">{NAV.map(item=>(
+<nav className={`mobile-nav ${navHidden?'nav-hidden':''}`}>{NAV.map(item=>(
 <button key={item.id} className={`mnb ${activeNav===item.id?'active':''}`} onClick={()=>item.id==='home'?home():nav(item.id)}>{item.icon}<span>{item.label}</span></button>
 ))}</nav>
 </>);

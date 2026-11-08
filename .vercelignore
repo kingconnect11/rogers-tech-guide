@@ -3,7 +3,7 @@
 *.mov
 .playwright-mcp
 .git
-Images/optimized
+images/optimized
 ARCHITECTURE_PLAN.md
 Roger_King_Tech_Guide_Handoff.md
 getting-started.png
